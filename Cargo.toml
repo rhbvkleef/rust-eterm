@@ -1,0 +1,8 @@
+[package]
+name = "serde_erlang"
+version = "0.1.0"
+authors = ["Rolf van Kleef <rolf@vankleef.me>"]
+edition = "2018"
+include = ["Cargo.toml", "src/**/*.rs", "README.md", "LICENSE-APACHE", "LICENSE-MIT"]
+
+[dependencies]
