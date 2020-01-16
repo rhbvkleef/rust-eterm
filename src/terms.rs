@@ -1,32 +1,32 @@
-/// Currently implemented term types:
-/// * ATOM_UTF8_EXT, SMALL_ATOM_UTF8_EXT (for EAtom(String))
-/// * INTEGER_EXT, SMALL_INTEGER_EXT (for {f,u}{8,16,32,64,128,size})
-/// * FLOAT_EXT (for f32, f64)
-/// * NIL_EXT (for ENil)
-/// * LIST_EXT (for EList, ENonProperList)
-/// * EXPORT_EXT (for EExport)
-///
-/// Not yet implemented term types:
-/// * ATOM_CACHE_REF
-/// * PORT_EXT
-/// * NEW_PORT_EXT
-/// * PID_EXT
-/// * NEW_PID_EXT
-/// * SMALL_TUPLE_EXT
-/// * LARGE_TUPLE_EXT
-/// * MAP_EXT
-/// * STRING_EXT
-/// * BINARY_EXT
-/// * SMALL_BIG_EXT
-/// * LARGE_BIG_EXT
-/// * REFERENCE_EXT (deprecated)
-/// * NEW_REFERENCE_EXT
-/// * NEWER_REFERENCE_EXT
-/// * FUN_EXT
-/// * NEW_FUN_EXT
-/// * BIT_BINARY_EXT
-/// * ATOM_EXT (deprecated)
-/// * SMALL_ATOM_EXT (deprecated)
+//! Currently implemented term types:
+//! * ATOM_UTF8_EXT, SMALL_ATOM_UTF8_EXT (for EAtom(String))
+//! * INTEGER_EXT, SMALL_INTEGER_EXT (for {f,u}{8,16,32,64,128,size})
+//! * FLOAT_EXT (for f32, f64)
+//! * NIL_EXT (for ENil)
+//! * LIST_EXT (for EList, ENonProperList)
+//! * EXPORT_EXT (for EExport)
+//!
+//! Not yet implemented term types:
+//! * ATOM_CACHE_REF
+//! * PORT_EXT
+//! * NEW_PORT_EXT
+//! * PID_EXT
+//! * NEW_PID_EXT
+//! * SMALL_TUPLE_EXT
+//! * LARGE_TUPLE_EXT
+//! * MAP_EXT
+//! * STRING_EXT
+//! * BINARY_EXT
+//! * SMALL_BIG_EXT
+//! * LARGE_BIG_EXT
+//! * REFERENCE_EXT (deprecated)
+//! * NEW_REFERENCE_EXT
+//! * NEWER_REFERENCE_EXT
+//! * FUN_EXT
+//! * NEW_FUN_EXT
+//! * BIT_BINARY_EXT
+//! * ATOM_EXT (deprecated)
+//! * SMALL_ATOM_EXT (deprecated)
 
 use super::error::{Error, ErrorCode};
 
