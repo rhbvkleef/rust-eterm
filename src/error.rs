@@ -6,9 +6,6 @@ use std::io;
 use std::result;
 use std::str::FromStr;
 
-use serde::de;
-use serde::ser;
-
 pub struct Error {
     err: Box<ErrorImpl>,
 }
@@ -178,25 +175,25 @@ impl Debug for Error {
     }
 }
 
-impl de::Error for Error {
-    fn custom<T: Display>(msg: T) -> Error {
-        make_error(msg.to_string())
-    }
+//impl de::Error for Error {
+//    fn custom<T: Display>(msg: T) -> Error {
+//        make_error(msg.to_string())
+//    }
+//
+//    fn invalid_type(unexp: de::Unexpected, exp: &dyn de::Expected) -> Self {
+//        if let de::Unexpected::Unit = unexp {
+//            Error::custom(format_args!("invalid type: null, expected {}", exp))
+//        } else {
+//            Error::custom(format_args!("invalid type: {}, expected {}", unexp, exp))
+//        }
+//    }
+//}
 
-    fn invalid_type(unexp: de::Unexpected, exp: &dyn de::Expected) -> Self {
-        if let de::Unexpected::Unit = unexp {
-            Error::custom(format_args!("invalid type: null, expected {}", exp))
-        } else {
-            Error::custom(format_args!("invalid type: {}, expected {}", unexp, exp))
-        }
-    }
-}
-
-impl ser::Error for Error {
-    fn custom<T: Display>(msg: T) -> Error {
-        make_error(msg.to_string())
-    }
-}
+//impl ser::Error for Error {
+//    fn custom<T: Display>(msg: T) -> Error {
+//        make_error(msg.to_string())
+//    }
+//}
 
 fn make_error(mut msg: String) -> Error {
     let (line, column) = parse_line_col(&mut msg).unwrap_or((0, 0));
