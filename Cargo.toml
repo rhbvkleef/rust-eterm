@@ -3,6 +3,6 @@ name = "rust_eterm"
 version = "0.1.0"
 authors = ["Rolf van Kleef <rolf@vankleef.me>"]
 edition = "2018"
-include = ["Cargo.toml", "src/**/*.rs", "README.md", "LICENSE-APACHE", "LICENSE-MIT"]
+include = ["Cargo.toml", "src/**/*.rs", "README.md", "LICENSE"]
 
 [dependencies]
