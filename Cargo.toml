@@ -9,7 +9,7 @@ license = "BSD-3"
 categories = [
     "encoding",
 ]
-documentation = "https://github.com/rhbvkleef/rust-eterm/"
+documentation = "https://rhbvkleef.github.io/rust-eterm/rust_eterm/"
 repository = "https://github.com/rhbvkleef/rust-eterm/"
 readme = "README.md"
 edition = "2018"

@@ -25,11 +25,9 @@
 //! ## Currently implemented term types (both from binary, String and into binary, String)
 //! None
 //!
-//! ## Not yet implemented term types:
+//! ## Not yet implemented term/value types:
 //! * [`NEWER_REFERENCE_EXT`]
 //! * [`BIT_BINARY_EXT`]
-//!
-//! ## No implementation plans
 //! * [`ATOM_CACHE_REF`] (distribution header will probably not be supported, or not soon at least)
 //! * [`FUN_EXT`] (seems unnecessary for now, maybe in the future?)
 //! * [`NEW_FUN_EXT`] (seems unnecessary for now, maybe in the future?)
@@ -39,6 +37,11 @@
 //! * [`SMALL_ATOM_EXT`] (deprecated, decoding support will be added)
 //! * [`PORT_EXT`] (decoding support will be added)
 //! * [`PID_EXT`] (decoding support will be added)
+//! * [`DIST_HDR`], including:
+//!   * [`DIST_HDR_NORMAL`]
+//!   * [`DIST_HDR_FRAGMENTED`]
+//!   * [`DIST_HDR_FRAGMENT`]
+//!   * [`DIST_HDR_COMPRESSED`]
 //! 
 //! [`DIST_HDR`]: static.DIST_HDR.html
 //! [`DIST_HDR_NORMAL`]: static.DIST_HDR_NORMAL.html
@@ -89,6 +92,10 @@
 //! [`EPid`]: struct.EPid.html
 //! [`EMap`]: struct.EMap.html
 //! [`EBinary`]: struct.EBinary.html
+//! 
+//! [`ETerm`]: trait.ETerm.html
+//! [`To`]: trait.To.html
+//! [`TryTo`]: trait.TryTo.html
 
 use super::error::{Error, ErrorCode};
 
@@ -113,10 +120,136 @@ macro_rules! into_etermstr_from_tostr {
     )
 }
 
+/// This is the code of the start of a message
+/// 
+/// The distribution header can be of multiple variants:
+/// * [`DIST_HDR_NORMAL`]
+/// * [`DIST_HDR_FRAGMENTED`]
+/// * [`DIST_HDR_FRAGMENT`]
+/// * [`DIST_HDR_COMPRESSED`]
+/// * An encoded atom
+/// 
+/// [`DIST_HDR_NORMAL`]: static.DIST_HDR_NORMAL.html
+/// [`DIST_HDR_FRAGMENTED`]: static.DIST_HDR_FRAGMENTED.html
+/// [`DIST_HDR_FRAGMENT`]: static.DIST_HDR_FRAGMENT.html
+/// [`DIST_HDR_COMPRESSED`]: static.DIST_HDR_COMPRESSED.html
 pub static DIST_HDR:            u8 =131;
+
+/// The tag for a normal unfragmented and uncompressed distribution header.
+/// 
+/// # Binary representation
+/// 
+/// | 1 byte | 1 byte                  | `NumberOfAtomCacheRefs/2+1 \| 0` bytes | `N \| 0` bytes    |
+/// | ------ | ----------------------- | -------------------------------------- | ----------------- |
+/// | `68`   | `NumberOfAtomCacheRefs` | `Flags`                                | `AtomCacheRefs`   |
+/// 
+/// * `NumberOfAtomCacheRefs` is the amount of atom cache references in this
+///   message.
+/// * `Flags` is a list of 4-byte values containig flags in the following format:
+///   
+///   | 1 bit           | 3 bits         |
+///   | --------------- | -------------- |
+///   | `NewCacheEntry` | `SegmentIndex` |
+///   
+///   * `NewCacheEntry` describes whether the atom is new in the cache.
+///   * `SegmentIndex` describes in which segment the atom is located.
+///   
+///   and after the flags for each of the references, one entry of this is sent:
+///   
+///   | 3 bits | 1 bit       |
+///   | ------ | ----------- |
+///   | Unused | `LongAtoms` |
+///   
+///   * `LongAtoms` states whether 1 or 2 bytes are used for the atom values
+///     in this distribution header.
+/// * `AtomCacheRefs` are:
+///   
+///   When for this atom, `NewCacheEntry` is 1:
+///   
+///   | 1 byte                 | 1\|2 bytes | `Length` bytes |
+///   | ---------------------- | ---------- | -------------- |
+///   | `InternalSegmentIndex` | `Length`   | `AtomText`     |
+///   
+///   * `InternalSegmentIndex`, together with `SegmentIndex` in the flags
+///     entry completely define the location of the atom in the atom cache.
+///   * `Length` is either 1 byte when `LongAtoms` is 0, and 2 bytes otherwise.
+///     It describes how many bytes long the `AtomText` is.
+///   * `AtomText` is the actual name of the atom.
+///   
+///   Or when for this atom, `NewCacheEntry` is 0:
+///   
+///   | 1 byte                 |
+///   | ---------------------- |
+///   | `InternalSegmentIndex` |
+///   
+///   * `InternalSegmentIndex`, together with `SegmentIndex` in the flags
+///     entry completely define the location of the atom in the atom cache.
+/// 
+/// This header is then trailed with a term_to_binary-encoded term with
+/// (optionally) [atom references][`ATOM_CACHE_REF`] to this header.
+/// 
+/// [`ATOM_CACHE_REF`]: static.ATOM_CACHE_REF.html
 pub static DIST_HDR_NORMAL:     u8 = 68;
+
+/// The tag for a header stating that the message is fragmented.
+/// 
+/// Note: This header must contain the entire atom cache.
+/// 
+/// # Binary representation
+/// 
+/// | 1 byte | 8 bytes      | 8 bytes      | 1 byte                  | `NumberOfAtomCacheRefs/2+1 \| 0` bytes | `N \| 0` bytes    |
+/// | ------ | ------------ | ------------ | ----------------------- | -------------------------------------- | ----------------- |
+/// | `69`   | `SequenceId` | `FragmentId` | `NumberOfAtomCacheRefs` | `Flags`                                | `AtomCacheRefs`   |
+/// 
+/// * `SequenceId` uniquely identifies the message that this fragment is part
+///   of.
+/// * `FragmentId` is a number that decreases with 1 for each fragment, and
+///   at N, where N is the number of fragments (so the last fragment has
+///   `FragmentId` of `1`).
+/// * `NumberOfAtomCacheRefs`, `Flags`, and `AtomCacheRefs` act just like in
+///   [`DIST_HDR_NORMAL`].
+/// 
+/// Some data MAY then be sent after this header, and each packet after this
+/// MUST only contain data of the term that is being sent.
+/// 
+/// [`DIST_HDR_NORMAL`]: static.DIST_HDR_NORMAL.html
 pub static DIST_HDR_FRAGMENTED: u8 = 69;
+
+/// The tag denoting a follow-up fragment of apreviously fragment message
+/// (either another fragment, or the [first fragment][`DIST_HDR_FRAGMENTED`]).
+/// 
+/// # Binary representation
+/// 
+/// | 1 byte | 8 bytes      | 8 bytes      |
+/// | ------ | ------------ | ------------ |
+/// | `70`   | `SequenceId` | `FragmentId` |
+/// 
+/// * `SequenceId`, just like in [`DIST_HDR_FRAGMENTED`] uniquely identifies
+///   this message, and must be the same as in the associated
+///   [`DIST_HDR_FRAGMENT`].
+/// * `FragmentId`, just like in [`DIST_HDR_FRAGMENTED`] is a number that
+///   decreases with 1 for each fragment, with the last fragment having a
+///   `FragmentId` of 1.
+/// 
+/// [`DIST_HDR_FRAGMENTED`]: static.DIST_HDR_FRAGMENTED.html
 pub static DIST_HDR_FRAGMENT:   u8 = 70;
+
+/// The tag denoting a compressed value (either a distribution header or an
+/// encoded atom).
+/// 
+/// # Binary representation
+/// 
+/// | 1 byte | 4 bytes            | N                    |
+/// | ------ | ------------------ | -------------------- |
+/// | `80`   | `UncompressedSize` | `ZLibCompressedData` |
+/// 
+/// * `UncompressedSize` is the complete size of the uncompressed
+///   `ZLibCompressedData` (including the tag).
+/// * `ZLibCompressedData` compresses data of the shape:
+///   
+///   | 1 byte | N bytes |
+///   | ------ | ------- |
+///   | `Tag`  | `Data`  |
 pub static DIST_HDR_COMPRESSED: u8 = 80;
 
 /// Refers to the atom with AtomCacheReferenceIndex in the
@@ -207,7 +340,7 @@ pub static FLOAT_EXT:           u8 =  99;
 /// Same as [`NEW_PORT_EXT`] except the Creation field is only one byte and
 /// only two bits are significant, the rest are to be 0.
 ///
-/// # Binary layout
+/// # Binary representation
 ///
 /// | 1 byte | N bytes | 4 bytes | 1 byte     |
 /// | ------ | ------- | ------- | ---------- |
@@ -240,7 +373,7 @@ pub static PORT_EXT:            u8 = 102;
 /// Planned to supersede PORT_EXT in OTP 23 when [DFLAG_BIG_CREATON](dflags)
 /// becomes mandatory.
 ///
-/// # Binary layout
+/// # Binary representation
 ///
 /// | 1 byte | N bytes | 4 bytes | 4 bytes    |
 /// | ------ | ------- | ------- | ---------- |
@@ -270,7 +403,7 @@ pub static NEW_PORT_EXT:        u8 =  89;
 /// Same as [`NEW_PID_EXT`] except the Creation field is only one byte and only
 /// two bits are significant, the rest are to be 0.
 ///
-/// # Binary layout
+/// # Binary representation
 ///
 /// | 1 byte | N bytes | 4 bytes | 4 bytes  | 1 byte     |
 /// | ------ | ------- | ------- | -------- | ---------- |
@@ -305,7 +438,7 @@ pub static PID_EXT:             u8 = 103;
 /// Planned to supersede PID_EXT in OTP 23 when [DFLAG_BIG_CREATON](dflags)
 /// becomes mandatory.
 ///
-/// # Binary layout
+/// # Binary representation
 ///
 /// | 1 byte | N bytes | 4 bytes | 4 bytes  | 4 bytes    |
 /// | ------ | ------- | ------- | -------- | ---------- |
@@ -335,7 +468,7 @@ pub static NEW_PID_EXT:         u8 =  88;
 
 /// Encodes a tuple.
 ///
-/// # Binary layout
+/// # Binary representation
 ///
 /// | 1 byte | 1 byte  | N bytes    |
 /// | ------ | ------- | ---------- |
@@ -349,7 +482,7 @@ pub static SMALL_TUPLE_EXT:     u8 = 104;
 /// Same as [`SMALL_TUPLE_EXT`] except that Arity is an unsigned 4 byte
 /// integer.
 ///
-/// # Binary format
+/// # Binary representation
 ///
 /// | 1 byte | 4 bytes | N bytes    |
 /// | ------ | ------- | ---------- |
@@ -364,7 +497,7 @@ pub static LARGE_TUPLE_EXT:     u8 = 105;
 
 /// Encodes a map.
 ///
-/// # Binary format
+/// # Binary representation
 ///
 /// | 1 byte | 4 bytes | N bytes |
 /// | ------ | ------- | ------- |
@@ -378,7 +511,7 @@ pub static MAP_EXT:             u8 = 116;
 
 /// The representation for an empty list, that is, the Erlang syntax `[]`.
 ///
-/// # Binary format
+/// # Binary representation
 ///
 /// | 1 byte |
 /// | ------ |
@@ -393,7 +526,7 @@ pub static NIL_EXT:             u8 = 106;
 /// must ensure that lists longer than 65535 elements are encoded as
 /// [`LIST_EXT`].
 ///
-/// # Binary format
+/// # Binary representation
 ///
 /// | 1 byte | 2 bytes  | `Length` bytes |
 /// | ------ | -------- | -------------- |
@@ -409,7 +542,7 @@ pub static STRING_EXT:          u8 = 107;
 
 /// The representation for a non-empty list.
 ///
-/// # Binary format
+/// # Binary representation
 ///
 /// | 1 byte | 4 bytes  | N bytes    | M bytes |
 /// | ------ | -------- | ---------- | ------- |
@@ -427,7 +560,7 @@ pub static LIST_EXT:            u8 = 108;
 /// Binaries are byte-arrays.
 /// They are represented as bitstrings or binaries in the Erlang language.
 ///
-/// # Binary format
+/// # Binary representation
 ///
 /// | 1 byte | 4 bytes | `Len` bytes |
 /// | ------ | ------- | ----------- |
@@ -457,7 +590,7 @@ pub static SMALL_BIG_EXT:       u8 = 110;
 
 /// Integer representation of an integer N where `-2^(2^32) < N < 2^(2^32)`.
 /// 
-/// # Binary format
+/// # Binary representation
 /// 
 /// | 1 byte | 4 bytes | 1 byte | `Len` bytes        |
 /// | ------ | ------- | ------ | ------------------ |
@@ -673,10 +806,75 @@ pub static EXPORT_EXT:          u8 = 113;
 ///   significant to least significant.
 /// * `Data` is the actual binary data in this bitstring.
 pub static BIT_BINARY_EXT:      u8 =  77;
+
+/// This term represents a float
+/// 
+/// # Binary representation
+/// 
+/// | 1 byte | 8 bytes |
+/// | ------ | ------- |
+/// | `70`   | `Float` |
+/// 
+/// * `Float` is an 32-bit IEEE floating point number stored in big-endian
+///   format.
 pub static NEW_FLOAT_EXT:       u8 =  70;
+
+/// This term represents an atom.
+/// 
+/// # Binary representation
+/// 
+/// | 1 byte | 2 bytes | `Len` bytes |
+/// | ------ | ------- | ----------- |
+/// | `118`  | `Len`   | `AtomName`  |
+/// 
+/// * `Len`, represented as a 16-bit big-endian unsigned integer, is the amount
+///   of bytes the atom name takes.
+/// * `AtomName` is an unescaped UTF8 string of `Len` bytes long representing
+///   the name of this atom.
 pub static ATOM_UTF8_EXT:       u8 = 118;
+
+/// This term represents an atom that takes up at most 255 bytes
+/// (which may be less than 255 characters as UTF-8 can have multi-byte
+/// characters).
+/// 
+/// # Binary representation
+/// 
+/// | 1 byte | 1 byte | `Len` bytes |
+/// | ------ | ------ | ----------- |
+/// | `118`  | `Len`  | `AtomName`  |
+/// 
+/// * `Len`, represented as an 8-bit unsigned integer, is the amount of bytes
+///   the atom name takes.
+/// * `AtomName` is an unescaped UTF8 string of `Len` bytes long representing
+///   the name of this atom.
 pub static SMALL_ATOM_UTF8_EXT: u8 = 119;
+
+/// This represents a LATIN-1 atom, but should not be encoded anymore.
+/// 
+/// # Binary representation
+/// 
+/// | 1 byte | 2 bytes | `Len` bytes |
+/// | ------ | ------- | ----------- |
+/// | `118`  | `Len`   | `AtomName`  |
+/// 
+/// * `Len`, represented as an 16-bit big endian unsigned integer, is the
+///   amount of bytes the atom name takes.
+/// * `AtomName` is an unescaped LATIN-1 string of `Len` bytes long
+///   representing the name of this atom.
 pub static ATOM_EXT:            u8 = 100;
+
+/// This represents a LATIN-1 atom, but should not be encoded anymore.
+/// 
+/// # Binary representation
+/// 
+/// | 1 byte |  byte | `Len` bytes |
+/// | ------ | ----- | ----------- |
+/// | `118`  | `Len` | `AtomName`  |
+/// 
+/// * `Len`, represented as an 8-bit unsigned integer, is the amount of bytes
+///   the atom name takes.
+/// * `AtomName` is an unescaped LATIN-1 string of `Len` bytes long
+///   representing the name of this atom.
 pub static SMALL_ATOM_EXT:      u8 = 115;
 
 /// Replacement for `std::convert::TryInto<T>` that doesn't require `Sized`.
