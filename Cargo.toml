@@ -1,8 +1,35 @@
 [package]
 name = "rust_eterm"
-version = "0.1.0"
-authors = ["Rolf van Kleef <rolf@vankleef.me>"]
+version = "0.0.1"
+authors = [
+    "Rolf van Kleef <rolf@vankleef.me>",
+]
+description = "Erlang - Rust integration tooling, create Erlang binary and String terms"
+license = "BSD-3"
+categories = [
+    "encoding",
+]
+documentation = "https://github.com/rhbvkleef/rust-eterm/"
+repository = "https://github.com/rhbvkleef/rust-eterm/"
+readme = "README.md"
 edition = "2018"
-include = ["Cargo.toml", "src/**/*.rs", "README.md", "LICENSE"]
+include = [
+    "/Cargo.toml",
+    "/src/**/*.rs",
+    "/README.md",
+    "/LICENSE",
+]
+
+[badges]
+is-it-maintained-issue-resolution = { repository = "https://github.com/rhbvkleef/rust-eterm" }
+is-it-maintained-open-issues = { repository = "https://github.com/rhbvkleef/rust-eterm" }
+maintenance = { status = "actively-developed" }
+
+[features]
+default = ["bigint"]
+
+bigint = ["num-bigint", "num-traits"]
 
 [dependencies]
+num-bigint = { version = "^0.2", optional = true }
+num-traits = { version = "^0.2", optional = true }
