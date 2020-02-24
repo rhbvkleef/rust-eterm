@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["error","When serializing or deserializing Erlang binary terms goes wrong."],["terms","Partially implemented term types (into binary, String): * [`ATOM_UTF8_EXT`], [`SMALL_ATOM_UTF8_EXT`] (for [`EAtom`], quoted atoms   are not yet supported) * [`STRING_EXT`] (for [`EString`], Strings that require escaping are not   yet supported)"]]});
