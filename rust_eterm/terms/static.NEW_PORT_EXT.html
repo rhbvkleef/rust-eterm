@@ -20,4 +20,9 @@ The value zero should be avoided for normal operations as it is used as
 a wild card for debug purpose
 (like a pid returned by [<code>erlang:list_to_pid/1</code>]).</li>
 </ul>
+<h1 id="string-representation" class="section-header"><a href="#string-representation">String representation</a></h1>
+<p>There is not actually a good way to represent a port as a string because
+the <code>Node</code> value may not be known.
+A representation of #Port&lt;0.{id}.{creation}&gt; can be used as a means to visualize
+the value of a port regardless.</p>
 </div></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "rust_eterm";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script defer src="../../search-index.js"></script></body></html>
