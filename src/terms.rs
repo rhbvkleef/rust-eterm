@@ -98,27 +98,13 @@
 //! [`TryTo`]: trait.TryTo.html
 
 use super::error::{Error, ErrorCode};
+use std::fmt;
 
 #[cfg(feature="bigint")]
 use {
     num_bigint::{ BigInt, BigUint, Sign },
     num_traits::{ sign::Signed, cast::ToPrimitive },
 };
-
-macro_rules! into_etermstr_from_tostr {
-    ($structure:ty) => (
-        impl<'a> To<ETermString> for $structure {
-            fn to(&self) -> ETermString {
-                ETermString((&self.to_string()).to_owned())
-            }
-        }
-        impl<'a> TryTo<ETermPrettyString> for $structure {
-            fn try_to(&self) -> Result<ETermPrettyString, Error> {
-                Ok(ETermPrettyString(self.try_to()?))
-            }
-        }
-    )
-}
 
 /// This is the code of the start of a message
 /// 
@@ -358,6 +344,13 @@ pub static FLOAT_EXT:           u8 =  99;
 ///   The value zero should be avoided for normal operations as it is used as
 ///   a wild card for debug purpose
 ///   (like a pid returned by [`erlang:list_to_pid/1`]).
+/// 
+/// # String representation
+/// 
+/// There is not actually a good way to represent a port as a string because
+/// the `Node` value may not be known.
+/// A representation of #Port<0.{id}.{creation}> can be used as a means to visualize
+/// the value of a port regardless.
 ///
 /// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1
 /// [`ATOM_UTF8_EXT`]: static.ATOM_UTF8_EXT.html
@@ -392,6 +385,13 @@ pub static PORT_EXT:            u8 = 102;
 ///   a wild card for debug purpose
 ///   (like a pid returned by [`erlang:list_to_pid/1`]).
 ///
+/// # String representation
+/// 
+/// There is not actually a good way to represent a port as a string because
+/// the `Node` value may not be known.
+/// A representation of #Port<0.{id}.{creation}> can be used as a means to visualize
+/// the value of a port regardless.
+/// 
 /// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1
 /// [`ATOM_UTF8_EXT`]: static.ATOM_UTF8_EXT.html
 /// [`SMALL_ATOM_UTF8_EXT`]: static.SMALL_ATOM_UTF8_EXT.html
@@ -423,6 +423,13 @@ pub static NEW_PORT_EXT:        u8 =  89;
 ///   The value zero should be avoided for normal operations as it is used as
 ///   a wild card for debug purpose
 ///   (like a pid returned by [`erlang:list_to_pid/1`]).
+/// 
+/// # String representation
+/// 
+/// There is not actually a good way to represent a pid as a string because
+/// the `Node` value may not be known.
+/// A representation of <0.{id}.{creation}> can be used as a means to visualize
+/// the value of a pid regardless.
 ///
 /// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1
 /// [`ATOM_UTF8_EXT`]: static.ATOM_UTF8_EXT.html
@@ -458,7 +465,14 @@ pub static PID_EXT:             u8 = 103;
 ///   The value zero should be avoided for normal operations as it is used as
 ///   a wild card for debug purpose
 ///   (like a pid returned by [`erlang:list_to_pid/1`]).
-///
+/// 
+/// # String representation
+/// 
+/// There is not actually a good way to represent a pid as a string because
+/// the `Node` value may not be known.
+/// A representation of <0.{id}.{creation}> can be used as a means to visualize
+/// the value of a pid regardless.
+/// 
 /// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1
 /// [`ATOM_UTF8_EXT`]: static.ATOM_UTF8_EXT.html
 /// [`SMALL_ATOM_UTF8_EXT`]: static.SMALL_ATOM_UTF8_EXT.html
@@ -477,6 +491,11 @@ pub static NEW_PID_EXT:         u8 =  88;
 /// * `Arity` is an unsigned 8-bit integer.
 /// * `Elements` are each encoded terms.
 ///   There are `Arity` amount of elements.
+/// 
+/// # String representation
+/// 
+/// The string representation is simply a comma-separated list of stringified
+/// terms completely wrapped with curly braces.
 pub static SMALL_TUPLE_EXT:     u8 = 104;
 
 /// Same as [`SMALL_TUPLE_EXT`] except that Arity is an unsigned 4 byte
@@ -491,6 +510,11 @@ pub static SMALL_TUPLE_EXT:     u8 = 104;
 /// * `Arity` is an unsigned 32-bit big-endian integer.
 /// * `Elements` are each encoded terms.
 ///   There are `Arity` amount of elements.
+/// 
+/// # String representation
+/// 
+/// The string representation is simply a comma-separated list of stringified
+/// terms completely wrapped with curly braces.
 ///
 /// [`SMALL_TUPLE_EXT`]: static.SMALL_TUPLE_EXT.html
 pub static LARGE_TUPLE_EXT:     u8 = 105;
@@ -507,6 +531,12 @@ pub static LARGE_TUPLE_EXT:     u8 = 105;
 /// * `Pairs` are each two encoded terms.
 ///   There are `Arity` amount of pairs.
 ///   There are no duplicate keys.
+/// 
+/// # String representation
+/// 
+/// A map is represented like this:
+/// 
+/// `#{ key0 => value0 (, keyN => valueN )* }`
 pub static MAP_EXT:             u8 = 116;
 
 /// The representation for an empty list, that is, the Erlang syntax `[]`.
@@ -516,6 +546,10 @@ pub static MAP_EXT:             u8 = 116;
 /// | 1 byte |
 /// | ------ |
 /// | `106`  |
+/// 
+/// # String representation
+/// 
+/// `[]`.
 pub static NIL_EXT:             u8 = 106;
 
 /// String does not have a corresponding Erlang representation, but is an
@@ -536,6 +570,23 @@ pub static NIL_EXT:             u8 = 106;
 /// There are a maximum of 65535 bytes, however many characters that turns out
 /// to be.
 /// It is *not* a maximum of 65535 characters!
+/// 
+/// # String representation
+/// 
+/// Place the string between double quotes, and apply the following escape
+/// sequences:
+/// 
+/// | Actual character            | Escape sequence |
+/// | --------------------------- | --------------- |
+/// | backspace                   | `\b`            |
+/// | delete                      | `\d`            |
+/// | escape                      | `\e`            |
+/// | form feed                   | `\f`            |
+/// | newline                     | `\n`            |
+/// | carriage return             | `\r`            |
+/// | tab                         | `\t`            |
+/// | vertical tab                | `\v`            |
+/// | double qoute (")            | `\"`            |
 ///
 /// [`LIST_EXT`]: static.LIST_EXT.html
 pub static STRING_EXT:          u8 = 107;
@@ -553,6 +604,10 @@ pub static STRING_EXT:          u8 = 107;
 /// * `Elements` are each encoded terms.
 /// * `Tail` is the final tail of the list; it is [`NIL_EXT`] for a proper list,
 ///   but can be any type if the list is improper (for example, `[a|b]`).
+/// 
+/// # String representation
+/// 
+/// Place a comma-separated list of stringified terms between block-quotes.
 ///
 /// [`NIL_EXT`]: static.NIL_EXT.html
 pub static LIST_EXT:            u8 = 108;
@@ -567,11 +622,23 @@ pub static LIST_EXT:            u8 = 108;
 /// | `109`  | `Len`   | `Data`      |
 ///
 /// * The Len length field is an unsigned 4 byte integer (big-endian).
+/// 
+/// # String representation
+/// 
+/// The output format is simply to convert each byte to a decimal number
+/// and print them as a comma-separated list between a pair of double angle
+/// brackets (`<<`, `>>`).
+/// 
+/// For reading, the values should be any of:
+/// 
+/// * A number according to [`INTEGER_EXT`]
+/// 
+/// [`INTEGER_EXT`]: static.INTEGER_EXT.html
 pub static BINARY_EXT:          u8 = 109;
 
 /// Integer representation of an integer N where `-2^256 < N < 2^256`.
 /// 
-/// # Binary format
+/// # Binary representation
 /// 
 /// | 1 byte | 1 byte | 1 byte | `Len` bytes        |
 /// | ------ | ------ | ------ | ------------------ |
@@ -586,6 +653,17 @@ pub static BINARY_EXT:          u8 = 109;
 /// B = 256
 /// (d0*B^0 + d1*B^1 + d2*B^2 + ... d(N-1)*B^(n-1))
 /// ```
+/// 
+/// # String representation
+/// 
+/// The representations of this 2's complement 32-bit signed integer are:
+/// 
+/// * Simple decimal
+/// * An ASCII character Z in the form `$Z`
+/// * Any other base B in 2..36 in the form `B#N`
+/// 
+/// The recommendation is to always output like a simple decimal, as it is the
+/// simplest and most portable.
 pub static SMALL_BIG_EXT:       u8 = 110;
 
 /// Integer representation of an integer N where `-2^(2^32) < N < 2^(2^32)`.
@@ -605,6 +683,17 @@ pub static SMALL_BIG_EXT:       u8 = 110;
 /// B = 256
 /// (d0*B^0 + d1*B^1 + d2*B^2 + ... d(N-1)*B^(n-1))
 /// ```
+/// 
+/// # String representation
+/// 
+/// The representations of this 2's complement 32-bit signed integer are:
+/// 
+/// * Simple decimal
+/// * An ASCII character Z in the form `$Z`
+/// * Any other base B in 2..36 in the form `B#N`
+/// 
+/// The recommendation is to always output like a simple decimal, as it is the
+/// simplest and most portable.
 pub static LARGE_BIG_EXT:       u8 = 111;
 
 /// Deprecated method for encoding a reference term.
@@ -903,49 +992,15 @@ impl To<Vec<u8>> for ETermBinary {
     }
 }
 
-/// Ugly String representation for an `ETerm`.
-#[derive(Clone)]
-pub struct ETermString(String);
-
-impl To<String> for ETermString {
-    fn to(&self) -> String {
-        self.0.to_owned()
-    }
-}
-
-/// Pretty String representation for an `Eterm`.
-#[derive(Clone)]
-pub struct ETermPrettyString(ETermString);
-
-impl To<ETermString> for ETermPrettyString {
-    fn to(&self) -> ETermString {
-        self.0.to_owned()
-    }
-}
-
-impl To<String> for ETermPrettyString {
-    fn to(&self) -> String {
-        To::<String>::to(&self.0)
-    }
-}
-
 /// A type that can be converted to an Erlang Binary Term format and two valid
 /// Erlang String Term representations.
-pub trait ETerm: TryTo<ETermBinary> + TryTo<ETermString> + TryTo<ETermPrettyString> {
-    fn try_to_term_string(&self) -> Result<String, Error> {
-        Ok(To::to(&TryTo::<ETermString>::try_to(self)?))
-    }
-
-    fn try_to_term_pretty_string(&self) -> Result<String, Error> {
-        Ok(To::to(&TryTo::<ETermPrettyString>::try_to(self)?))
-    }
-
+pub trait ETerm: TryTo<ETermBinary> + fmt::Display {
     fn try_to_binary(&self) -> Result<Vec<u8>, Error> {
         Ok(To::to(&TryTo::<ETermBinary>::try_to(self)?))
     }
 }
 
-impl<T> ETerm for T where T: TryTo<ETermBinary> + TryTo<ETermString> + TryTo<ETermPrettyString> {}
+impl<T> ETerm for T where T: TryTo<ETermBinary> + fmt::Display {}
 
 impl TryTo<ETermBinary> for i8 {
     fn try_to(&self) -> Result<ETermBinary, Error> {
@@ -957,8 +1012,6 @@ impl TryTo<ETermBinary> for i8 {
     }
 }
 
-into_etermstr_from_tostr!(i8);
-
 impl To<ETermBinary> for u8 {
     fn to(&self) -> ETermBinary {
         let data: &[u8; 1] = &self.to_be_bytes();
@@ -966,23 +1019,17 @@ impl To<ETermBinary> for u8 {
     }
 }
 
-into_etermstr_from_tostr!(u8);
-
 impl TryTo<ETermBinary> for i16 {
     fn try_to(&self) -> Result<ETermBinary, Error> {
         (*self as i32).try_to()
     }
 }
 
-into_etermstr_from_tostr!(i16);
-
 impl TryTo<ETermBinary> for u16 {
     fn try_to(&self) -> Result<ETermBinary, Error> {
         (*self as i32).try_to()
     }
 }
-
-into_etermstr_from_tostr!(u16);
 
 impl TryTo<ETermBinary> for i32 {
     fn try_to(&self) -> Result<ETermBinary, Error> {
@@ -995,15 +1042,11 @@ impl TryTo<ETermBinary> for i32 {
     }
 }
 
-into_etermstr_from_tostr!(i32);
-
 impl TryTo<ETermBinary> for u32 {
     fn try_to(&self) -> Result<ETermBinary, Error> {
         (*self as i128).try_to()
     }
 }
-
-into_etermstr_from_tostr!(u32);
 
 impl TryTo<ETermBinary> for i64 {
     fn try_to(&self) -> Result<ETermBinary, Error> {
@@ -1011,15 +1054,11 @@ impl TryTo<ETermBinary> for i64 {
     }
 }
 
-into_etermstr_from_tostr!(i64);
-
 impl TryTo<ETermBinary> for u64 {
     fn try_to(&self) -> Result<ETermBinary, Error> {
         (*self as i128).try_to()
     }
 }
-
-into_etermstr_from_tostr!(u64);
 
 impl TryTo<ETermBinary> for i128 {
     fn try_to(&self) -> Result<ETermBinary, Error> {
@@ -1033,8 +1072,6 @@ impl TryTo<ETermBinary> for i128 {
     }
 }
 
-into_etermstr_from_tostr!(i128);
-
 impl TryTo<ETermBinary> for u128 {
     fn try_to(&self) -> Result<ETermBinary, Error> {
         // The big number here is i128::max_value() as a `From<u128>` for i128 is not implemented
@@ -1047,15 +1084,11 @@ impl TryTo<ETermBinary> for u128 {
     }
 }
 
-into_etermstr_from_tostr!(u128);
-
 impl TryTo<ETermBinary> for isize {
     fn try_to(&self) -> Result<ETermBinary, Error> {
         (*self as i128).try_to()
     }
 }
-
-into_etermstr_from_tostr!(isize);
 
 impl TryTo<ETermBinary> for usize {
     fn try_to(&self) -> Result<ETermBinary, Error> {
@@ -1063,14 +1096,12 @@ impl TryTo<ETermBinary> for usize {
     }
 }
 
-into_etermstr_from_tostr!(usize);
-
 /// Represents an Erlang `NIL_EXT` term.
 pub struct ENil;
 
-impl ToString for ENil {
-    fn to_string(&self) -> String {
-        "[]".to_string()
+impl fmt::Display for ENil {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "[]")
     }
 }
 
@@ -1080,19 +1111,18 @@ impl To<ETermBinary> for ENil {
     }
 }
 
-into_etermstr_from_tostr!(ENil);
-
 /// Represents a proper `LIST_EXT` term with a `nil` tail.
 pub struct EList<'a>(&'a Vec<&'a dyn ETerm>);
 
-impl<'a> ToString for EList<'a> {
-    fn to_string(&self) -> String {
+impl<'a> fmt::Display for EList<'a> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut s = "[".to_string();
         for d in self.0.iter() {
-            s.push_str(d.try_to_term_string().unwrap().as_ref());
+            s.push_str(format!("{}", d).as_ref());
         }
         s.push(']');
-        s
+
+        f.write_str(s.as_ref())
     }
 }
 
@@ -1112,24 +1142,23 @@ impl<'a> TryTo<ETermBinary> for EList<'a> {
     }
 }
 
-into_etermstr_from_tostr!(EList<'a>);
-
 /// Describes a `LIST_EXT` term with a possible non-`nil` tail.
 pub struct ENonProperList<'a> {
     data: &'a Vec<&'a dyn ETerm>,
     tail: &'a dyn ETerm,
 }
 
-impl<'a> ToString for ENonProperList<'a> {
-    fn to_string(&self) -> String {
+impl<'a> fmt::Display for ENonProperList<'a> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut s = "[".to_string();
         for d in self.data.iter() {
-            s.push_str(d.try_to_term_string().unwrap().as_ref());
+            s.push_str(format!("{}", d).as_ref());
         }
         s.push('|');
-        s.push_str(self.tail.try_to_term_string().unwrap().as_ref());
+        s.push_str(format!("{}", self.tail).as_ref());
         s.push(']');
-        s
+
+        f.write_str(s.as_ref())
     }
 }
 
@@ -1151,17 +1180,15 @@ impl<'a> TryTo<ETermBinary> for ENonProperList<'a> {
     }
 }
 
-into_etermstr_from_tostr!(ENonProperList<'a>);
-
 /// Describes an `ATOM_UTF8_EXT` term and a `SMALL_ATOM_UTF8_EXT` term.
 ///
 /// TODO: Make sure the string representation of atoms that need to be quoted
 ///  is implemented.
 pub struct EAtom(String);
 
-impl ToString for EAtom {
-    fn to_string(&self) -> String {
-        (&self.0).to_owned()
+impl fmt::Display for EAtom {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.0)
     }
 }
 
@@ -1178,8 +1205,6 @@ impl TryTo<ETermBinary> for EAtom {
     }
 }
 
-into_etermstr_from_tostr!(EAtom);
-
 impl TryTo<ETermBinary> for f32 {
     fn try_to(&self) -> Result<ETermBinary, Error> {
         if self.is_finite() {
@@ -1190,8 +1215,6 @@ impl TryTo<ETermBinary> for f32 {
         }
     }
 }
-
-into_etermstr_from_tostr!(f32);
 
 impl TryTo<ETermBinary> for f64 {
     fn try_to(&self) -> Result<ETermBinary, Error> {
@@ -1204,8 +1227,6 @@ impl TryTo<ETermBinary> for f64 {
     }
 }
 
-into_etermstr_from_tostr!(f64);
-
 /// Describes an Erlang `EXPORT_EXT` term.
 pub struct EExport {
     module: EAtom,
@@ -1213,16 +1234,17 @@ pub struct EExport {
     arity: u8,
 }
 
-impl ToString for EExport {
-    fn to_string(&self) -> String {
+impl fmt::Display for EExport {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut result = "{".to_string();
-        result.push_str(self.module.to_string().as_ref());
+        result.push_str(format!("{}", self.module).as_ref());
         result.push(',');
-        result.push_str(self.function.to_string().as_ref());
+        result.push_str(format!("{}", self.function).as_ref());
         result.push(',');
         result.push_str(self.arity.to_string().as_ref());
         result.push('}');
-        result
+
+        f.write_str(result.as_ref())
     }
 }
 
@@ -1236,22 +1258,21 @@ impl TryTo<ETermBinary> for EExport {
     }
 }
 
-into_etermstr_from_tostr!(EExport);
-
 /// Represents a `LARGE_TUPLE_EXT` or a `SMALL_TUPLE_EXT` term with a `nil`
 /// tail.
 pub struct ETuple<'a>(&'a Vec<&'a dyn ETerm>);
 
-impl<'a> ToString for ETuple<'a> {
-    fn to_string(&self) -> String {
+impl<'a> fmt::Display for ETuple<'a> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut result = "{".to_string();
         let mut parts: Vec<String> = Vec::new();
         for d in self.0.iter() {
-            parts.push(d.try_to_term_string().unwrap())
+            parts.push(format!("{}", d))
         }
         result.push_str(parts.join(",").as_ref());
         result.push('}');
-        result
+        
+        f.write_str(result.as_ref())
     }
 }
 
@@ -1272,20 +1293,15 @@ impl<'a> TryTo<ETermBinary> for ETuple<'a> {
     }
 }
 
-into_etermstr_from_tostr!(ETuple<'a>);
-
 /// Describes an `ATOM_UTF8_EXT` term and a `SMALL_ATOM_UTF8_EXT` term.
 ///
 /// TODO: Make sure the string representation of atoms that need to be quoted
 ///  is implemented.
 pub struct EString(String);
 
-impl ToString for EString {
-    fn to_string(&self) -> String {
-        let mut result = "\"".to_string();
-        result.push_str((&self.0).as_ref());
-        result.push('"');
-        result
+impl fmt::Display for EString {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "\"{}\"", self.0)
     }
 }
 
@@ -1300,8 +1316,6 @@ impl TryTo<ETermBinary> for EString {
     }
 }
 
-into_etermstr_from_tostr!(EString);
-
 /// Describes an Erlang Port
 pub struct EPort {
     node: EAtom,
@@ -1309,14 +1323,9 @@ pub struct EPort {
     creation: u32,
 }
 
-impl ToString for EPort {
-    fn to_string(&self) -> String {
-        let mut result = "#Port<".to_string();
-        result.push_str(self.node.to_string().as_ref());
-        result.push('.');
-        result.push_str(self.id.to_string().as_ref());
-        result.push('>');
-        result
+impl fmt::Display for EPort {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "#Port<{}.{}>", self.node, self.id)
     }
 }
 
@@ -1330,8 +1339,6 @@ impl TryTo<ETermBinary> for EPort {
     }
 }
 
-into_etermstr_from_tostr!(EPort);
-
 /// Describes an Erlang PID.
 pub struct EPid {
     node: EAtom,
@@ -1340,16 +1347,9 @@ pub struct EPid {
     creation: u32,
 }
 
-impl ToString for EPid {
-    fn to_string(&self) -> String {
-        let mut result = "<".to_string();
-        result.push_str(self.node.to_string().as_ref());
-        result.push('.');
-        result.push_str(self.id.to_string().as_ref());
-        result.push('.');
-        result.push_str(self.serial.to_string().as_ref());
-        result.push('>');
-        result
+impl fmt::Display for EPid {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "<{}.{}.{}>", self.node, self.id, self.serial)
     }
 }
 
@@ -1364,25 +1364,20 @@ impl TryTo<ETermBinary> for EPid {
     }
 }
 
-into_etermstr_from_tostr!(EPid);
-
 /// Describes an Erlang Map
 pub struct EMap<'a>(&'a Vec<(&'a dyn ETerm, &'a dyn ETerm)>);
 
-impl<'a> ToString for EMap<'a> {
-    fn to_string(&self) -> String {
+impl<'a> fmt::Display for EMap<'a> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut result = "#{".to_string();
         let mut parts: Vec<String> = Vec::new();
-        for d in self.0.iter() {
-            let (k, v) = *d;
-            let mut entry = k.try_to_term_string().unwrap();
-            entry.push_str("=>");
-            entry.push_str(v.try_to_term_string().unwrap().as_ref());
-            parts.push(entry);
+        for (k, v) in self.0.iter() {
+            parts.push(format!("{}=>{}", k, v));
         }
         result.push_str(parts.join(",").as_ref());
         result.push('}');
-        result
+        
+        f.write_str(result.as_ref())
     }
 }
 
@@ -1400,13 +1395,11 @@ impl<'a> TryTo<ETermBinary> for EMap<'a> {
     }
 }
 
-into_etermstr_from_tostr!(EMap<'a>);
-
 /// Describes an Erlang Binary
 struct EBinary<'a>(&'a Vec<u8>);
 
-impl<'a> ToString for EBinary<'a> {
-    fn to_string(&self) -> String {
+impl<'a> fmt::Display for EBinary<'a> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut result = "<<".to_string();
         let mut parts = Vec::new();
         for byte in self.0 {
@@ -1416,7 +1409,7 @@ impl<'a> ToString for EBinary<'a> {
         result.push_str(parts.join(",").as_ref());
         result.push_str(">>");
 
-        result
+        f.write_str(result.as_ref())
     }
 }
 
@@ -1428,8 +1421,6 @@ impl<'a> TryTo<ETermBinary> for EBinary<'a> {
         Ok(ETermBinary(result))
     }
 }
-
-into_etermstr_from_tostr!(EBinary<'a>);
 
 fn concat<T>(p1: &[T], p2: &[T]) -> Vec<T> where T: Clone {
     let mut concat = p1.to_vec();
@@ -1475,9 +1466,6 @@ impl TryTo<ETermBinary> for BigInt {
 }
 
 #[cfg(feature="bigint")]
-into_etermstr_from_tostr!(BigInt);
-
-#[cfg(feature="bigint")]
 impl TryTo<ETermBinary> for BigUint {
     fn try_to(&self) -> Result<ETermBinary, Error> {
         match self.to_i128() {
@@ -1504,6 +1492,3 @@ impl TryTo<ETermBinary> for BigUint {
         Err(Error::data(ErrorCode::ValueNotEncodable(Box::from("Integer is too large or too small to be encoded as an erlang term."))))
     }
 }
-
-#[cfg(feature="bigint")]
-into_etermstr_from_tostr!(BigUint);
