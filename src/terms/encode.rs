@@ -23,6 +23,7 @@ use super::{
     EPort,
     EPid,
     EMap,
+    EBinary,
 };
 use super::super::error::{ Error, ErrorCode };
 
@@ -116,7 +117,7 @@ impl TryTo<ETermBinary> for i128 {
             let data: &[u8; 16] = &self.to_be_bytes();
             let bytes: u8 = ((128 - self.leading_zeros()) / 8) as u8;
             let mut result = vec![110u8, bytes];
-            result.extend_from_slice(data[..(bytes as usize)]);
+            result.extend_from_slice(&data[..(bytes as usize)]);
             Ok(ETermBinary(result))
         }
     }
@@ -190,7 +191,7 @@ impl<'a> TryTo<ETermBinary> for ENonProperList<'a> {
 
 impl TryTo<ETermBinary> for EAtom {
     fn try_to(&self) -> Result<ETermBinary, Error> {
-        let byte_length = self.0.to_be_bytes().len();
+        let byte_length = self.0.as_bytes().len();
 
         if byte_length <= u8::max_value().into() {
             let mut result = vec![119u8, byte_length as u8];
@@ -258,7 +259,7 @@ impl<'a> TryTo<ETermBinary> for ETuple<'a> {
 
 impl TryTo<ETermBinary> for EString {
     fn try_to(&self) -> Result<ETermBinary, Error> {
-        let mut byte_length = self.0.as_be_bytes().len();
+        let byte_length = self.0.as_bytes().len();
 
         if byte_length <= u16::max_value().into() {
             let len: [u8; 8] = byte_length.to_be_bytes();
