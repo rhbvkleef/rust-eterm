@@ -968,13 +968,13 @@ pub struct ETermBinary(Vec<u8>);
 
 /// A type that can be converted to an Erlang Binary Term format and two valid
 /// Erlang String Term representations.
-pub trait ETerm: encode::TryTo<ETermBinary> + fmt::Display {
+pub trait ETerm: encode::TryToExternalBinary + fmt::Display {
     fn try_to_binary(&self) -> Result<Vec<u8>, Error> {
-        Ok(encode::To::to(&encode::TryTo::<ETermBinary>::try_to(self)?))
+        Ok(encode::TryToExternalBinary::try_to_external_binary(self)?.0)
     }
 }
 
-impl<T> ETerm for T where T: encode::TryTo<ETermBinary> + fmt::Display {}
+impl<T> ETerm for T where T: encode::TryToExternalBinary + fmt::Display {}
 
 /// Represents an Erlang `NIL_EXT` term.
 pub struct ENil;
@@ -1026,16 +1026,19 @@ impl<'a> fmt::Display for ENonProperList<'a> {
 ///  is implemented.
 pub struct EAtom(String);
 
-static re_simple_atom_repr: Regex = Regex::new("[a-z@][0-9a-zA-Z_@]*").unwrap();
-
 impl fmt::Display for EAtom {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        if re_simple_atom_repr.is_match(self.0.as_ref()) {
+        lazy_static! {
+            static ref RX_SIMPLE_ATOM_REPR: Regex =
+                Regex::new("[a-z@][0-9a-zA-Z_@]*").unwrap();
+        }
+
+        if RX_SIMPLE_ATOM_REPR.is_match(self.0.as_ref()) {
             // It is not necessary to escape the atom, so don't.
             write!(f, "{}", self.0)
         } else {
             // It is necessary to escape the atom.
-            write!(f, "'{}'", escape_string(self.0))
+            write!(f, "'{}'", escape_string(&self.0))
         }
     }
 }
@@ -1087,7 +1090,7 @@ pub struct EString(String);
 
 impl fmt::Display for EString {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "\"{}\"", escape_string(self.0))
+        write!(f, "\"{}\"", escape_string(&self.0))
     }
 }
 
@@ -1153,35 +1156,35 @@ impl<'a> fmt::Display for EBinary<'a> {
     }
 }
 
-fn escape_string(s: String) -> String {
+fn escape_string(s: &str) -> String {
     let mut result = String::new();
     s.escape_default();
     for c in s.chars() {
-        result.extend(
+        result.push_str(
             match c {
-                '\\' => "\\\\",
-                '\x01'..='\x07' => format!("\\x{}", to_hex(c, 2)).as_ref(),
-                '\x08' => "\\b",
-                '\t' => "\\t",
-                '\n' => "\\n",
-                '\x0b' => "\\v",
-                '\x0c' => "\\f",
-                '\r' => "\\r",
-                '\x0e'..='\x1a' => format!("\\x{}", to_hex(c, 2)).as_ref(),
-                '\x1b' => "\\e",
-                '\x1c'..='\x1f' => format!("\\x{}", to_hex(c, 2)).as_ref(),
-                '\x20'..='\x7e' => c.to_string().as_ref(),
-                '\x7f' => "\\d",
-                _ => format!("\\x{{{}}}", to_hex(c, 1)).as_ref(), // Convert to the shortest hex sequence possible
-            }.chars()
+                '\\' => "\\\\".to_string(),
+                '\x01'..='\x07' => format!("\\x{}", to_hex(c, 2)),
+                '\x08' => "\\b".to_string(),
+                '\t' => "\\t".to_string(),
+                '\n' => "\\n".to_string(),
+                '\x0b' => "\\v".to_string(),
+                '\x0c' => "\\f".to_string(),
+                '\r' => "\\r".to_string(),
+                '\x0e'..='\x1a' => format!("\\x{}", to_hex(c, 2)),
+                '\x1b' => "\\e".to_string(),
+                '\x1c'..='\x1f' => format!("\\x{}", to_hex(c, 2)),
+                '\x20'..='\x7e' => c.to_string(),
+                '\x7f' => "\\d".to_string(),
+                _ => format!("\\x{{{}}}", to_hex(c, 1)), // Convert to the shortest hex sequence possible
+            }.as_ref()
         );
     }
     result
 }
 
 fn to_hex(c: char, len: usize) -> String {
-    let tmp = c as u32;
-    let result = String::new();
+    let mut tmp = c as u32;
+    let mut result = String::new();
 
     while tmp != 0 {
         let val = tmp % 16;
@@ -1189,6 +1192,7 @@ fn to_hex(c: char, len: usize) -> String {
             match val {
                 0..=9 => (val + 48) as u8 as char,
                 10..=15 => ((val - 10 + 65) as u8 as char),
+                _ => '\0',
             }
         );
         tmp /= 16;

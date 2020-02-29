@@ -28,135 +28,134 @@ use super::{
 use super::super::error::{ Error, ErrorCode };
 
 /// Replacement for `std::convert::TryInto<T>` that doesn't require `Sized`.
-pub trait TryTo<T> {
-    fn try_to(&self) -> Result<T, Error>;
+pub trait TryToExternalBinary {
+    fn try_to_external_binary(&self) -> Result<ETermBinary, Error>;
 }
 
 /// Replacement for `std::convert::Into<T>` that doesn't require `Sized`.
-pub trait To<T> {
-    fn to(&self) -> T;
+pub trait ToExternalBinary {
+    fn to_external_binary(&self) -> ETermBinary;
 }
 
-impl<X, T> TryTo<T> for X where X: To<T> {
-    fn try_to(&self) -> Result<T, Error> {
-        Ok(To::<T>::to(self))
+impl<X> TryToExternalBinary for X where X: ToExternalBinary {
+    fn try_to_external_binary(&self) -> Result<ETermBinary, Error> {
+        Ok(ToExternalBinary::to_external_binary(self))
     }
 }
 
-impl To<Vec<u8>> for ETermBinary {
-    fn to(&self) -> Vec<u8> {
-        self.0.to_owned()
+impl ToExternalBinary for i8 {
+    fn to_external_binary(&self) -> ETermBinary {
+        (*self as i32).to_external_binary()
     }
 }
 
-impl TryTo<ETermBinary> for i8 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        if *self >= 0i8 {
-            (*self as u8).try_to()
-        } else {
-            (*self as i32).try_to()
-        }
-    }
-}
-
-impl To<ETermBinary> for u8 {
-    fn to(&self) -> ETermBinary {
+impl ToExternalBinary for u8 {
+    fn to_external_binary(&self) -> ETermBinary {
         let data: &[u8; 1] = &self.to_be_bytes();
+
         ETermBinary(vec![97u8, data[0]])
     }
 }
 
-impl TryTo<ETermBinary> for i16 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        (*self as i32).try_to()
+impl ToExternalBinary for i16 {
+    fn to_external_binary(&self) -> ETermBinary {
+        (*self as i32).to_external_binary()
     }
 }
 
-impl TryTo<ETermBinary> for u16 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        (*self as i32).try_to()
+impl ToExternalBinary for u16 {
+    fn to_external_binary(&self) -> ETermBinary {
+        (*self as i32).to_external_binary()
     }
 }
 
-impl TryTo<ETermBinary> for i32 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        if *self <= i8::max_value().into() && *self >= i8::min_value().into() {
-            (*self as i8).try_to()
+impl ToExternalBinary for i32 {
+    fn to_external_binary(&self) -> ETermBinary {
+        if *self <= u8::max_value().into() && *self >= 0 {
+            (*self as u8).to_external_binary()
         } else {
-            let data: &[u8; 4] = &self.to_be_bytes();
             let mut result = vec![98u8];
             result.extend(&self.to_be_bytes());
-            Ok(ETermBinary(result))
+
+            ETermBinary(result)
         }
     }
 }
 
-impl TryTo<ETermBinary> for u32 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        (*self as i128).try_to()
+impl ToExternalBinary for u32 {
+    fn to_external_binary(&self) -> ETermBinary {
+        (*self as i128).to_external_binary()
     }
 }
 
-impl TryTo<ETermBinary> for i64 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        (*self as i128).try_to()
+impl ToExternalBinary for i64 {
+    fn to_external_binary(&self) -> ETermBinary {
+        (*self as i128).to_external_binary()
     }
 }
 
-impl TryTo<ETermBinary> for u64 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        (*self as i128).try_to()
+impl ToExternalBinary for u64 {
+    fn to_external_binary(&self) -> ETermBinary {
+        (*self as i128).to_external_binary()
     }
 }
 
-impl TryTo<ETermBinary> for i128 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
+impl ToExternalBinary for i128 {
+    fn to_external_binary(&self) -> ETermBinary {
         if *self <= i32::max_value().into() && *self >= i32::min_value().into() {
-            (*self as i32).try_to()
+            (*self as i32).to_external_binary()
         } else {
             let data: &[u8; 16] = &self.to_be_bytes();
             let bytes: u8 = ((128 - self.leading_zeros()) / 8) as u8;
             let mut result = vec![110u8, bytes];
             result.extend_from_slice(&data[..(bytes as usize)]);
-            Ok(ETermBinary(result))
+
+            ETermBinary(result)
         }
     }
 }
 
-impl TryTo<ETermBinary> for u128 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
+impl ToExternalBinary for u128 {
+    fn to_external_binary(&self) -> ETermBinary {
         // The big number here is i128::max_value() as a `From<u128>` for i128 is not implemented
         if *self <= 170_141_183_460_469_231_731_687_303_715_884_105_727u128 {
-            (*self as i128).try_to()
+            (*self as i128).to_external_binary()
         } else {
             let data: &[u8; 16] = &self.to_be_bytes();
-            let mut result = vec![110u8, 17u8, 0u8];
-            result.extend(data);
-            Ok(ETermBinary(result))
+            let mut result = vec![110u8, 0u8, 0u8];
+            for e in data.iter() {
+                if *e != 0u8 {
+                    result.push(*e)
+                }
+            }
+
+            result[1] = (result.len() - 3) as u8;
+
+            ETermBinary(result)
         }
     }
 }
 
-impl TryTo<ETermBinary> for isize {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        (*self as i128).try_to()
+impl ToExternalBinary for isize {
+    fn to_external_binary(&self) -> ETermBinary {
+        (*self as i128).to_external_binary()
     }
 }
 
-impl TryTo<ETermBinary> for usize {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        (*self as u128).try_to()
+impl ToExternalBinary for usize {
+    fn to_external_binary(&self) -> ETermBinary {
+        (*self as u128).to_external_binary()
     }
 }
 
-impl To<ETermBinary> for ENil {
-    fn to(&self) -> ETermBinary {
+impl ToExternalBinary for ENil {
+    fn to_external_binary(&self) -> ETermBinary {
         ETermBinary(vec![106u8])
     }
 }
 
-impl<'a> TryTo<ETermBinary> for EList<'a> {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
+impl<'a> TryToExternalBinary for EList<'a> {
+    fn try_to_external_binary(&self) -> Result<ETermBinary, Error> {
         if self.0.is_empty() {
             Ok(ETermBinary((ENil {}).try_to_binary()?))
         } else {
@@ -171,8 +170,8 @@ impl<'a> TryTo<ETermBinary> for EList<'a> {
     }
 }
 
-impl<'a> TryTo<ETermBinary> for ENonProperList<'a> {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
+impl<'a> TryToExternalBinary for ENonProperList<'a> {
+    fn try_to_external_binary(&self) -> Result<ETermBinary, Error> {
         if self.data.is_empty() {
             Ok(ETermBinary(self.tail.try_to_binary()?))
         } else {
@@ -189,8 +188,8 @@ impl<'a> TryTo<ETermBinary> for ENonProperList<'a> {
     }
 }
 
-impl TryTo<ETermBinary> for EAtom {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
+impl TryToExternalBinary for EAtom {
+    fn try_to_external_binary(&self) -> Result<ETermBinary, Error> {
         let byte_length = self.0.as_bytes().len();
 
         if byte_length <= u8::max_value().into() {
@@ -208,8 +207,8 @@ impl TryTo<ETermBinary> for EAtom {
     }
 }
 
-impl TryTo<ETermBinary> for f32 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
+impl TryToExternalBinary for f32 {
+    fn try_to_external_binary(&self) -> Result<ETermBinary, Error> {
         if self.is_finite() {
             let bytes = self.to_be_bytes();
             Ok(ETermBinary(vec![70u8, 0, 0, 0, 0, bytes[0], bytes[1], bytes[2], bytes[3]]))
@@ -219,8 +218,8 @@ impl TryTo<ETermBinary> for f32 {
     }
 }
 
-impl TryTo<ETermBinary> for f64 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
+impl TryToExternalBinary for f64 {
+    fn try_to_external_binary(&self) -> Result<ETermBinary, Error> {
         if self.is_finite() {
             let bytes = self.to_be_bytes();
             Ok(ETermBinary(vec![70u8, bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5], bytes[6], bytes[7]]))
@@ -230,18 +229,19 @@ impl TryTo<ETermBinary> for f64 {
     }
 }
 
-impl TryTo<ETermBinary> for EExport {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
+impl TryToExternalBinary for EExport {
+    fn try_to_external_binary(&self) -> Result<ETermBinary, Error> {
         let mut result = vec![113u8];
         result.extend(ETerm::try_to_binary(&self.module)?);
         result.extend(ETerm::try_to_binary(&self.function)?);
         result.extend(ETerm::try_to_binary(&self.arity)?);
+
         Ok(ETermBinary(result))
     }
 }
 
-impl<'a> TryTo<ETermBinary> for ETuple<'a> {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
+impl<'a> TryToExternalBinary for ETuple<'a> {
+    fn try_to_external_binary(&self) -> Result<ETermBinary, Error> {
         let mut result: Vec<u8>;
         let len = (self.0.len() as u32).to_be_bytes();
         if self.0.len() <= u8::max_value().into() {
@@ -257,8 +257,8 @@ impl<'a> TryTo<ETermBinary> for ETuple<'a> {
     }
 }
 
-impl TryTo<ETermBinary> for EString {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
+impl TryToExternalBinary for EString {
+    fn try_to_external_binary(&self) -> Result<ETermBinary, Error> {
         let byte_length = self.0.as_bytes().len();
 
         if byte_length <= u16::max_value().into() {
@@ -267,33 +267,35 @@ impl TryTo<ETermBinary> for EString {
             result.extend(self.0.as_bytes());
             Ok(ETermBinary(result))
         } else {
-            EList(&(self.0.as_bytes().iter().map(|x| x as &dyn ETerm).collect())).try_to()
+            EList(&(self.0.as_bytes().iter().map(|x| x as &dyn ETerm).collect())).try_to_external_binary()
         }
     }
 }
 
-impl TryTo<ETermBinary> for EPort {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
+impl TryToExternalBinary for EPort {
+    fn try_to_external_binary(&self) -> Result<ETermBinary, Error> {
         let mut result = vec![89u8];
         result.extend(self.node.try_to_binary()?);
         result.extend(self.id.to_be_bytes().iter());
         result.extend(self.creation.to_be_bytes().iter());
+
         Ok(ETermBinary(result))
     }
 }
 
-impl TryTo<ETermBinary> for EPid {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
+impl TryToExternalBinary for EPid {
+    fn try_to_external_binary(&self) -> Result<ETermBinary, Error> {
         let mut result = vec![88u8];
         result.extend(self.node.try_to_binary()?);
         result.extend(self.id.to_be_bytes().iter());
         result.extend(self.serial.to_be_bytes().iter());
         result.extend(self.creation.to_be_bytes().iter());
+        
         Ok(ETermBinary(result))
     }
 }
-impl<'a> TryTo<ETermBinary> for EMap<'a> {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
+impl<'a> TryToExternalBinary for EMap<'a> {
+    fn try_to_external_binary(&self) -> Result<ETermBinary, Error> {
         let mut result = vec![116u8];
         result.extend((self.0.len() as u32).to_be_bytes().iter());
 
@@ -306,20 +308,21 @@ impl<'a> TryTo<ETermBinary> for EMap<'a> {
     }
 }
 
-impl<'a> TryTo<ETermBinary> for EBinary<'a> {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
+impl<'a> ToExternalBinary for EBinary<'a> {
+    fn to_external_binary(&self) -> ETermBinary {
         let mut result = vec![109u8];
         result.extend(self.0.len().to_be_bytes().iter());
         result.extend(self.0);
-        Ok(ETermBinary(result))
+
+        ETermBinary(result)
     }
 }
 
 #[cfg(feature="bigint")]
-impl TryTo<ETermBinary> for BigInt {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
+impl TryToExternalBinary for BigInt {
+    fn try_to_external_binary(&self) -> Result<ETermBinary, Error> {
         match self.to_i128() {
-            Some(x) => return x.try_to(),
+            Some(x) => return x.try_to_external_binary(),
             _ => Option::<i32>::None
         };
 
@@ -353,10 +356,10 @@ impl TryTo<ETermBinary> for BigInt {
 }
 
 #[cfg(feature="bigint")]
-impl TryTo<ETermBinary> for BigUint {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
+impl TryToExternalBinary for BigUint {
+    fn try_to_external_binary(&self) -> Result<ETermBinary, Error> {
         match self.to_i128() {
-            Some(x) => return x.try_to(),
+            Some(x) => return x.try_to_external_binary(),
             _ => Option::<i32>::None
         };
 
