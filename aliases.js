@@ -1,5 +1,11 @@
 var ALIASES = {};
+ALIASES["aho_corasick"] = {};
+ALIASES["lazy_static"] = {};
+ALIASES["memchr"] = {};
 ALIASES["num_bigint"] = {};
 ALIASES["num_integer"] = {};
 ALIASES["num_traits"] = {};
+ALIASES["regex"] = {};
+ALIASES["regex_syntax"] = {};
 ALIASES["rust_eterm"] = {};
+ALIASES["thread_local"] = {};
