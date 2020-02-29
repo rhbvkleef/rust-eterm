@@ -1,9 +1,3 @@
-//! ## Partially implemented term types (into binary, String):
-//! * [`ATOM_UTF8_EXT`], [`SMALL_ATOM_UTF8_EXT`] (for [`EAtom`], quoted atoms
-//!   are not yet supported)
-//! * [`STRING_EXT`] (for [`EString`], Strings that require escaping are not
-//!   yet supported)
-//!
 //! ## Currently implemented term types (into binary, String):
 //! * [`INTEGER_EXT`], [`SMALL_INTEGER_EXT`] (for `{i,u}{8,16,32,64,128,size}`)
 //! * [`FLOAT_EXT`] (for `f32`, `f64`)
@@ -18,6 +12,8 @@
 //! * [`LARGE_BIG_EXT`] (for `BigInt`, `BigUint`)
 //! * [`NEW_PORT_EXT`] (for [`EPort`])
 //! * [`NEW_PID_EXT`] (for [`EPid`])
+//! * [`ATOM_UTF8_EXT`], [`SMALL_ATOM_UTF8_EXT`] (for [`EAtom`])
+//! * [`STRING_EXT`] (for [`EString`])
 //!
 //! ## Currently implemented term types (from binary, String)
 //! None
@@ -97,14 +93,14 @@
 //! [`To`]: trait.To.html
 //! [`TryTo`]: trait.TryTo.html
 
-use super::error::{Error, ErrorCode};
-use std::fmt;
+mod encode;
+pub mod decode;
 
-#[cfg(feature="bigint")]
-use {
-    num_bigint::{ BigInt, BigUint, Sign },
-    num_traits::{ sign::Signed, cast::ToPrimitive },
-};
+extern crate regex;
+
+use super::error::Error;
+use std::fmt;
+use regex::Regex;
 
 /// This is the code of the start of a message
 /// 
@@ -966,135 +962,19 @@ pub static ATOM_EXT:            u8 = 100;
 ///   representing the name of this atom.
 pub static SMALL_ATOM_EXT:      u8 = 115;
 
-/// Replacement for `std::convert::TryInto<T>` that doesn't require `Sized`.
-pub trait TryTo<T> {
-    fn try_to(&self) -> Result<T, Error>;
-}
-
-/// Replacement for `std::convert::Into<T>` that doesn't require `Sized`.
-pub trait To<T> {
-    fn to(&self) -> T;
-}
-
-impl<X, T> TryTo<T> for X where X: To<T> {
-    fn try_to(&self) -> Result<T, Error> {
-        Ok(To::<T>::to(self))
-    }
-}
-
 /// Binary representation for an `ETerm`.
 #[derive(Clone)]
 pub struct ETermBinary(Vec<u8>);
 
-impl To<Vec<u8>> for ETermBinary {
-    fn to(&self) -> Vec<u8> {
-        self.0.to_owned()
-    }
-}
-
 /// A type that can be converted to an Erlang Binary Term format and two valid
 /// Erlang String Term representations.
-pub trait ETerm: TryTo<ETermBinary> + fmt::Display {
+pub trait ETerm: encode::TryTo<ETermBinary> + fmt::Display {
     fn try_to_binary(&self) -> Result<Vec<u8>, Error> {
-        Ok(To::to(&TryTo::<ETermBinary>::try_to(self)?))
+        Ok(encode::To::to(&encode::TryTo::<ETermBinary>::try_to(self)?))
     }
 }
 
-impl<T> ETerm for T where T: TryTo<ETermBinary> + fmt::Display {}
-
-impl TryTo<ETermBinary> for i8 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        if *self >= 0i8 {
-            (*self as u8).try_to()
-        } else {
-            (*self as i32).try_to()
-        }
-    }
-}
-
-impl To<ETermBinary> for u8 {
-    fn to(&self) -> ETermBinary {
-        let data: &[u8; 1] = &self.to_be_bytes();
-        ETermBinary(vec![97u8, data[0]])
-    }
-}
-
-impl TryTo<ETermBinary> for i16 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        (*self as i32).try_to()
-    }
-}
-
-impl TryTo<ETermBinary> for u16 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        (*self as i32).try_to()
-    }
-}
-
-impl TryTo<ETermBinary> for i32 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        if *self <= i8::max_value().into() && *self >= i8::min_value().into() {
-            (*self as i8).try_to()
-        } else {
-            let data: &[u8; 4] = &self.to_be_bytes();
-            Ok(ETermBinary(concat(&[98u8], data)))
-        }
-    }
-}
-
-impl TryTo<ETermBinary> for u32 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        (*self as i128).try_to()
-    }
-}
-
-impl TryTo<ETermBinary> for i64 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        (*self as i128).try_to()
-    }
-}
-
-impl TryTo<ETermBinary> for u64 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        (*self as i128).try_to()
-    }
-}
-
-impl TryTo<ETermBinary> for i128 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        if *self <= i32::max_value().into() && *self >= i32::min_value().into() {
-            (*self as i32).try_to()
-        } else {
-            let data: &[u8; 16] = &self.to_be_bytes();
-            let bytes: u8 = ((128 - self.leading_zeros()) / 8) as u8;
-            Ok(ETermBinary(concat(&[110u8, bytes], &data[..(bytes as usize)])))
-        }
-    }
-}
-
-impl TryTo<ETermBinary> for u128 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        // The big number here is i128::max_value() as a `From<u128>` for i128 is not implemented
-        if *self <= 170_141_183_460_469_231_731_687_303_715_884_105_727u128 {
-            (*self as i128).try_to()
-        } else {
-            let data: &[u8; 16] = &self.to_be_bytes();
-            Ok(ETermBinary(concat(&[110u8, 17u8, 0], data)))
-        }
-    }
-}
-
-impl TryTo<ETermBinary> for isize {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        (*self as i128).try_to()
-    }
-}
-
-impl TryTo<ETermBinary> for usize {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        (*self as u128).try_to()
-    }
-}
+impl<T> ETerm for T where T: encode::TryTo<ETermBinary> + fmt::Display {}
 
 /// Represents an Erlang `NIL_EXT` term.
 pub struct ENil;
@@ -1102,12 +982,6 @@ pub struct ENil;
 impl fmt::Display for ENil {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "[]")
-    }
-}
-
-impl To<ETermBinary> for ENil {
-    fn to(&self) -> ETermBinary {
-        ETermBinary(vec![106u8])
     }
 }
 
@@ -1123,22 +997,6 @@ impl<'a> fmt::Display for EList<'a> {
         s.push(']');
 
         f.write_str(s.as_ref())
-    }
-}
-
-impl<'a> TryTo<ETermBinary> for EList<'a> {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        if self.0.is_empty() {
-            Ok(ETermBinary((ENil {}).try_to_binary()?))
-        } else {
-            let len: [u8; 4] = (self.0.len() as i32).to_be_bytes();
-            let mut result = vec![108, len[0], len[1], len[2], len[3]];
-            for d in self.0.iter() {
-                result.extend(d.try_to_binary()?);
-            }
-            result.extend((ENil {}).try_to_binary()?);
-            Ok(ETermBinary(result))
-        }
     }
 }
 
@@ -1162,67 +1020,22 @@ impl<'a> fmt::Display for ENonProperList<'a> {
     }
 }
 
-impl<'a> TryTo<ETermBinary> for ENonProperList<'a> {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        if self.data.is_empty() {
-            Ok(ETermBinary(self.tail.try_to_binary()?))
-        } else {
-            let len: [u8; 4] = (self.data.len() as i32).to_be_bytes();
-            let mut result: Vec<u8> = vec![108, len[0], len[1], len[2], len[3]];
-            for d in self.data.iter() {
-                result.extend(d.try_to_binary()?);
-            }
-
-            result.extend(self.tail.try_to_binary()?);
-
-            Ok(ETermBinary(result))
-        }
-    }
-}
-
 /// Describes an `ATOM_UTF8_EXT` term and a `SMALL_ATOM_UTF8_EXT` term.
 ///
 /// TODO: Make sure the string representation of atoms that need to be quoted
 ///  is implemented.
 pub struct EAtom(String);
 
+static re_simple_atom_repr: Regex = Regex::new("[a-z@][0-9a-zA-Z_@]*").unwrap();
+
 impl fmt::Display for EAtom {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.0)
-    }
-}
-
-impl TryTo<ETermBinary> for EAtom {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        if self.0.len() <= u8::max_value().into() {
-            Ok(ETermBinary(concat(&[119u8, self.0.len() as u8], self.0.as_bytes())))
-        } else if self.0.len() <= 65535 {
-            let len: [u8; 8] = self.0.len().to_be_bytes();
-            Ok(ETermBinary(concat(&[118, len[6], len[7]], self.0.as_bytes())))
+        if re_simple_atom_repr.is_match(self.0.as_ref()) {
+            // It is not necessary to escape the atom, so don't.
+            write!(f, "{}", self.0)
         } else {
-            Err(Error::data(ErrorCode::ValueNotEncodable(Box::from((&self.0).as_str().to_owned()))))
-        }
-    }
-}
-
-impl TryTo<ETermBinary> for f32 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        if self.is_finite() {
-            let bytes = self.to_be_bytes();
-            Ok(ETermBinary(vec![70u8, 0, 0, 0, 0, bytes[0], bytes[1], bytes[2], bytes[3]]))
-        } else {
-            Err(Error::data(ErrorCode::ValueNotEncodable(Box::from(self.to_string()))))
-        }
-    }
-}
-
-impl TryTo<ETermBinary> for f64 {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        if self.is_finite() {
-            let bytes = self.to_be_bytes();
-            Ok(ETermBinary(vec![70u8, bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5], bytes[6], bytes[7]]))
-        } else {
-            Err(Error::data(ErrorCode::ValueNotEncodable(Box::from(self.to_string()))))
+            // It is necessary to escape the atom.
+            write!(f, "'{}'", escape_string(self.0))
         }
     }
 }
@@ -1248,16 +1061,6 @@ impl fmt::Display for EExport {
     }
 }
 
-impl TryTo<ETermBinary> for EExport {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        let mut result = vec![113u8];
-        result.extend(ETerm::try_to_binary(&self.module)?);
-        result.extend(ETerm::try_to_binary(&self.function)?);
-        result.extend(ETerm::try_to_binary(&self.arity)?);
-        Ok(ETermBinary(result))
-    }
-}
-
 /// Represents a `LARGE_TUPLE_EXT` or a `SMALL_TUPLE_EXT` term with a `nil`
 /// tail.
 pub struct ETuple<'a>(&'a Vec<&'a dyn ETerm>);
@@ -1276,23 +1079,6 @@ impl<'a> fmt::Display for ETuple<'a> {
     }
 }
 
-impl<'a> TryTo<ETermBinary> for ETuple<'a> {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        let mut result: Vec<u8>;
-        let len = (self.0.len() as u32).to_be_bytes();
-        if self.0.len() <= u8::max_value().into() {
-            result = vec![104u8, len[3]];
-        } else {
-            result = vec![105u8, len[0], len[1], len[2], len[3]];
-        }
-        for d in self.0.iter() {
-            result.extend(d.try_to_binary()?);
-        }
-
-        Ok(ETermBinary(result))
-    }
-}
-
 /// Describes an `ATOM_UTF8_EXT` term and a `SMALL_ATOM_UTF8_EXT` term.
 ///
 /// TODO: Make sure the string representation of atoms that need to be quoted
@@ -1301,18 +1087,7 @@ pub struct EString(String);
 
 impl fmt::Display for EString {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "\"{}\"", self.0)
-    }
-}
-
-impl TryTo<ETermBinary> for EString {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        if self.0.len() <= u16::max_value().into() {
-            let len: [u8; 8] = self.0.len().to_be_bytes();
-            Ok(ETermBinary(concat(&[107, len[6], len[7]], self.0.as_bytes())))
-        } else {
-            EList(&(self.0.as_bytes().iter().map(|x| x as &dyn ETerm).collect())).try_to()
-        }
+        write!(f, "\"{}\"", escape_string(self.0))
     }
 }
 
@@ -1326,16 +1101,6 @@ pub struct EPort {
 impl fmt::Display for EPort {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "#Port<{}.{}>", self.node, self.id)
-    }
-}
-
-impl TryTo<ETermBinary> for EPort {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        let mut result = vec![89u8];
-        result.extend(self.node.try_to_binary()?);
-        result.extend(self.id.to_be_bytes().iter());
-        result.extend(self.creation.to_be_bytes().iter());
-        Ok(ETermBinary(result))
     }
 }
 
@@ -1353,17 +1118,6 @@ impl fmt::Display for EPid {
     }
 }
 
-impl TryTo<ETermBinary> for EPid {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        let mut result = vec![88u8];
-        result.extend(self.node.try_to_binary()?);
-        result.extend(self.id.to_be_bytes().iter());
-        result.extend(self.serial.to_be_bytes().iter());
-        result.extend(self.creation.to_be_bytes().iter());
-        Ok(ETermBinary(result))
-    }
-}
-
 /// Describes an Erlang Map
 pub struct EMap<'a>(&'a Vec<(&'a dyn ETerm, &'a dyn ETerm)>);
 
@@ -1378,20 +1132,6 @@ impl<'a> fmt::Display for EMap<'a> {
         result.push('}');
         
         f.write_str(result.as_ref())
-    }
-}
-
-impl<'a> TryTo<ETermBinary> for EMap<'a> {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        let mut result = vec![116u8];
-        result.extend((self.0.len() as u32).to_be_bytes().iter());
-
-        for (k, v) in self.0 {
-            result.extend(k.try_to_binary()?);
-            result.extend(v.try_to_binary()?);
-        };
-
-        Ok(ETermBinary(result))
     }
 }
 
@@ -1413,82 +1153,51 @@ impl<'a> fmt::Display for EBinary<'a> {
     }
 }
 
-impl<'a> TryTo<ETermBinary> for EBinary<'a> {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        let mut result = vec![109u8];
-        result.extend(self.0.len().to_be_bytes().iter());
-        result.extend(self.0);
-        Ok(ETermBinary(result))
+fn escape_string(s: String) -> String {
+    let mut result = String::new();
+    s.escape_default();
+    for c in s.chars() {
+        result.extend(
+            match c {
+                '\\' => "\\\\",
+                '\x01'..='\x07' => format!("\\x{}", to_hex(c, 2)).as_ref(),
+                '\x08' => "\\b",
+                '\t' => "\\t",
+                '\n' => "\\n",
+                '\x0b' => "\\v",
+                '\x0c' => "\\f",
+                '\r' => "\\r",
+                '\x0e'..='\x1a' => format!("\\x{}", to_hex(c, 2)).as_ref(),
+                '\x1b' => "\\e",
+                '\x1c'..='\x1f' => format!("\\x{}", to_hex(c, 2)).as_ref(),
+                '\x20'..='\x7e' => c.to_string().as_ref(),
+                '\x7f' => "\\d",
+                _ => format!("\\x{{{}}}", to_hex(c, 1)).as_ref(), // Convert to the shortest hex sequence possible
+            }.chars()
+        );
     }
+    result
 }
 
-fn concat<T>(p1: &[T], p2: &[T]) -> Vec<T> where T: Clone {
-    let mut concat = p1.to_vec();
-    concat.extend(p2.iter().cloned());
-    concat
-}
+fn to_hex(c: char, len: usize) -> String {
+    let tmp = c as u32;
+    let result = String::new();
 
-#[cfg(feature="bigint")]
-impl TryTo<ETermBinary> for BigInt {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        match self.to_i128() {
-            Some(x) => return x.try_to(),
-            _ => Option::<i32>::None
-        };
-
-        let sign: u8 = match self.sign() {
-            Sign::Minus => 1,
-            Sign::NoSign => 0,
-            Sign::Plus => 0
-        };
-
-        let tmp = match self.abs().to_biguint() {
-            Option::Some(x) => x,
-            Option::None => return Err(Error::data(ErrorCode::ValueNotEncodable(Box::from("Non-negative bigint is somehow not convertible to biguint."))))
-        }.to_bytes_be();
-
-        if tmp.len() <= (u8::max_value() as usize) {
-            let len = tmp.len() as u8;
-            let mut result = vec![110u8, len, sign];
-            result.extend(tmp.iter());
-            return Ok(ETermBinary(result));
-        };
-
-        if tmp.len() <= (u32::max_value() as usize) {
-            let len = (tmp.len() as u32).to_be_bytes();
-            let mut result = vec![111u8, len[0], len[1], len[2], len[3], sign];
-            result.extend(tmp.iter());
-            return Ok(ETermBinary(result));
-        };
-
-        Err(Error::data(ErrorCode::ValueNotEncodable(Box::from("Integer is too large or too small to be encoded as an erlang term."))))
+    while tmp != 0 {
+        let val = tmp % 16;
+        result.push(
+            match val {
+                0..=9 => (val + 48) as u8 as char,
+                10..=15 => ((val - 10 + 65) as u8 as char),
+            }
+        );
+        tmp /= 16;
     }
-}
 
-#[cfg(feature="bigint")]
-impl TryTo<ETermBinary> for BigUint {
-    fn try_to(&self) -> Result<ETermBinary, Error> {
-        match self.to_i128() {
-            Some(x) => return x.try_to(),
-            _ => Option::<i32>::None
-        };
-
-        let tmp = self.to_bytes_be();
-
-        if tmp.len() <= (u8::max_value() as usize) {
-            let len = tmp.len() as u8;
-            let mut result = vec![110u8, len, 0u8];
-            result.extend(tmp.iter());
-            return Ok(ETermBinary(result));
-        };
-
-        if tmp.len() <= (u32::max_value() as usize) {
-            let len = (tmp.len() as u32).to_be_bytes();
-            let mut result = vec![111u8, len[0], len[1], len[2], len[3], 0u8];
-            result.extend(tmp.iter());
-            return Ok(ETermBinary(result));
-        };
-
-        Err(Error::data(ErrorCode::ValueNotEncodable(Box::from("Integer is too large or too small to be encoded as an erlang term."))))
+    // String::len() is fine here as it only contains single-byte characters.
+    while result.len() < len {
+        result.push('0');
     }
+
+    result.chars().rev().collect()
 }

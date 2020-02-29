@@ -31,5 +31,6 @@ default = ["bigint"]
 bigint = ["num-bigint", "num-traits"]
 
 [dependencies]
+regex = "1"
 num-bigint = { version = "^0.2", optional = true }
 num-traits = { version = "^0.2", optional = true }
