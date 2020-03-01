@@ -1190,7 +1190,6 @@
 <span id="1190">1190</span>
 <span id="1191">1191</span>
 <span id="1192">1192</span>
-<span id="1193">1193</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! ## Currently implemented term types (into binary, String):</span>
 <span class="doccomment">//! * [`INTEGER_EXT`], [`SMALL_INTEGER_EXT`] (for `{i,u}{8,16,32,64,128,size}`)</span>
@@ -2244,8 +2243,7 @@
     }
 }
 
-<span class="doccomment">/// Represents a `LARGE_TUPLE_EXT` or a `SMALL_TUPLE_EXT` term with a `nil`</span>
-<span class="doccomment">/// tail.</span>
+<span class="doccomment">/// Represents a `LARGE_TUPLE_EXT` or a `SMALL_TUPLE_EXT` term.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ETuple</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw">dyn</span> <span class="ident">ETerm</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ETuple</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
