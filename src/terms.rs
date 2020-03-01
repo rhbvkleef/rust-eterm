@@ -33,16 +33,16 @@
 //! * [`SMALL_ATOM_EXT`] (deprecated, decoding support will be added)
 //! * [`PORT_EXT`] (decoding support will be added)
 //! * [`PID_EXT`] (decoding support will be added)
-//! * [`DIST_HDR`], including:
-//!   * [`DIST_HDR_NORMAL`]
-//!   * [`DIST_HDR_FRAGMENTED`]
-//!   * [`DIST_HDR_FRAGMENT`]
-//!   * [`DIST_HDR_COMPRESSED`]
+//! * [`ETF_VERSION`]
+//! * [`DIST_HDR_NORMAL`]
+//! * [`DIST_HDR_FRAG_START`]
+//! * [`DIST_HDR_FRAG_CONT`]
+//! * [`DIST_HDR_COMPRESSED`]
 //! 
-//! [`DIST_HDR`]: static.DIST_HDR.html
+//! [`ETF_VERSION`]: static.ETF_VERSION.html
 //! [`DIST_HDR_NORMAL`]: static.DIST_HDR_NORMAL.html
-//! [`DIST_HDR_FRAGMENTED`]: static.DIST_HDR_FRAGMENTED.html
-//! [`DIST_HDR_FRAGMENT`]: static.DIST_HDR_FRAGMENT.html
+//! [`DIST_HDR_FRAG_START`]: static.DIST_HDR_FRAG_START.html
+//! [`DIST_HDR_FRAG_CONT`]: static.DIST_HDR_FRAG_CONT.html
 //! [`DIST_HDR_COMPRESSED`]: static.DIST_HDR_COMPRESSED.html
 //! [`ATOM_CACHE_REF`]: static.ATOM_CACHE_REF.html
 //! [`SMALL_INTEGER_EXT`]: static.SMALL_INTEGER_EXT.html
@@ -73,10 +73,6 @@
 //! [`SMALL_ATOM_UTF8_EXT`]: static.SMALL_ATOM_UTF8_EXT.html
 //! [`ATOM_EXT`]: static.ATOM_EXT.html
 //! [`SMALL_ATOM_EXT`]: static.SMALL_ATOM_EXT.html
-//! 
-//! [`ETermBinary`]: struct.ETermBinary.html
-//! [`ETermString`]: struct.ETermString.html
-//! [`ETermPrettyString`]: struct.ETermPrettyString.html
 //! [`ENil`]: struct.ENil.html
 //! [`EList`]: struct.EList.html
 //! [`ENonProperList`]: struct.ENonProperList.html
@@ -100,22 +96,12 @@ extern crate regex;
 
 use super::error::Error;
 use std::fmt;
+use std::io::Write;
 use regex::Regex;
 
-/// This is the code of the start of a message
-/// 
-/// The distribution header can be of multiple variants:
-/// * [`DIST_HDR_NORMAL`]
-/// * [`DIST_HDR_FRAGMENTED`]
-/// * [`DIST_HDR_FRAGMENT`]
-/// * [`DIST_HDR_COMPRESSED`]
-/// * An encoded atom
-/// 
-/// [`DIST_HDR_NORMAL`]: static.DIST_HDR_NORMAL.html
-/// [`DIST_HDR_FRAGMENTED`]: static.DIST_HDR_FRAGMENTED.html
-/// [`DIST_HDR_FRAGMENT`]: static.DIST_HDR_FRAGMENT.html
-/// [`DIST_HDR_COMPRESSED`]: static.DIST_HDR_COMPRESSED.html
-pub static DIST_HDR:            u8 =131;
+/// This is the code of the start of a message.
+/// This message will contain an encoded tag or a distribution header.
+pub static ETF_VERSION:         u8 =131;
 
 /// The tag for a normal unfragmented and uncompressed distribution header.
 /// 
@@ -195,10 +181,10 @@ pub static DIST_HDR_NORMAL:     u8 = 68;
 /// MUST only contain data of the term that is being sent.
 /// 
 /// [`DIST_HDR_NORMAL`]: static.DIST_HDR_NORMAL.html
-pub static DIST_HDR_FRAGMENTED: u8 = 69;
+pub static DIST_HDR_FRAG_START: u8 = 69;
 
 /// The tag denoting a follow-up fragment of apreviously fragment message
-/// (either another fragment, or the [first fragment][`DIST_HDR_FRAGMENTED`]).
+/// (either another fragment, or the [first fragment][`DIST_HDR_FRAG_START`]).
 /// 
 /// # Binary representation
 /// 
@@ -206,15 +192,15 @@ pub static DIST_HDR_FRAGMENTED: u8 = 69;
 /// | ------ | ------------ | ------------ |
 /// | `70`   | `SequenceId` | `FragmentId` |
 /// 
-/// * `SequenceId`, just like in [`DIST_HDR_FRAGMENTED`] uniquely identifies
+/// * `SequenceId`, just like in [`DIST_HDR_FRAG_START`] uniquely identifies
 ///   this message, and must be the same as in the associated
-///   [`DIST_HDR_FRAGMENT`].
-/// * `FragmentId`, just like in [`DIST_HDR_FRAGMENTED`] is a number that
+///   `DIST_HDR_FRAG_CONT`'s.
+/// * `FragmentId`, just like in [`DIST_HDR_FRAG_START`] is a number that
 ///   decreases with 1 for each fragment, with the last fragment having a
 ///   `FragmentId` of 1.
 /// 
-/// [`DIST_HDR_FRAGMENTED`]: static.DIST_HDR_FRAGMENTED.html
-pub static DIST_HDR_FRAGMENT:   u8 = 70;
+/// [`DIST_HDR_FRAG_START`]: static.DIST_HDR_FRAG_START.html
+pub static DIST_HDR_FRAG_CONT:  u8 = 70;
 
 /// The tag denoting a compressed value (either a distribution header or an
 /// encoded atom).
@@ -249,7 +235,7 @@ pub static DIST_HDR_COMPRESSED: u8 = 80;
 /// The value of this atom is looked up in the [distribution header].
 /// 
 /// [`atom`]: static.ATOM_EXT.html
-/// [distribution header]: static.DIST_HDR.html
+/// [distribution header]: static.DIST_HDR_NORMAL.html
 pub static ATOM_CACHE_REF:      u8 =  82;
 
 /// Unsigned 8-bit integer.
@@ -668,7 +654,7 @@ pub static SMALL_BIG_EXT:       u8 = 110;
 /// 
 /// | 1 byte | 4 bytes | 1 byte | `Len` bytes        |
 /// | ------ | ------- | ------ | ------------------ |
-/// | `110`  | `Len`   | `Sign` | `d0`..`d(Len - 1)` |
+/// | `111`  | `Len`   | `Sign` | `d0`..`d(Len - 1)` |
 /// 
 /// Bignums are stored in unary form with a Sign byte, that is, 0 if the
 /// bignum is positive and 1 if it is negative.
@@ -962,15 +948,15 @@ pub static ATOM_EXT:            u8 = 100;
 ///   representing the name of this atom.
 pub static SMALL_ATOM_EXT:      u8 = 115;
 
-/// Binary representation for an `ETerm`.
-#[derive(Clone)]
-pub struct ETermBinary(Vec<u8>);
-
 /// A type that can be converted to an Erlang Binary Term format and two valid
 /// Erlang String Term representations.
 pub trait ETerm: encode::TryToExternalBinary + fmt::Display {
-    fn try_to_binary(&self) -> Result<Vec<u8>, Error> {
-        Ok(encode::TryToExternalBinary::try_to_external_binary(self)?.0)
+    fn try_to_external_binary(&self) -> Result<Vec<u8>, Error> {
+        self.try_to_vec()
+    }
+
+    fn try_write_to(&self, writer: &mut dyn Write) -> Result<usize, Error> {
+        self.try_to_writer(writer)
     }
 }
 
@@ -1064,8 +1050,7 @@ impl fmt::Display for EExport {
     }
 }
 
-/// Represents a `LARGE_TUPLE_EXT` or a `SMALL_TUPLE_EXT` term with a `nil`
-/// tail.
+/// Represents a `LARGE_TUPLE_EXT` or a `SMALL_TUPLE_EXT` term.
 pub struct ETuple<'a>(&'a Vec<&'a dyn ETerm>);
 
 impl<'a> fmt::Display for ETuple<'a> {
