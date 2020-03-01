@@ -127,11 +127,21 @@ impl ToExternalBinary for i128 {
         if *self <= i32::max_value().into() && *self >= i32::min_value().into() {
             (*self as i32).to_writer(writer)
         } else {
-            let data: &[u8; 16] = &self.to_be_bytes();
-            let bytes: u8 = ((128 - self.leading_zeros()) / 8) as u8;
+            let mut abs = if *self == i128::min_value() {
+                0x80_00_00_00_00_00_00_00_00_00_00_00_00_00_00_00u128
+            } else {
+                self.abs() as u128
+            };
 
-            let mut amount = writer.write(&[super::SMALL_BIG_EXT, bytes])?;
-            amount += writer.write(&data[..(bytes as usize)])?;
+            let bytes: u8 = (16 - (abs.leading_zeros() >> 3)) as u8;
+            let sign: u8 = if *self >= 0 { 0 } else { 1 };
+
+            let mut amount = writer.write(&[super::SMALL_BIG_EXT, bytes, sign])?;
+
+            while abs != 0 {
+                amount += writer.write(&[(abs & 0xff) as u8])?;
+                abs >>= 8;
+            }
 
             Ok(amount)
         }
@@ -420,5 +430,75 @@ fn write(writer: &mut dyn Write, bytes: &[u8]) -> Result<usize, Error> {
     match writer.write(bytes) {
         Ok(written) => Ok(written),
         Err(e) => Err(Error::io(e)),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::ETerm;
+
+    #[test]
+    fn u8_to_binary() {
+        assert_eq!(vec![97, 0], u8::min_value().try_to_external_binary().unwrap());
+        assert_eq!(vec![97, 255], u8::max_value().try_to_external_binary().unwrap());
+    }
+
+    #[test]
+    fn i8_to_binary() {
+        assert_eq!(vec![98, 255, 255, 255, 128], i8::min_value().try_to_external_binary().unwrap());
+        assert_eq!(vec![97, 127], i8::max_value().try_to_external_binary().unwrap());
+    }
+
+    #[test]
+    fn u16_to_binary() {
+        assert_eq!(vec![97, 0], u16::min_value().try_to_external_binary().unwrap());
+        assert_eq!(vec![98, 0, 0, 255, 255], u16::max_value().try_to_external_binary().unwrap());
+    }
+
+    #[test]
+    fn i16_to_binary() {
+        assert_eq!(vec![98, 255,255, 128, 0], i16::min_value().try_to_external_binary().unwrap());
+        assert_eq!(vec![98, 0, 0, 127, 255], i16::max_value().try_to_external_binary().unwrap());
+    }
+
+    #[test]
+    fn u32_to_binary() {
+        assert_eq!(vec![97, 0], u32::min_value().try_to_external_binary().unwrap());
+        assert_eq!(vec![110, 4, 0, 255, 255, 255, 255], u32::max_value().try_to_external_binary().unwrap());
+    }
+
+    #[test]
+    fn i32_to_binary() {
+        assert_eq!(vec![98, 128, 0, 0, 0], i32::min_value().try_to_external_binary().unwrap());
+        assert_eq!(vec![98, 127, 255, 255, 255], i32::max_value().try_to_external_binary().unwrap());
+    }
+
+    #[test]
+    fn u64_to_binary() {
+        assert_eq!(vec![97, 0], u64::min_value().try_to_external_binary().unwrap());
+        assert_eq!(vec![110, 8, 0, 255, 255, 255, 255, 255, 255, 255, 255], u64::max_value().try_to_external_binary().unwrap());
+    }
+
+    #[test]
+    fn i64_to_binary() {
+        assert_eq!(vec![110, 8, 1, 0, 0, 0, 0, 0, 0, 0, 128], i64::min_value().try_to_external_binary().unwrap());
+        assert_eq!(vec![110, 8, 0, 255, 255, 255, 255, 255, 255, 255, 127], i64::max_value().try_to_external_binary().unwrap());
+    }
+
+    #[test]
+    fn u128_to_binary() {
+        assert_eq!(vec![97, 0], u128::min_value().try_to_external_binary().unwrap());
+        assert_eq!(
+            vec![110, 16, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255],
+            u128::max_value().try_to_external_binary().unwrap());
+    }
+
+    #[test]
+    fn i128_to_binary() {
+        assert_eq!(vec![110, 16, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128],
+            i128::min_value().try_to_external_binary().unwrap());
+        assert_eq!(
+            vec![110, 16, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 127],
+            i128::max_value().try_to_external_binary().unwrap());
     }
 }
