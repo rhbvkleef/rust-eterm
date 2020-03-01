@@ -1194,17 +1194,6 @@
 <span id="1194">1194</span>
 <span id="1195">1195</span>
 <span id="1196">1196</span>
-<span id="1197">1197</span>
-<span id="1198">1198</span>
-<span id="1199">1199</span>
-<span id="1200">1200</span>
-<span id="1201">1201</span>
-<span id="1202">1202</span>
-<span id="1203">1203</span>
-<span id="1204">1204</span>
-<span id="1205">1205</span>
-<span id="1206">1206</span>
-<span id="1207">1207</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! ## Currently implemented term types (into binary, String):</span>
 <span class="doccomment">//! * [`INTEGER_EXT`], [`SMALL_INTEGER_EXT`] (for `{i,u}{8,16,32,64,128,size}`)</span>
@@ -1241,16 +1230,16 @@
 <span class="doccomment">//! * [`SMALL_ATOM_EXT`] (deprecated, decoding support will be added)</span>
 <span class="doccomment">//! * [`PORT_EXT`] (decoding support will be added)</span>
 <span class="doccomment">//! * [`PID_EXT`] (decoding support will be added)</span>
-<span class="doccomment">//! * [`DIST_HDR`], including:</span>
-<span class="doccomment">//!   * [`DIST_HDR_NORMAL`]</span>
-<span class="doccomment">//!   * [`DIST_HDR_FRAGMENTED`]</span>
-<span class="doccomment">//!   * [`DIST_HDR_FRAGMENT`]</span>
-<span class="doccomment">//!   * [`DIST_HDR_COMPRESSED`]</span>
+<span class="doccomment">//! * [`ETF_VERSION`]</span>
+<span class="doccomment">//! * [`DIST_HDR_NORMAL`]</span>
+<span class="doccomment">//! * [`DIST_HDR_FRAG_START`]</span>
+<span class="doccomment">//! * [`DIST_HDR_FRAG_CONT`]</span>
+<span class="doccomment">//! * [`DIST_HDR_COMPRESSED`]</span>
 <span class="doccomment">//! </span>
-<span class="doccomment">//! [`DIST_HDR`]: static.DIST_HDR.html</span>
+<span class="doccomment">//! [`ETF_VERSION`]: static.ETF_VERSION.html</span>
 <span class="doccomment">//! [`DIST_HDR_NORMAL`]: static.DIST_HDR_NORMAL.html</span>
-<span class="doccomment">//! [`DIST_HDR_FRAGMENTED`]: static.DIST_HDR_FRAGMENTED.html</span>
-<span class="doccomment">//! [`DIST_HDR_FRAGMENT`]: static.DIST_HDR_FRAGMENT.html</span>
+<span class="doccomment">//! [`DIST_HDR_FRAG_START`]: static.DIST_HDR_FRAG_START.html</span>
+<span class="doccomment">//! [`DIST_HDR_FRAG_CONT`]: static.DIST_HDR_FRAG_CONT.html</span>
 <span class="doccomment">//! [`DIST_HDR_COMPRESSED`]: static.DIST_HDR_COMPRESSED.html</span>
 <span class="doccomment">//! [`ATOM_CACHE_REF`]: static.ATOM_CACHE_REF.html</span>
 <span class="doccomment">//! [`SMALL_INTEGER_EXT`]: static.SMALL_INTEGER_EXT.html</span>
@@ -1282,7 +1271,6 @@
 <span class="doccomment">//! [`ATOM_EXT`]: static.ATOM_EXT.html</span>
 <span class="doccomment">//! [`SMALL_ATOM_EXT`]: static.SMALL_ATOM_EXT.html</span>
 <span class="doccomment">//! </span>
-<span class="doccomment">//! [`ETermBinary`]: struct.ETermBinary.html</span>
 <span class="doccomment">//! [`ETermString`]: struct.ETermString.html</span>
 <span class="doccomment">//! [`ETermPrettyString`]: struct.ETermPrettyString.html</span>
 <span class="doccomment">//! [`ENil`]: struct.ENil.html</span>
@@ -1308,22 +1296,12 @@
 
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Write</span>;
 <span class="kw">use</span> <span class="ident">regex</span>::<span class="ident">Regex</span>;
 
-<span class="doccomment">/// This is the code of the start of a message</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// The distribution header can be of multiple variants:</span>
-<span class="doccomment">/// * [`DIST_HDR_NORMAL`]</span>
-<span class="doccomment">/// * [`DIST_HDR_FRAGMENTED`]</span>
-<span class="doccomment">/// * [`DIST_HDR_FRAGMENT`]</span>
-<span class="doccomment">/// * [`DIST_HDR_COMPRESSED`]</span>
-<span class="doccomment">/// * An encoded atom</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// [`DIST_HDR_NORMAL`]: static.DIST_HDR_NORMAL.html</span>
-<span class="doccomment">/// [`DIST_HDR_FRAGMENTED`]: static.DIST_HDR_FRAGMENTED.html</span>
-<span class="doccomment">/// [`DIST_HDR_FRAGMENT`]: static.DIST_HDR_FRAGMENT.html</span>
-<span class="doccomment">/// [`DIST_HDR_COMPRESSED`]: static.DIST_HDR_COMPRESSED.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">DIST_HDR</span>:            <span class="ident">u8</span> <span class="op">=</span><span class="number">131</span>;
+<span class="doccomment">/// This is the code of the start of a message.</span>
+<span class="doccomment">/// This message will contain an encoded tag or a distribution header.</span>
+<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">ETF_VERSION</span>:         <span class="ident">u8</span> <span class="op">=</span><span class="number">131</span>;
 
 <span class="doccomment">/// The tag for a normal unfragmented and uncompressed distribution header.</span>
 <span class="doccomment">/// </span>
@@ -1403,10 +1381,10 @@
 <span class="doccomment">/// MUST only contain data of the term that is being sent.</span>
 <span class="doccomment">/// </span>
 <span class="doccomment">/// [`DIST_HDR_NORMAL`]: static.DIST_HDR_NORMAL.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">DIST_HDR_FRAGMENTED</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">69</span>;
+<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">DIST_HDR_FRAG_START</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">69</span>;
 
 <span class="doccomment">/// The tag denoting a follow-up fragment of apreviously fragment message</span>
-<span class="doccomment">/// (either another fragment, or the [first fragment][`DIST_HDR_FRAGMENTED`]).</span>
+<span class="doccomment">/// (either another fragment, or the [first fragment][`DIST_HDR_FRAG_START`]).</span>
 <span class="doccomment">/// </span>
 <span class="doccomment">/// # Binary representation</span>
 <span class="doccomment">/// </span>
@@ -1414,15 +1392,15 @@
 <span class="doccomment">/// | ------ | ------------ | ------------ |</span>
 <span class="doccomment">/// | `70`   | `SequenceId` | `FragmentId` |</span>
 <span class="doccomment">/// </span>
-<span class="doccomment">/// * `SequenceId`, just like in [`DIST_HDR_FRAGMENTED`] uniquely identifies</span>
+<span class="doccomment">/// * `SequenceId`, just like in [`DIST_HDR_FRAG_START`] uniquely identifies</span>
 <span class="doccomment">///   this message, and must be the same as in the associated</span>
-<span class="doccomment">///   [`DIST_HDR_FRAGMENT`].</span>
-<span class="doccomment">/// * `FragmentId`, just like in [`DIST_HDR_FRAGMENTED`] is a number that</span>
+<span class="doccomment">///   `DIST_HDR_FRAG_CONT`&#39;s.</span>
+<span class="doccomment">/// * `FragmentId`, just like in [`DIST_HDR_FRAG_START`] is a number that</span>
 <span class="doccomment">///   decreases with 1 for each fragment, with the last fragment having a</span>
 <span class="doccomment">///   `FragmentId` of 1.</span>
 <span class="doccomment">/// </span>
-<span class="doccomment">/// [`DIST_HDR_FRAGMENTED`]: static.DIST_HDR_FRAGMENTED.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">DIST_HDR_FRAGMENT</span>:   <span class="ident">u8</span> <span class="op">=</span> <span class="number">70</span>;
+<span class="doccomment">/// [`DIST_HDR_FRAG_START`]: static.DIST_HDR_FRAG_START.html</span>
+<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">DIST_HDR_FRAG_CONT</span>:  <span class="ident">u8</span> <span class="op">=</span> <span class="number">70</span>;
 
 <span class="doccomment">/// The tag denoting a compressed value (either a distribution header or an</span>
 <span class="doccomment">/// encoded atom).</span>
@@ -1457,7 +1435,7 @@
 <span class="doccomment">/// The value of this atom is looked up in the [distribution header].</span>
 <span class="doccomment">/// </span>
 <span class="doccomment">/// [`atom`]: static.ATOM_EXT.html</span>
-<span class="doccomment">/// [distribution header]: static.DIST_HDR.html</span>
+<span class="doccomment">/// [distribution header]: static.DIST_HDR_NORMAL.html</span>
 <span class="kw">pub</span> <span class="kw">static</span> <span class="ident">ATOM_CACHE_REF</span>:      <span class="ident">u8</span> <span class="op">=</span>  <span class="number">82</span>;
 
 <span class="doccomment">/// Unsigned 8-bit integer.</span>
@@ -1876,7 +1854,7 @@
 <span class="doccomment">/// </span>
 <span class="doccomment">/// | 1 byte | 4 bytes | 1 byte | `Len` bytes        |</span>
 <span class="doccomment">/// | ------ | ------- | ------ | ------------------ |</span>
-<span class="doccomment">/// | `110`  | `Len`   | `Sign` | `d0`..`d(Len - 1)` |</span>
+<span class="doccomment">/// | `111`  | `Len`   | `Sign` | `d0`..`d(Len - 1)` |</span>
 <span class="doccomment">/// </span>
 <span class="doccomment">/// Bignums are stored in unary form with a Sign byte, that is, 0 if the</span>
 <span class="doccomment">/// bignum is positive and 1 if it is negative.</span>
@@ -2170,15 +2148,15 @@
 <span class="doccomment">///   representing the name of this atom.</span>
 <span class="kw">pub</span> <span class="kw">static</span> <span class="ident">SMALL_ATOM_EXT</span>:      <span class="ident">u8</span> <span class="op">=</span> <span class="number">115</span>;
 
-<span class="doccomment">/// Binary representation for an `ETerm`.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ETermBinary</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>);
-
 <span class="doccomment">/// A type that can be converted to an Erlang Binary Term format and two valid</span>
 <span class="doccomment">/// Erlang String Term representations.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ETerm</span>: <span class="ident">encode</span>::<span class="ident">TryToExternalBinary</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Display</span> {
-    <span class="kw">fn</span> <span class="ident">try_to_binary</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="prelude-val">Ok</span>(<span class="ident">encode</span>::<span class="ident">TryToExternalBinary</span>::<span class="ident">try_to_external_binary</span>(<span class="self">self</span>)<span class="question-mark">?</span>.<span class="number">0</span>)
+    <span class="kw">fn</span> <span class="ident">try_to_external_binary</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">try_to_vec</span>()
+    }
+
+    <span class="kw">fn</span> <span class="ident">try_write_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">try_to_writer</span>(<span class="ident">writer</span>)
     }
 }
 
