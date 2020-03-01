@@ -502,7 +502,6 @@
 <span id="502">502</span>
 <span id="503">503</span>
 <span id="504">504</span>
-<span id="505">505</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;bigint&quot;</span>)]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num_bigint</span>;
@@ -947,7 +946,6 @@
     <span class="kw">fn</span> <span class="ident">u8_to_binary</span>() {
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">97</span>, <span class="number">0</span>], <span class="ident">u8</span>::<span class="ident">min_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">97</span>, <span class="number">255</span>], <span class="ident">u8</span>::<span class="ident">max_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
-        <span class="comment">// assert_eq!(vec![98, 128, 0, 0, 0], i32::min_value().try_to_external_binary().unwrap());</span>
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
