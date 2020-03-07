@@ -502,6 +502,72 @@
 <span id="502">502</span>
 <span id="503">503</span>
 <span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;bigint&quot;</span>)]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num_bigint</span>;
@@ -632,11 +698,7 @@
         <span class="kw">if</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">i32</span>::<span class="ident">max_value</span>().<span class="ident">into</span>() <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">i32</span>::<span class="ident">min_value</span>().<span class="ident">into</span>() {
             (<span class="kw-2">*</span><span class="self">self</span> <span class="kw">as</span> <span class="ident">i32</span>).<span class="ident">to_writer</span>(<span class="ident">writer</span>)
         } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">abs</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span><span class="op">=</span> <span class="ident">i128</span>::<span class="ident">min_value</span>() {
-                <span class="number">0x80_00_00_00_00_00_00_00_00_00_00_00_00_00_00_00u128</span>
-            } <span class="kw">else</span> {
-                <span class="self">self</span>.<span class="ident">abs</span>() <span class="kw">as</span> <span class="ident">u128</span>
-            };
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">abs</span> <span class="op">=</span> <span class="ident">lossless_abs</span>(<span class="kw-2">*</span><span class="self">self</span>);
 
             <span class="kw">let</span> <span class="ident">bytes</span>: <span class="ident">u8</span> <span class="op">=</span> (<span class="number">16</span> <span class="op">-</span> (<span class="ident">abs</span>.<span class="ident">leading_zeros</span>() <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">3</span>)) <span class="kw">as</span> <span class="ident">u8</span>;
             <span class="kw">let</span> <span class="ident">sign</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span> { <span class="number">0</span> } <span class="kw">else</span> { <span class="number">1</span> };
@@ -938,74 +1000,144 @@
     }
 }
 
+<span class="kw">fn</span> <span class="ident">lossless_abs</span>(<span class="ident">num</span>: <span class="ident">i128</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u128</span> {
+    <span class="kw">if</span> <span class="ident">num</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="ident">num</span> <span class="kw">as</span> <span class="ident">u128</span>
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">num</span> <span class="op">=</span><span class="op">=</span> <span class="ident">i128</span>::<span class="ident">min_value</span>() {
+        <span class="number">0x80_00_00_00_00_00_00_00_00_00_00_00_00_00_00_00u128</span>
+    } <span class="kw">else</span> {
+        <span class="op">-</span><span class="ident">num</span> <span class="kw">as</span> <span class="ident">u128</span>
+    }
+}
+
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">ETerm</span>;
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">lossless_abs</span>;
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">u8_to_binary</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">97</span>, <span class="number">0</span>], <span class="ident">u8</span>::<span class="ident">min_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">97</span>, <span class="number">255</span>], <span class="ident">u8</span>::<span class="ident">max_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
+    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+    <span class="kw">struct</span> <span class="ident">Test</span> {
+        <span class="ident">binary</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+        <span class="ident">is_negative</span>: <span class="ident">bool</span>,
+        <span class="ident">number</span>: <span class="ident">u128</span>,
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">i8_to_binary</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">98</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">128</span>], <span class="ident">i8</span>::<span class="ident">min_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">97</span>, <span class="number">127</span>], <span class="ident">i8</span>::<span class="ident">max_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
+    <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">test</span> {
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">bin</span>:<span class="ident">tt</span>, <span class="bool-val">false</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">val</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="kw-2">&amp;</span><span class="ident">Test</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">bin</span>, <span class="bool-val">false</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">val</span> <span class="kw">as</span> <span class="ident">u128</span>)
+        };
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">bin</span>:<span class="ident">tt</span>, <span class="bool-val">true</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">val</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="kw-2">&amp;</span><span class="ident">Test</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">bin</span>, <span class="bool-val">true</span>, <span class="ident">lossless_abs</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">val</span> <span class="kw">as</span> <span class="ident">i128</span>))
+        };
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">u16_to_binary</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">97</span>, <span class="number">0</span>], <span class="ident">u16</span>::<span class="ident">min_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">98</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span>], <span class="ident">u16</span>::<span class="ident">max_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
+    <span class="kw">impl</span> <span class="ident">Test</span> {
+        <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">binary</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">is_negative</span>: <span class="ident">bool</span>, <span class="ident">number</span>: <span class="ident">u128</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Test</span> {
+            <span class="ident">Test</span> {
+                <span class="ident">binary</span>,
+                <span class="ident">is_negative</span>,
+                <span class="ident">number</span>,
+            }
+        }
+
+        <span class="kw">fn</span> <span class="ident">run_all</span>(<span class="ident">signed</span>: <span class="ident">bool</span>, <span class="ident">bits</span>: <span class="ident">u8</span>) {
+            <span class="kw">for</span> <span class="ident">test</span> <span class="kw">in</span> <span class="kw-2">&amp;</span>[
+                <span class="macro">test</span><span class="macro">!</span>([<span class="number">97</span>, <span class="number">0</span>], <span class="bool-val">false</span>, <span class="number">0</span>),
+
+                <span class="comment">// i8 and u8 type boundaries</span>
+                <span class="macro">test</span><span class="macro">!</span>([<span class="number">98</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">128</span>], <span class="bool-val">true</span>, <span class="ident">i8</span>::<span class="ident">min_value</span>()),
+                <span class="macro">test</span><span class="macro">!</span>([<span class="number">97</span>, <span class="number">127</span>], <span class="bool-val">false</span>, <span class="ident">i8</span>::<span class="ident">max_value</span>()),
+                <span class="macro">test</span><span class="macro">!</span>([<span class="number">97</span>, <span class="number">255</span>], <span class="bool-val">false</span>, <span class="ident">u8</span>::<span class="ident">max_value</span>()),
+
+                <span class="comment">// i16 and u16 type boundaries</span>
+                <span class="macro">test</span><span class="macro">!</span>([<span class="number">98</span>, <span class="number">255</span>,<span class="number">255</span>, <span class="number">128</span>, <span class="number">0</span>], <span class="bool-val">true</span>, <span class="ident">i16</span>::<span class="ident">min_value</span>()),
+                <span class="macro">test</span><span class="macro">!</span>([<span class="number">98</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">127</span>, <span class="number">255</span>], <span class="bool-val">false</span>, <span class="ident">i16</span>::<span class="ident">max_value</span>()),
+                <span class="macro">test</span><span class="macro">!</span>([<span class="number">98</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span>], <span class="bool-val">false</span>, <span class="ident">u16</span>::<span class="ident">max_value</span>()),
+
+                <span class="comment">// i32 and u32 type boundaries</span>
+                <span class="macro">test</span><span class="macro">!</span>([<span class="number">98</span>, <span class="number">128</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], <span class="bool-val">true</span>, <span class="ident">i32</span>::<span class="ident">min_value</span>()),
+                <span class="macro">test</span><span class="macro">!</span>([<span class="number">98</span>, <span class="number">127</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>], <span class="bool-val">false</span>, <span class="ident">i32</span>::<span class="ident">max_value</span>()),
+                <span class="macro">test</span><span class="macro">!</span>([<span class="number">110</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>], <span class="bool-val">false</span>, <span class="ident">u32</span>::<span class="ident">max_value</span>()),
+
+                <span class="comment">// i64 and u64 type boundaries</span>
+                <span class="macro">test</span><span class="macro">!</span>([<span class="number">110</span>, <span class="number">8</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">128</span>], <span class="bool-val">true</span>, <span class="ident">i64</span>::<span class="ident">min_value</span>()),
+                <span class="macro">test</span><span class="macro">!</span>([<span class="number">110</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">127</span>], <span class="bool-val">false</span>, <span class="ident">i64</span>::<span class="ident">max_value</span>()),
+                <span class="macro">test</span><span class="macro">!</span>([<span class="number">110</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>], <span class="bool-val">false</span>, <span class="ident">u64</span>::<span class="ident">max_value</span>()),
+
+                <span class="comment">// i128 and u128 type boundaries</span>
+                <span class="macro">test</span><span class="macro">!</span>([<span class="number">110</span>, <span class="number">16</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">128</span>], <span class="bool-val">true</span>, <span class="ident">i128</span>::<span class="ident">min_value</span>()),
+                <span class="macro">test</span><span class="macro">!</span>([<span class="number">110</span>, <span class="number">16</span>, <span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">127</span>], <span class="bool-val">false</span>, <span class="ident">i128</span>::<span class="ident">max_value</span>()),
+                <span class="macro">test</span><span class="macro">!</span>([<span class="number">110</span>, <span class="number">16</span>, <span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>], <span class="bool-val">false</span> ,<span class="ident">u128</span>::<span class="ident">max_value</span>()),
+            ] {
+
+                <span class="ident">test</span>.<span class="ident">run</span>(<span class="ident">signed</span>, <span class="ident">bits</span>);
+            }
+        }
+
+        <span class="kw">fn</span> <span class="ident">run</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">signed</span>: <span class="ident">bool</span>, <span class="ident">bits</span>: <span class="ident">u8</span>) {
+            <span class="kw">let</span> <span class="ident">bin</span> <span class="op">=</span> <span class="kw">match</span> (<span class="ident">signed</span>, <span class="ident">bits</span>, <span class="self">self</span>.<span class="ident">is_negative</span>, <span class="self">self</span>.<span class="ident">number</span>) {
+                (<span class="bool-val">true</span>, <span class="number">8</span>, <span class="ident">s</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">i8</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">|</span><span class="op">|</span> (<span class="ident">s</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">lossless_abs</span>(<span class="ident">i8</span>::<span class="ident">min_value</span>() <span class="kw">as</span> <span class="ident">i128</span>)) <span class="op">=</span><span class="op">&gt;</span>
+                    (<span class="self">self</span>.<span class="ident">with_sign</span>() <span class="kw">as</span> <span class="ident">i8</span>).<span class="ident">try_to_external_binary</span>(),
+                (<span class="bool-val">false</span>, <span class="number">8</span>, <span class="bool-val">false</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">u8</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">=</span><span class="op">&gt;</span>
+                    (<span class="self">self</span>.<span class="ident">number</span> <span class="kw">as</span> <span class="ident">u8</span>).<span class="ident">try_to_external_binary</span>(),
+                (<span class="bool-val">true</span>, <span class="number">16</span>, <span class="ident">s</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">i16</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">|</span><span class="op">|</span> (<span class="ident">s</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">lossless_abs</span>(<span class="ident">i16</span>::<span class="ident">min_value</span>() <span class="kw">as</span> <span class="ident">i128</span>)) <span class="op">=</span><span class="op">&gt;</span>
+                    (<span class="self">self</span>.<span class="ident">with_sign</span>() <span class="kw">as</span> <span class="ident">i16</span>).<span class="ident">try_to_external_binary</span>(),
+                (<span class="bool-val">false</span>, <span class="number">16</span>, <span class="bool-val">false</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">u16</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">=</span><span class="op">&gt;</span>
+                    (<span class="self">self</span>.<span class="ident">number</span> <span class="kw">as</span> <span class="ident">u16</span>).<span class="ident">try_to_external_binary</span>(),
+                (<span class="bool-val">true</span>, <span class="number">32</span>, <span class="ident">s</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">i32</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">|</span><span class="op">|</span> (<span class="ident">s</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">lossless_abs</span>(<span class="ident">i32</span>::<span class="ident">min_value</span>() <span class="kw">as</span> <span class="ident">i128</span>)) <span class="op">=</span><span class="op">&gt;</span>
+                    (<span class="self">self</span>.<span class="ident">with_sign</span>() <span class="kw">as</span> <span class="ident">i32</span>).<span class="ident">try_to_external_binary</span>(),
+                (<span class="bool-val">false</span>, <span class="number">32</span>, <span class="bool-val">false</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">u32</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">=</span><span class="op">&gt;</span>
+                    (<span class="self">self</span>.<span class="ident">number</span> <span class="kw">as</span> <span class="ident">u32</span>).<span class="ident">try_to_external_binary</span>(),
+                (<span class="bool-val">true</span>, <span class="number">64</span>, <span class="ident">s</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">i64</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">|</span><span class="op">|</span> (<span class="ident">s</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">lossless_abs</span>(<span class="ident">i64</span>::<span class="ident">min_value</span>() <span class="kw">as</span> <span class="ident">i128</span>)) <span class="op">=</span><span class="op">&gt;</span>
+                    (<span class="self">self</span>.<span class="ident">with_sign</span>() <span class="kw">as</span> <span class="ident">i64</span>).<span class="ident">try_to_external_binary</span>(),
+                (<span class="bool-val">false</span>, <span class="number">64</span>, <span class="bool-val">false</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">u64</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">=</span><span class="op">&gt;</span>
+                    (<span class="self">self</span>.<span class="ident">number</span> <span class="kw">as</span> <span class="ident">u64</span>).<span class="ident">try_to_external_binary</span>(),
+                (<span class="bool-val">true</span>, <span class="number">128</span>, <span class="ident">s</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">i128</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">|</span><span class="op">|</span> (<span class="ident">s</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">lossless_abs</span>(<span class="ident">i128</span>::<span class="ident">min_value</span>() <span class="kw">as</span> <span class="ident">i128</span>)) <span class="op">=</span><span class="op">&gt;</span>
+                    (<span class="self">self</span>.<span class="ident">with_sign</span>() <span class="kw">as</span> <span class="ident">i128</span>).<span class="ident">try_to_external_binary</span>(),
+                (<span class="bool-val">false</span>, <span class="number">128</span>, <span class="bool-val">false</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">u128</span>::<span class="ident">max_value</span>() <span class="op">=</span><span class="op">&gt;</span>
+                    <span class="self">self</span>.<span class="ident">number</span>.<span class="ident">try_to_external_binary</span>(),
+                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span>,
+            }.<span class="ident">unwrap</span>();
+
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">binary</span>, <span class="ident">bin</span>, <span class="string">&quot;Call mode: {{signed: {}, bit_width: {}}}, Test mode: {{negative: {}, number: {}}}&quot;</span>, <span class="ident">signed</span>, <span class="ident">bits</span>, <span class="self">self</span>.<span class="ident">is_negative</span>, <span class="self">self</span>.<span class="ident">number</span>);
+        }
+
+        <span class="kw">fn</span> <span class="ident">with_sign</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i128</span> {
+            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_negative</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="self">self</span>.<span class="ident">number</span> <span class="op">=</span><span class="op">=</span> <span class="ident">lossless_abs</span>(<span class="ident">i128</span>::<span class="ident">min_value</span>()) {
+                <span class="ident">i128</span>::<span class="ident">min_value</span>()
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_negative</span> {
+                <span class="op">-</span>(<span class="self">self</span>.<span class="ident">number</span> <span class="kw">as</span> <span class="ident">i128</span>)
+            } <span class="kw">else</span> {
+                <span class="self">self</span>.<span class="ident">number</span> <span class="kw">as</span> <span class="ident">i128</span>
+            }
+        }
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">i16_to_binary</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">98</span>, <span class="number">255</span>,<span class="number">255</span>, <span class="number">128</span>, <span class="number">0</span>], <span class="ident">i16</span>::<span class="ident">min_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">98</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">127</span>, <span class="number">255</span>], <span class="ident">i16</span>::<span class="ident">max_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
+    <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">maketest</span> {
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="ident">unsigned</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bits</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> (
+            <span class="attribute">#[<span class="ident">test</span>]</span>
+            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>() {
+                <span class="ident">Test</span>::<span class="ident">run_all</span>(<span class="bool-val">false</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bits</span>);
+            }
+        );
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="ident">signed</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bits</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> (
+            <span class="attribute">#[<span class="ident">test</span>]</span>
+            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>() {
+                <span class="ident">Test</span>::<span class="ident">run_all</span>(<span class="bool-val">true</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bits</span>);
+            }
+        );
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">u32_to_binary</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">97</span>, <span class="number">0</span>], <span class="ident">u32</span>::<span class="ident">min_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">110</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>], <span class="ident">u32</span>::<span class="ident">max_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">i32_to_binary</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">98</span>, <span class="number">128</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], <span class="ident">i32</span>::<span class="ident">min_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">98</span>, <span class="number">127</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>], <span class="ident">i32</span>::<span class="ident">max_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">u64_to_binary</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">97</span>, <span class="number">0</span>], <span class="ident">u64</span>::<span class="ident">min_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">110</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>], <span class="ident">u64</span>::<span class="ident">max_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">i64_to_binary</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">110</span>, <span class="number">8</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">128</span>], <span class="ident">i64</span>::<span class="ident">min_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">110</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">127</span>], <span class="ident">i64</span>::<span class="ident">max_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">u128_to_binary</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">97</span>, <span class="number">0</span>], <span class="ident">u128</span>::<span class="ident">min_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="macro">vec</span><span class="macro">!</span>[<span class="number">110</span>, <span class="number">16</span>, <span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>],
-            <span class="ident">u128</span>::<span class="ident">max_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">i128_to_binary</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">110</span>, <span class="number">16</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">128</span>],
-            <span class="ident">i128</span>::<span class="ident">min_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="macro">vec</span><span class="macro">!</span>[<span class="number">110</span>, <span class="number">16</span>, <span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">127</span>],
-            <span class="ident">i128</span>::<span class="ident">max_value</span>().<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
-    }
+    <span class="macro">maketest</span><span class="macro">!</span>(<span class="ident">u8</span>, <span class="ident">unsigned</span>, <span class="number">8</span>);
+    <span class="macro">maketest</span><span class="macro">!</span>(<span class="ident">i8</span>, <span class="ident">signed</span>, <span class="number">8</span>);
+    <span class="macro">maketest</span><span class="macro">!</span>(<span class="ident">u16</span>, <span class="ident">unsigned</span>, <span class="number">16</span>);
+    <span class="macro">maketest</span><span class="macro">!</span>(<span class="ident">i16</span>, <span class="ident">signed</span>, <span class="number">16</span>);
+    <span class="macro">maketest</span><span class="macro">!</span>(<span class="ident">u32</span>, <span class="ident">unsigned</span>, <span class="number">32</span>);
+    <span class="macro">maketest</span><span class="macro">!</span>(<span class="ident">i32</span>, <span class="ident">signed</span>, <span class="number">32</span>);
+    <span class="macro">maketest</span><span class="macro">!</span>(<span class="ident">u64</span>, <span class="ident">unsigned</span>, <span class="number">64</span>);
+    <span class="macro">maketest</span><span class="macro">!</span>(<span class="ident">i64</span>, <span class="ident">signed</span>, <span class="number">64</span>);
+    <span class="macro">maketest</span><span class="macro">!</span>(<span class="ident">u128</span>, <span class="ident">unsigned</span>, <span class="number">128</span>);
+    <span class="macro">maketest</span><span class="macro">!</span>(<span class="ident">i128</span>, <span class="ident">signed</span>, <span class="number">128</span>);
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "rust_eterm";</script><script src="../../../aliases.js"></script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
