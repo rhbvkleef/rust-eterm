@@ -383,21 +383,22 @@ impl TryToExternalBinary for BigInt {
             Sign::Plus => 0
         };
 
-        let tmp = match self.abs().to_biguint() {
+        let abs = match self.abs().to_biguint() {
             Option::Some(x) => x,
             Option::None => return Err(Error::data(ErrorCode::ValueNotEncodable(Box::from("Non-negative bigint is somehow not convertible to biguint."))))
-        }.to_bytes_be();
+        };
 
-        if tmp.len() <= (u8::max_value() as usize) {
-            let len = tmp.len() as u8;
-            let mut written = write(writer, &[super::SMALL_BIG_EXT, len, sign])?;
-            written += write(writer, &tmp)?;
+        let len = abs.to_bytes_be().len();
+
+        if len <= (u8::max_value() as usize) {
+            let mut written = write(writer, &[super::SMALL_BIG_EXT, len as u8, sign])?;
+            written += write_biguint(writer, &abs)?;
 
             Ok(written)
-        } else if tmp.len() <= (u32::max_value() as usize) {
-            let len = (tmp.len() as u32).to_be_bytes();
-            let mut written = write(writer, &[super::LARGE_BIG_EXT, len[0], len[1], len[2], len[3], sign])?;
-            written += write(writer, &tmp)?;
+        } else if len <= (u32::max_value() as usize) {
+            let len_bytes = (len as u32).to_be_bytes();
+            let mut written = write(writer, &[super::LARGE_BIG_EXT, len_bytes[0], len_bytes[1], len_bytes[2], len_bytes[3], sign])?;
+            written += write_biguint(writer, &abs)?;
 
             Ok(written)
         } else {
@@ -419,13 +420,13 @@ impl TryToExternalBinary for BigUint {
         if tmp.len() <= (u8::max_value() as usize) {
             let len = tmp.len() as u8;
             let mut written = write(writer, &[super::SMALL_BIG_EXT, len, 0u8])?;
-            written += write(writer, &tmp)?;
+            written += write_biguint(writer, self)?;
 
             Ok(written)
         } else if tmp.len() <= (u32::max_value() as usize) {
             let len = (tmp.len() as u32).to_be_bytes();
             let mut written = write(writer, &[super::LARGE_BIG_EXT, len[0], len[1], len[2], len[3], 0u8])?;
-            written += write(writer, &tmp)?;
+            written += write_biguint(writer, self)?;
 
             Ok(written)
         } else {
@@ -448,6 +449,19 @@ fn lossless_abs(num: i128) -> u128 {
         0x80_00_00_00_00_00_00_00_00_00_00_00_00_00_00_00u128
     } else {
         -num as u128
+    }
+}
+
+fn write_biguint(writer: &mut dyn Write, value: &BigUint) -> Result<usize, Error> {
+    let mut v: BigUint = value.clone();
+    let mut amount = 0;
+    loop {
+        amount += write(writer, &[(&v % 256u16).to_u8().unwrap()])?;
+        v >>= 8usize;
+
+        if v <= BigUint::from(0u8) {
+            break Ok(amount)
+        }
     }
 }
 
