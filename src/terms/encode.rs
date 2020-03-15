@@ -150,20 +150,17 @@ impl ToExternalBinary for u128 {
         if *self <= 170_141_183_460_469_231_731_687_303_715_884_105_727u128 {
             (*self as i128).to_writer(writer)
         } else {
-            let data: &[u8; 16] = &self.to_be_bytes();
-            let mut len = writer.write(&[
-                super::SMALL_BIG_EXT,
-                data.iter().filter(|n| **n != 0).count() as u8,
-                0u8
-            ])?;
+            let mut tmp = *self;
 
-            for e in data.iter() {
-                if *e != 0u8 {
-                    len += writer.write(&[*e])?;
-                }
+            let bytes: u8 = (16 - (tmp.leading_zeros() >> 3)) as u8;
+            let mut amount = writer.write(&[super::SMALL_BIG_EXT, bytes, 0u8])?;
+
+            while tmp != 0 {
+                amount += writer.write(&[(tmp & 0xff) as u8])?;
+                tmp >>= 8;
             }
 
-            Ok(len)
+            Ok(amount)
         }
     }
 }
@@ -456,20 +453,20 @@ fn lossless_abs(num: i128) -> u128 {
 mod tests {
     use super::ETerm;
     use super::lossless_abs;
-    use num_bigint::{ BigInt, BigUint };
+    use num_bigint::{ BigInt, BigUint, Sign };
 
     struct Test {
-        binary: Vec<u8>,
-        is_negative: bool,
-        number: u128,
+        pub binary: Vec<u8>,
+        pub is_negative: bool,
+        pub number: u128,
     }
 
     macro_rules! test {
         ($bin:tt, false, $val:expr) => {
-            &Test::new(vec!$bin, false, $val as u128)
+            Test::new(vec!$bin, false, $val as u128)
         };
         ($bin:tt, true, $val:expr) => {
-            &Test::new(vec!$bin, true, lossless_abs($val as i128))
+            Test::new(vec!$bin, true, lossless_abs($val as i128))
         };
     }
 
@@ -511,7 +508,6 @@ mod tests {
                 test!([110, 16, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 127], false, i128::max_value()),
                 test!([110, 16, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255], false ,u128::max_value()),
             ] {
-
                 test.run(signed, bits);
             }
         }
@@ -538,6 +534,14 @@ mod tests {
                     (self.with_sign() as i128).try_to_external_binary(),
                 (false, 128, false, n) if n <= u128::max_value() =>
                     self.number.try_to_external_binary(),
+                (true, 0, s, n) =>
+                    BigInt::from_biguint(if s {
+                        Sign::Minus
+                    } else {
+                        Sign::Plus
+                    }, BigUint::from(n)).try_to_external_binary(),
+                (false, 0, false, n) =>
+                    BigUint::from(n).try_to_external_binary(),
                 _ => return,
             }.unwrap();
 
@@ -580,6 +584,8 @@ mod tests {
     maketest!(i64, signed, 64);
     maketest!(u128, unsigned, 128);
     maketest!(i128, signed, 128);
+    maketest!(biguint, unsigned, 0);
+    maketest!(bigint, signed, 0);
 
     #[test]
     #[cfg(feature="bigint")]
