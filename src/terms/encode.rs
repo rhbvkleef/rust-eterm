@@ -243,13 +243,7 @@ impl TryToExternalBinary for EAtom {
 
 impl TryToExternalBinary for f32 {
     fn try_to_writer(&self, writer: &mut dyn Write) -> Result<usize, Error> {
-        if self.is_finite() {
-            let bytes = self.to_be_bytes();
-
-            write(writer, &[super::NEW_FLOAT_EXT, 0, 0, 0, 0, bytes[0], bytes[1], bytes[2], bytes[3]])
-        } else {
-            Err(Error::data(ErrorCode::ValueNotEncodable(Box::from(self.to_string()))))
-        }
+        (*self as f64).try_to_writer(writer)
     }
 }
 
@@ -569,30 +563,32 @@ mod tests {
     }
 
     macro_rules! maketest {
-        ($name:ident, unsigned, $bits:expr) => (
+        ($name:ident) => (
             #[test]
             fn $name() {
-                Test::run_all(false, $bits);
+                Test::run_all(stringify!($name).starts_with("i"), std::mem::size_of::<$name>() as u8);
             }
         );
-        ($name:ident, signed, $bits:expr) => (
+        ($name:ident, $bits:expr) => (
             #[test]
             fn $name() {
-                Test::run_all(true, $bits);
+                Test::run_all(stringify!($name).starts_with("i"), $bits);
             }
         );
     }
 
-    maketest!(u8, unsigned, 8);
-    maketest!(i8, signed, 8);
-    maketest!(u16, unsigned, 16);
-    maketest!(i16, signed, 16);
-    maketest!(u32, unsigned, 32);
-    maketest!(i32, signed, 32);
-    maketest!(u64, unsigned, 64);
-    maketest!(i64, signed, 64);
-    maketest!(u128, unsigned, 128);
-    maketest!(i128, signed, 128);
+    maketest!(u8);
+    maketest!(i8);
+    maketest!(u16);
+    maketest!(i16);
+    maketest!(u32);
+    maketest!(i32);
+    maketest!(u64);
+    maketest!(i64);
+    maketest!(u128);
+    maketest!(i128);
+    maketest!(usize);
+    maketest!(isize);
 
     #[test]
     #[cfg(feature="bigint")]
@@ -625,7 +621,7 @@ mod tests {
             0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
             0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
             0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-        ], val.try_to_external_binary().unwrap());
+        ], val.try_to_external_binary().unwrap(), "(positive)");
         val *= -1;
         assert_eq!(vec![
             0x6e, 0xff, 0x01, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
@@ -650,7 +646,7 @@ mod tests {
             0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
             0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
             0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-        ], val.try_to_external_binary().unwrap());
+        ], val.try_to_external_binary().unwrap(), "(negative)");
     }
 
     #[test]
@@ -719,7 +715,7 @@ mod tests {
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01
-        ], val.try_to_external_binary().unwrap());
+        ], val.try_to_external_binary().unwrap(), "(positive)");
         val *= -1;
         assert_eq!(vec![
             0x6f, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -744,7 +740,7 @@ mod tests {
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01
-        ], val.try_to_external_binary().unwrap());
+        ], val.try_to_external_binary().unwrap(), "(negative)");
     }
 
     #[test]
@@ -780,5 +776,42 @@ mod tests {
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01
         ], val.try_to_external_binary().unwrap());
+    }
+
+    struct FloatTest {
+        pub value: f64,
+        pub binary: Vec<u8>,
+    }
+
+    #[test]
+    // Disable the float_cmp error as we are very careful with comparing
+    //  floats.
+    //  We are not doing any arithmetic (so therefore also not any arithmetic
+    //  that disturps the exactness of these floats), so comparing is safe.
+    #[allow(clippy::float_cmp)]
+    fn floats() {
+        // Note: Clippy warns about excessive precision here.
+        //  That warning is correct, but we are including the precision
+        //  here as it is possible to represent the entire precision in
+        //  decimal.
+        //  I feel it is more correct to include full precision whenever
+        //  possible.
+        for t in &[
+            // f32 and f64
+            &FloatTest{value: 0.5, binary: vec![70, 63, 224, 0, 0, 0, 0, 0, 0]},
+            &FloatTest{value: -1.66656506061553955078125, binary: vec![70, 191, 250, 170, 64, 32, 0, 0, 0]},
+            &FloatTest{value: 0.999999940395355224609375, binary: vec![70, 63, 239, 255, 255, 224, 0, 0, 0]},
+
+            // f64 only
+            &FloatTest{value: 0.200000000000000011102230246252, binary: vec![70, 63, 201, 153, 153, 153, 153, 153, 154]}
+        ] {
+            assert_eq!(t.binary, t.value.try_to_external_binary().unwrap(), "(f64: {})", t.value);
+
+            // This tests whether the f32 representation is exact.
+            //  Only if it is, testing the value as f32 is meaningful.
+            if ((t.value as f32) as f64) == t.value {
+                assert_eq!(t.binary, (t.value as f32).try_to_external_binary().unwrap(), "(f32: {})", t.value);
+            }
+        }
     }
 }
