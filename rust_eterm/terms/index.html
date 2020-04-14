@@ -1,20 +1,20 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `terms` mod in crate `rust_eterm`."><meta name="keywords" content="rust, rustlang, rust-lang, terms"><title>rust_eterm::terms - Rust</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../rust_eterm/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a><p class='location'>Module terms</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#statics">Statics</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../index.html'>rust_eterm</a></p><script>window.sidebarCurrent = {name: 'terms', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../../src/rust_eterm/terms.rs.html#1-1192' title='goto source code'>[src]</a></span><span class='in-band'>Module <a href='../index.html'>rust_eterm</a>::<wbr><a class="mod" href=''>terms</a></span></h1><div class='docblock'><h2 id="currently-implemented-term-types-into-binary-string" class="section-header"><a href="#currently-implemented-term-types-into-binary-string">Currently implemented term types (into binary, String):</a></h2>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `terms` mod in crate `rust_eterm`."><meta name="keywords" content="rust, rustlang, rust-lang, terms"><title>rust_eterm::terms - Rust</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../rust_eterm/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a><p class='location'>Module terms</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../index.html'>rust_eterm</a></p><script>window.sidebarCurrent = {name: 'terms', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../../src/rust_eterm/terms.rs.html#1-1248' title='goto source code'>[src]</a></span><span class='in-band'>Module <a href='../index.html'>rust_eterm</a>::<wbr><a class="mod" href=''>terms</a></span></h1><div class='docblock'><h2 id="currently-implemented-term-types-into-binary-string" class="section-header"><a href="#currently-implemented-term-types-into-binary-string">Currently implemented term types (into binary, String):</a></h2>
 <ul>
-<li><a href="static.INTEGER_EXT.html"><code>INTEGER_EXT</code></a>, <a href="static.SMALL_INTEGER_EXT.html"><code>SMALL_INTEGER_EXT</code></a> (for <code>{i,u}{8,16,32,64,128,size}</code>)</li>
-<li><a href="static.FLOAT_EXT.html"><code>FLOAT_EXT</code></a> (for <code>f32</code>, <code>f64</code>)</li>
-<li><a href="static.NIL_EXT.html"><code>NIL_EXT</code></a> (for <a href="struct.ENil.html"><code>ENil</code></a>)</li>
-<li><a href="static.LIST_EXT.html"><code>LIST_EXT</code></a> (for <a href="struct.EList.html"><code>EList</code></a>, <a href="struct.ENonProperList.html"><code>ENonProperList</code></a>)</li>
-<li><a href="static.EXPORT_EXT.html"><code>EXPORT_EXT</code></a> (for <a href="struct.EExport.html"><code>EExport</code></a>)</li>
-<li><a href="static.LARGE_TUPLE_EXT.html"><code>LARGE_TUPLE_EXT</code></a>, <a href="static.SMALL_TUPLE_EXT.html"><code>SMALL_TUPLE_EXT</code></a> (for <a href="struct.ETuple.html"><code>ETuple</code></a>)</li>
-<li><a href="static.MAP_EXT.html"><code>MAP_EXT</code></a> (for <a href="struct.EMap.html"><code>EMap</code></a>)</li>
-<li><a href="static.BINARY_EXT.html"><code>BINARY_EXT</code></a> (for <a href="struct.EBinary.html"><code>EBinary</code></a>)</li>
-<li><a href="static.SMALL_BIG_EXT.html"><code>SMALL_BIG_EXT</code></a> (for <code>BigInt</code>, <code>BigUint</code>, <code>u32</code>, <code>i64</code>, <code>u64</code>, <code>i128</code>,
+<li><a href="constant.INTEGER_EXT.html"><code>INTEGER_EXT</code></a>, <a href="constant.SMALL_INTEGER_EXT.html"><code>SMALL_INTEGER_EXT</code></a> (for <code>{i,u}{8,16,32,64,128,size}</code>)</li>
+<li><a href="constant.FLOAT_EXT.html"><code>FLOAT_EXT</code></a> (for <code>f32</code>, <code>f64</code>)</li>
+<li><a href="constant.NIL_EXT.html"><code>NIL_EXT</code></a> (for <a href="struct.ENil.html"><code>ENil</code></a>)</li>
+<li><a href="constant.LIST_EXT.html"><code>LIST_EXT</code></a> (for <a href="struct.EList.html"><code>EList</code></a>, <a href="struct.ENonProperList.html"><code>ENonProperList</code></a>)</li>
+<li><a href="constant.EXPORT_EXT.html"><code>EXPORT_EXT</code></a> (for <a href="struct.EExport.html"><code>EExport</code></a>)</li>
+<li><a href="constant.LARGE_TUPLE_EXT.html"><code>LARGE_TUPLE_EXT</code></a>, <a href="constant.SMALL_TUPLE_EXT.html"><code>SMALL_TUPLE_EXT</code></a> (for <a href="struct.ETuple.html"><code>ETuple</code></a>)</li>
+<li><a href="constant.MAP_EXT.html"><code>MAP_EXT</code></a> (for <a href="struct.EMap.html"><code>EMap</code></a>)</li>
+<li><a href="constant.BINARY_EXT.html"><code>BINARY_EXT</code></a> (for <a href="struct.EBinary.html"><code>EBinary</code></a>)</li>
+<li><a href="constant.SMALL_BIG_EXT.html"><code>SMALL_BIG_EXT</code></a> (for <code>BigInt</code>, <code>BigUint</code>, <code>u32</code>, <code>i64</code>, <code>u64</code>, <code>i128</code>,
 <code>u128</code>)</li>
-<li><a href="static.LARGE_BIG_EXT.html"><code>LARGE_BIG_EXT</code></a> (for <code>BigInt</code>, <code>BigUint</code>)</li>
-<li><a href="static.NEW_PORT_EXT.html"><code>NEW_PORT_EXT</code></a> (for <a href="struct.EPort.html"><code>EPort</code></a>)</li>
-<li><a href="static.NEW_PID_EXT.html"><code>NEW_PID_EXT</code></a> (for <a href="struct.EPid.html"><code>EPid</code></a>)</li>
-<li><a href="static.ATOM_UTF8_EXT.html"><code>ATOM_UTF8_EXT</code></a>, <a href="static.SMALL_ATOM_UTF8_EXT.html"><code>SMALL_ATOM_UTF8_EXT</code></a> (for <a href="struct.EAtom.html"><code>EAtom</code></a>)</li>
-<li><a href="static.STRING_EXT.html"><code>STRING_EXT</code></a> (for <a href="struct.EString.html"><code>EString</code></a>)</li>
+<li><a href="constant.LARGE_BIG_EXT.html"><code>LARGE_BIG_EXT</code></a> (for <code>BigInt</code>, <code>BigUint</code>)</li>
+<li><a href="constant.NEW_PORT_EXT.html"><code>NEW_PORT_EXT</code></a> (for <a href="struct.EPort.html"><code>EPort</code></a>)</li>
+<li><a href="constant.NEW_PID_EXT.html"><code>NEW_PID_EXT</code></a> (for <a href="struct.EPid.html"><code>EPid</code></a>)</li>
+<li><a href="constant.ATOM_UTF8_EXT.html"><code>ATOM_UTF8_EXT</code></a>, <a href="constant.SMALL_ATOM_UTF8_EXT.html"><code>SMALL_ATOM_UTF8_EXT</code></a> (for <a href="struct.EAtom.html"><code>EAtom</code></a>)</li>
+<li><a href="constant.STRING_EXT.html"><code>STRING_EXT</code></a> (for <a href="struct.EString.html"><code>EString</code></a>)</li>
 </ul>
 <h2 id="currently-implemented-term-types-from-binary-string" class="section-header"><a href="#currently-implemented-term-types-from-binary-string">Currently implemented term types (from binary, String)</a></h2>
 <p>None</p>
@@ -22,22 +22,22 @@
 <p>None</p>
 <h2 id="not-yet-implemented-termvalue-types" class="section-header"><a href="#not-yet-implemented-termvalue-types">Not yet implemented term/value types:</a></h2>
 <ul>
-<li><a href="static.NEWER_REFERENCE_EXT.html"><code>NEWER_REFERENCE_EXT</code></a></li>
-<li><a href="static.BIT_BINARY_EXT.html"><code>BIT_BINARY_EXT</code></a></li>
-<li><a href="static.ATOM_CACHE_REF.html"><code>ATOM_CACHE_REF</code></a> (distribution header will probably not be supported, or not soon at least)</li>
-<li><a href="static.FUN_EXT.html"><code>FUN_EXT</code></a> (seems unnecessary for now, maybe in the future?)</li>
-<li><a href="static.NEW_FUN_EXT.html"><code>NEW_FUN_EXT</code></a> (seems unnecessary for now, maybe in the future?)</li>
-<li><a href="static.REFERENCE_EXT.html"><code>REFERENCE_EXT</code></a> (deprecated, decoding support will be added)</li>
-<li><a href="static.NEW_REFERENCE_EXT.html"><code>NEW_REFERENCE_EXT</code></a> (decoding support will be added)</li>
-<li><a href="static.ATOM_EXT.html"><code>ATOM_EXT</code></a> (deprecated, decoding support will be added)</li>
-<li><a href="static.SMALL_ATOM_EXT.html"><code>SMALL_ATOM_EXT</code></a> (deprecated, decoding support will be added)</li>
-<li><a href="static.PORT_EXT.html"><code>PORT_EXT</code></a> (decoding support will be added)</li>
-<li><a href="static.PID_EXT.html"><code>PID_EXT</code></a> (decoding support will be added)</li>
-<li><a href="static.ETF_VERSION.html"><code>ETF_VERSION</code></a></li>
-<li><a href="static.DIST_HDR_NORMAL.html"><code>DIST_HDR_NORMAL</code></a></li>
-<li><a href="static.DIST_HDR_FRAG_START.html"><code>DIST_HDR_FRAG_START</code></a></li>
-<li><a href="static.DIST_HDR_FRAG_CONT.html"><code>DIST_HDR_FRAG_CONT</code></a></li>
-<li><a href="static.DIST_HDR_COMPRESSED.html"><code>DIST_HDR_COMPRESSED</code></a></li>
+<li><a href="constant.NEWER_REFERENCE_EXT.html"><code>NEWER_REFERENCE_EXT</code></a></li>
+<li><a href="constant.BIT_BINARY_EXT.html"><code>BIT_BINARY_EXT</code></a></li>
+<li><a href="constant.ATOM_CACHE_REF.html"><code>ATOM_CACHE_REF</code></a> (distribution header will probably not be supported, or not soon at least)</li>
+<li><a href="constant.FUN_EXT.html"><code>FUN_EXT</code></a> (seems unnecessary for now, maybe in the future?)</li>
+<li><a href="constant.NEW_FUN_EXT.html"><code>NEW_FUN_EXT</code></a> (seems unnecessary for now, maybe in the future?)</li>
+<li><a href="constant.REFERENCE_EXT.html"><code>REFERENCE_EXT</code></a> (deprecated, decoding support will be added)</li>
+<li><a href="constant.NEW_REFERENCE_EXT.html"><code>NEW_REFERENCE_EXT</code></a> (decoding support will be added)</li>
+<li><a href="constant.ATOM_EXT.html"><code>ATOM_EXT</code></a> (deprecated, decoding support will be added)</li>
+<li><a href="constant.SMALL_ATOM_EXT.html"><code>SMALL_ATOM_EXT</code></a> (deprecated, decoding support will be added)</li>
+<li><a href="constant.PORT_EXT.html"><code>PORT_EXT</code></a> (decoding support will be added)</li>
+<li><a href="constant.PID_EXT.html"><code>PID_EXT</code></a> (decoding support will be added)</li>
+<li><a href="constant.ETF_VERSION.html"><code>ETF_VERSION</code></a></li>
+<li><a href="constant.DIST_HDR_NORMAL.html"><code>DIST_HDR_NORMAL</code></a></li>
+<li><a href="constant.DIST_HDR_FRAG_START.html"><code>DIST_HDR_FRAG_START</code></a></li>
+<li><a href="constant.DIST_HDR_FRAG_CONT.html"><code>DIST_HDR_FRAG_CONT</code></a></li>
+<li><a href="constant.DIST_HDR_COMPRESSED.html"><code>DIST_HDR_COMPRESSED</code></a></li>
 </ul>
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table><tr class='module-item'><td><a class="mod" href="decode/index.html" title='rust_eterm::terms::decode mod'>decode</a></td><td class='docblock-short'></td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
@@ -49,56 +49,12 @@
 </td></tr><tr class='module-item'><td><a class="struct" href="struct.ENonProperList.html" title='rust_eterm::terms::ENonProperList struct'>ENonProperList</a></td><td class='docblock-short'><p>Describes a <code>LIST_EXT</code> term with a possible non-<code>nil</code> tail.</p>
 </td></tr><tr class='module-item'><td><a class="struct" href="struct.EPid.html" title='rust_eterm::terms::EPid struct'>EPid</a></td><td class='docblock-short'><p>Describes an Erlang PID.</p>
 </td></tr><tr class='module-item'><td><a class="struct" href="struct.EPort.html" title='rust_eterm::terms::EPort struct'>EPort</a></td><td class='docblock-short'><p>Describes an Erlang Port</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.EString.html" title='rust_eterm::terms::EString struct'>EString</a></td><td class='docblock-short'><p>Describes an <code>ATOM_UTF8_EXT</code> term and a <code>SMALL_ATOM_UTF8_EXT</code> term.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.EString.html" title='rust_eterm::terms::EString struct'>EString</a></td><td class='docblock-short'><p>Describes an <code>STRING_EXT</code> term.</p>
 </td></tr><tr class='module-item'><td><a class="struct" href="struct.ETuple.html" title='rust_eterm::terms::ETuple struct'>ETuple</a></td><td class='docblock-short'><p>Represents a <code>LARGE_TUPLE_EXT</code> or a <code>SMALL_TUPLE_EXT</code> term.</p>
-</td></tr></table><h2 id='statics' class='section-header'><a href="#statics">Statics</a></h2>
-<table><tr class='module-item'><td><a class="static" href="static.ATOM_CACHE_REF.html" title='rust_eterm::terms::ATOM_CACHE_REF static'>ATOM_CACHE_REF</a></td><td class='docblock-short'><p>Refers to the atom with AtomCacheReferenceIndex in the
-<a href="static.DIST_HDR_NORMAL.html">distribution header</a>.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.ATOM_EXT.html" title='rust_eterm::terms::ATOM_EXT static'>ATOM_EXT</a></td><td class='docblock-short'><p>This represents a LATIN-1 atom, but should not be encoded anymore.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.ATOM_UTF8_EXT.html" title='rust_eterm::terms::ATOM_UTF8_EXT static'>ATOM_UTF8_EXT</a></td><td class='docblock-short'><p>This term represents an atom.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.BINARY_EXT.html" title='rust_eterm::terms::BINARY_EXT static'>BINARY_EXT</a></td><td class='docblock-short'><p>Binaries are byte-arrays.
-They are represented as bitstrings or binaries in the Erlang language.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.BIT_BINARY_EXT.html" title='rust_eterm::terms::BIT_BINARY_EXT static'>BIT_BINARY_EXT</a></td><td class='docblock-short'><p>This term represents a bitstring whose length in bits does not have to be
-a multiple of 8.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.DIST_HDR_COMPRESSED.html" title='rust_eterm::terms::DIST_HDR_COMPRESSED static'>DIST_HDR_COMPRESSED</a></td><td class='docblock-short'><p>The tag denoting a compressed value (either a distribution header or an
-encoded atom).</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.DIST_HDR_FRAG_CONT.html" title='rust_eterm::terms::DIST_HDR_FRAG_CONT static'>DIST_HDR_FRAG_CONT</a></td><td class='docblock-short'><p>The tag denoting a follow-up fragment of apreviously fragment message
-(either another fragment, or the <a href="static.DIST_HDR_FRAG_START.html">first fragment</a>).</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.DIST_HDR_FRAG_START.html" title='rust_eterm::terms::DIST_HDR_FRAG_START static'>DIST_HDR_FRAG_START</a></td><td class='docblock-short'><p>The tag for a header stating that the message is fragmented.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.DIST_HDR_NORMAL.html" title='rust_eterm::terms::DIST_HDR_NORMAL static'>DIST_HDR_NORMAL</a></td><td class='docblock-short'><p>The tag for a normal unfragmented and uncompressed distribution header.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.ETF_VERSION.html" title='rust_eterm::terms::ETF_VERSION static'>ETF_VERSION</a></td><td class='docblock-short'><p>This is the code of the start of a message.
+</td></tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table><tr class='module-item'><td><a class="enum" href="enum.DistHeaderTag.html" title='rust_eterm::terms::DistHeaderTag enum'>DistHeaderTag</a></td><td class='docblock-short'></td></tr><tr class='module-item'><td><a class="enum" href="enum.TermTag.html" title='rust_eterm::terms::TermTag enum'>TermTag</a></td><td class='docblock-short'></td></tr></table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
+<table><tr class='module-item'><td><a class="constant" href="constant.ETF_VERSION.html" title='rust_eterm::terms::ETF_VERSION constant'>ETF_VERSION</a></td><td class='docblock-short'><p>This is the code of the start of a message.
 This message will contain an encoded tag or a distribution header.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.EXPORT_EXT.html" title='rust_eterm::terms::EXPORT_EXT static'>EXPORT_EXT</a></td><td class='docblock-short'><p>Encodes functions of the shape <code>fun M:F/A</code>.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.FLOAT_EXT.html" title='rust_eterm::terms::FLOAT_EXT static'>FLOAT_EXT</a></td><td class='docblock-short'><p>A finite float (i.e. not inf, -inf or NaN) is stored in string format.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.FUN_EXT.html" title='rust_eterm::terms::FUN_EXT static'>FUN_EXT</a></td><td class='docblock-short'><p>Old encoding of internal functions: <code>fun F/A and fun(Arg1,..) -&gt; ... end</code>.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.INTEGER_EXT.html" title='rust_eterm::terms::INTEGER_EXT static'>INTEGER_EXT</a></td><td class='docblock-short'><p>Signed 32-bit integer.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.LARGE_BIG_EXT.html" title='rust_eterm::terms::LARGE_BIG_EXT static'>LARGE_BIG_EXT</a></td><td class='docblock-short'><p>Integer representation of an integer N where <code>-2^(2^32) &lt; N &lt; 2^(2^32)</code>.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.LARGE_TUPLE_EXT.html" title='rust_eterm::terms::LARGE_TUPLE_EXT static'>LARGE_TUPLE_EXT</a></td><td class='docblock-short'><p>Same as <a href="static.SMALL_TUPLE_EXT.html"><code>SMALL_TUPLE_EXT</code></a> except that Arity is an unsigned 4 byte
-integer.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.LIST_EXT.html" title='rust_eterm::terms::LIST_EXT static'>LIST_EXT</a></td><td class='docblock-short'><p>The representation for a non-empty list.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.MAP_EXT.html" title='rust_eterm::terms::MAP_EXT static'>MAP_EXT</a></td><td class='docblock-short'><p>Encodes a map.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.NEWER_REFERENCE_EXT.html" title='rust_eterm::terms::NEWER_REFERENCE_EXT static'>NEWER_REFERENCE_EXT</a></td><td class='docblock-short'><p>Encodes a reference term.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.NEW_FLOAT_EXT.html" title='rust_eterm::terms::NEW_FLOAT_EXT static'>NEW_FLOAT_EXT</a></td><td class='docblock-short'><p>This term represents a float</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.NEW_FUN_EXT.html" title='rust_eterm::terms::NEW_FUN_EXT static'>NEW_FUN_EXT</a></td><td class='docblock-short'><p>Encoding of internal functions: <code>fun F/A and fun(Arg1,..) -&gt; ... end</code>.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.NEW_PID_EXT.html" title='rust_eterm::terms::NEW_PID_EXT static'>NEW_PID_EXT</a></td><td class='docblock-short'><p>Encodes an Erlang process identifier object.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.NEW_PORT_EXT.html" title='rust_eterm::terms::NEW_PORT_EXT static'>NEW_PORT_EXT</a></td><td class='docblock-short'><p>Encodes a port identifier (obtained from <a href="http://erlang.org/doc/man/erlang.html#open_port-2"><code>erlang:open_port/2</code></a>).</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.NEW_REFERENCE_EXT.html" title='rust_eterm::terms::NEW_REFERENCE_EXT static'>NEW_REFERENCE_EXT</a></td><td class='docblock-short'><p>Deprecated method for encoding a reference term.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.NIL_EXT.html" title='rust_eterm::terms::NIL_EXT static'>NIL_EXT</a></td><td class='docblock-short'><p>The representation for an empty list, that is, the Erlang syntax <code>[]</code>.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.PID_EXT.html" title='rust_eterm::terms::PID_EXT static'>PID_EXT</a></td><td class='docblock-short'><p>Same as <a href="static.NEW_PID_EXT.html"><code>NEW_PID_EXT</code></a> except the Creation field is only one byte and only
-two bits are significant, the rest are to be 0.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.PORT_EXT.html" title='rust_eterm::terms::PORT_EXT static'>PORT_EXT</a></td><td class='docblock-short'><p>Same as <a href="static.NEW_PORT_EXT.html"><code>NEW_PORT_EXT</code></a> except the Creation field is only one byte and
-only two bits are significant, the rest are to be 0.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.REFERENCE_EXT.html" title='rust_eterm::terms::REFERENCE_EXT static'>REFERENCE_EXT</a></td><td class='docblock-short'><p>Deprecated method for encoding a reference term.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.SMALL_ATOM_EXT.html" title='rust_eterm::terms::SMALL_ATOM_EXT static'>SMALL_ATOM_EXT</a></td><td class='docblock-short'><p>This represents a LATIN-1 atom, but should not be encoded anymore.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.SMALL_ATOM_UTF8_EXT.html" title='rust_eterm::terms::SMALL_ATOM_UTF8_EXT static'>SMALL_ATOM_UTF8_EXT</a></td><td class='docblock-short'><p>This term represents an atom that takes up at most 255 bytes
-(which may be less than 255 characters as UTF-8 can have multi-byte
-characters).</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.SMALL_BIG_EXT.html" title='rust_eterm::terms::SMALL_BIG_EXT static'>SMALL_BIG_EXT</a></td><td class='docblock-short'><p>Integer representation of an integer N where <code>-2^256 &lt; N &lt; 2^256</code>.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.SMALL_INTEGER_EXT.html" title='rust_eterm::terms::SMALL_INTEGER_EXT static'>SMALL_INTEGER_EXT</a></td><td class='docblock-short'><p>Unsigned 8-bit integer.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.SMALL_TUPLE_EXT.html" title='rust_eterm::terms::SMALL_TUPLE_EXT static'>SMALL_TUPLE_EXT</a></td><td class='docblock-short'><p>Encodes a tuple.</p>
-</td></tr><tr class='module-item'><td><a class="static" href="static.STRING_EXT.html" title='rust_eterm::terms::STRING_EXT static'>STRING_EXT</a></td><td class='docblock-short'><p>String does not have a corresponding Erlang representation, but is an
-optimization for sending lists of bytes (integer in the range 0-255) more
-efficiently over the distribution.</p>
 </td></tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table><tr class='module-item'><td><a class="trait" href="trait.ETerm.html" title='rust_eterm::terms::ETerm trait'>ETerm</a></td><td class='docblock-short'><p>A type that can be converted to an Erlang Binary Term format and two valid
 Erlang String Term representations.</p>

@@ -1190,6 +1190,62 @@
 <span id="1190">1190</span>
 <span id="1191">1191</span>
 <span id="1192">1192</span>
+<span id="1193">1193</span>
+<span id="1194">1194</span>
+<span id="1195">1195</span>
+<span id="1196">1196</span>
+<span id="1197">1197</span>
+<span id="1198">1198</span>
+<span id="1199">1199</span>
+<span id="1200">1200</span>
+<span id="1201">1201</span>
+<span id="1202">1202</span>
+<span id="1203">1203</span>
+<span id="1204">1204</span>
+<span id="1205">1205</span>
+<span id="1206">1206</span>
+<span id="1207">1207</span>
+<span id="1208">1208</span>
+<span id="1209">1209</span>
+<span id="1210">1210</span>
+<span id="1211">1211</span>
+<span id="1212">1212</span>
+<span id="1213">1213</span>
+<span id="1214">1214</span>
+<span id="1215">1215</span>
+<span id="1216">1216</span>
+<span id="1217">1217</span>
+<span id="1218">1218</span>
+<span id="1219">1219</span>
+<span id="1220">1220</span>
+<span id="1221">1221</span>
+<span id="1222">1222</span>
+<span id="1223">1223</span>
+<span id="1224">1224</span>
+<span id="1225">1225</span>
+<span id="1226">1226</span>
+<span id="1227">1227</span>
+<span id="1228">1228</span>
+<span id="1229">1229</span>
+<span id="1230">1230</span>
+<span id="1231">1231</span>
+<span id="1232">1232</span>
+<span id="1233">1233</span>
+<span id="1234">1234</span>
+<span id="1235">1235</span>
+<span id="1236">1236</span>
+<span id="1237">1237</span>
+<span id="1238">1238</span>
+<span id="1239">1239</span>
+<span id="1240">1240</span>
+<span id="1241">1241</span>
+<span id="1242">1242</span>
+<span id="1243">1243</span>
+<span id="1244">1244</span>
+<span id="1245">1245</span>
+<span id="1246">1246</span>
+<span id="1247">1247</span>
+<span id="1248">1248</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! ## Currently implemented term types (into binary, String):</span>
 <span class="doccomment">//! * [`INTEGER_EXT`], [`SMALL_INTEGER_EXT`] (for `{i,u}{8,16,32,64,128,size}`)</span>
@@ -1232,40 +1288,40 @@
 <span class="doccomment">//! * [`DIST_HDR_FRAG_CONT`]</span>
 <span class="doccomment">//! * [`DIST_HDR_COMPRESSED`]</span>
 <span class="doccomment">//! </span>
-<span class="doccomment">//! [`ETF_VERSION`]: static.ETF_VERSION.html</span>
-<span class="doccomment">//! [`DIST_HDR_NORMAL`]: static.DIST_HDR_NORMAL.html</span>
-<span class="doccomment">//! [`DIST_HDR_FRAG_START`]: static.DIST_HDR_FRAG_START.html</span>
-<span class="doccomment">//! [`DIST_HDR_FRAG_CONT`]: static.DIST_HDR_FRAG_CONT.html</span>
-<span class="doccomment">//! [`DIST_HDR_COMPRESSED`]: static.DIST_HDR_COMPRESSED.html</span>
-<span class="doccomment">//! [`ATOM_CACHE_REF`]: static.ATOM_CACHE_REF.html</span>
-<span class="doccomment">//! [`SMALL_INTEGER_EXT`]: static.SMALL_INTEGER_EXT.html</span>
-<span class="doccomment">//! [`INTEGER_EXT`]: static.INTEGER_EXT.html</span>
-<span class="doccomment">//! [`FLOAT_EXT`]: static.FLOAT_EXT.html</span>
-<span class="doccomment">//! [`PORT_EXT`]: static.PORT_EXT.html</span>
-<span class="doccomment">//! [`NEW_PORT_EXT`]: static.NEW_PORT_EXT.html</span>
-<span class="doccomment">//! [`PID_EXT`]: static.PID_EXT.html</span>
-<span class="doccomment">//! [`NEW_PID_EXT`]: static.NEW_PID_EXT.html</span>
-<span class="doccomment">//! [`SMALL_TUPLE_EXT`]: static.SMALL_TUPLE_EXT.html</span>
-<span class="doccomment">//! [`LARGE_TUPLE_EXT`]: static.LARGE_TUPLE_EXT.html</span>
-<span class="doccomment">//! [`MAP_EXT`]: static.MAP_EXT.html</span>
-<span class="doccomment">//! [`NIL_EXT`]: static.NIL_EXT.html</span>
-<span class="doccomment">//! [`STRING_EXT`]: static.STRING_EXT.html</span>
-<span class="doccomment">//! [`LIST_EXT`]: static.LIST_EXT.html</span>
-<span class="doccomment">//! [`BINARY_EXT`]: static.BINARY_EXT.html</span>
-<span class="doccomment">//! [`SMALL_BIG_EXT`]: static.SMALL_BIG_EXT.html</span>
-<span class="doccomment">//! [`LARGE_BIG_EXT`]: static.LARGE_BIG_EXT.html</span>
-<span class="doccomment">//! [`REFERENCE_EXT`]: static.REFERENCE_EXT.html</span>
-<span class="doccomment">//! [`NEW_REFERENCE_EXT`]: static.NEW_REFERENCE_EXT.html</span>
-<span class="doccomment">//! [`NEWER_REFERENCE_EXT`]: static.NEWER_REFERENCE_EXT.html</span>
-<span class="doccomment">//! [`FUN_EXT`]: static.FUN_EXT.html</span>
-<span class="doccomment">//! [`NEW_FUN_EXT`]: static.NEW_FUN_EXT.html</span>
-<span class="doccomment">//! [`EXPORT_EXT`]: static.EXPORT_EXT.html</span>
-<span class="doccomment">//! [`BIT_BINARY_EXT`]: static.BIT_BINARY_EXT.html</span>
-<span class="doccomment">//! [`NEW_FLOAT_EXT`]: static.NEW_FLOAT_EXT.html</span>
-<span class="doccomment">//! [`ATOM_UTF8_EXT`]: static.ATOM_UTF8_EXT.html</span>
-<span class="doccomment">//! [`SMALL_ATOM_UTF8_EXT`]: static.SMALL_ATOM_UTF8_EXT.html</span>
-<span class="doccomment">//! [`ATOM_EXT`]: static.ATOM_EXT.html</span>
-<span class="doccomment">//! [`SMALL_ATOM_EXT`]: static.SMALL_ATOM_EXT.html</span>
+<span class="doccomment">//! [`ETF_VERSION`]: constant.ETF_VERSION.html</span>
+<span class="doccomment">//! [`DIST_HDR_NORMAL`]: constant.DIST_HDR_NORMAL.html</span>
+<span class="doccomment">//! [`DIST_HDR_FRAG_START`]: constant.DIST_HDR_FRAG_START.html</span>
+<span class="doccomment">//! [`DIST_HDR_FRAG_CONT`]: constant.DIST_HDR_FRAG_CONT.html</span>
+<span class="doccomment">//! [`DIST_HDR_COMPRESSED`]: constant.DIST_HDR_COMPRESSED.html</span>
+<span class="doccomment">//! [`ATOM_CACHE_REF`]: constant.ATOM_CACHE_REF.html</span>
+<span class="doccomment">//! [`SMALL_INTEGER_EXT`]: constant.SMALL_INTEGER_EXT.html</span>
+<span class="doccomment">//! [`INTEGER_EXT`]: constant.INTEGER_EXT.html</span>
+<span class="doccomment">//! [`FLOAT_EXT`]: constant.FLOAT_EXT.html</span>
+<span class="doccomment">//! [`PORT_EXT`]: constant.PORT_EXT.html</span>
+<span class="doccomment">//! [`NEW_PORT_EXT`]: constant.NEW_PORT_EXT.html</span>
+<span class="doccomment">//! [`PID_EXT`]: constant.PID_EXT.html</span>
+<span class="doccomment">//! [`NEW_PID_EXT`]: constant.NEW_PID_EXT.html</span>
+<span class="doccomment">//! [`SMALL_TUPLE_EXT`]: constant.SMALL_TUPLE_EXT.html</span>
+<span class="doccomment">//! [`LARGE_TUPLE_EXT`]: constant.LARGE_TUPLE_EXT.html</span>
+<span class="doccomment">//! [`MAP_EXT`]: constant.MAP_EXT.html</span>
+<span class="doccomment">//! [`NIL_EXT`]: constant.NIL_EXT.html</span>
+<span class="doccomment">//! [`STRING_EXT`]: constant.STRING_EXT.html</span>
+<span class="doccomment">//! [`LIST_EXT`]: constant.LIST_EXT.html</span>
+<span class="doccomment">//! [`BINARY_EXT`]: constant.BINARY_EXT.html</span>
+<span class="doccomment">//! [`SMALL_BIG_EXT`]: constant.SMALL_BIG_EXT.html</span>
+<span class="doccomment">//! [`LARGE_BIG_EXT`]: constant.LARGE_BIG_EXT.html</span>
+<span class="doccomment">//! [`REFERENCE_EXT`]: constant.REFERENCE_EXT.html</span>
+<span class="doccomment">//! [`NEW_REFERENCE_EXT`]: constant.NEW_REFERENCE_EXT.html</span>
+<span class="doccomment">//! [`NEWER_REFERENCE_EXT`]: constant.NEWER_REFERENCE_EXT.html</span>
+<span class="doccomment">//! [`FUN_EXT`]: constant.FUN_EXT.html</span>
+<span class="doccomment">//! [`NEW_FUN_EXT`]: constant.NEW_FUN_EXT.html</span>
+<span class="doccomment">//! [`EXPORT_EXT`]: constant.EXPORT_EXT.html</span>
+<span class="doccomment">//! [`BIT_BINARY_EXT`]: constant.BIT_BINARY_EXT.html</span>
+<span class="doccomment">//! [`NEW_FLOAT_EXT`]: constant.NEW_FLOAT_EXT.html</span>
+<span class="doccomment">//! [`ATOM_UTF8_EXT`]: constant.ATOM_UTF8_EXT.html</span>
+<span class="doccomment">//! [`SMALL_ATOM_UTF8_EXT`]: constant.SMALL_ATOM_UTF8_EXT.html</span>
+<span class="doccomment">//! [`ATOM_EXT`]: constant.ATOM_EXT.html</span>
+<span class="doccomment">//! [`SMALL_ATOM_EXT`]: constant.SMALL_ATOM_EXT.html</span>
 <span class="doccomment">//! [`ENil`]: struct.ENil.html</span>
 <span class="doccomment">//! [`EList`]: struct.EList.html</span>
 <span class="doccomment">//! [`ENonProperList`]: struct.ENonProperList.html</span>
@@ -1285,877 +1341,934 @@
 <span class="kw">mod</span> <span class="ident">encode</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">decode</span>;
 
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">regex</span>;
-
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Write</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::<span class="ident">Any</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
+
 <span class="kw">use</span> <span class="ident">regex</span>::<span class="ident">Regex</span>;
+
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
 
 <span class="doccomment">/// This is the code of the start of a message.</span>
 <span class="doccomment">/// This message will contain an encoded tag or a distribution header.</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">ETF_VERSION</span>:         <span class="ident">u8</span> <span class="op">=</span><span class="number">131</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ETF_VERSION</span>:         <span class="ident">u8</span> <span class="op">=</span><span class="number">131</span>;
 
-<span class="doccomment">/// The tag for a normal unfragmented and uncompressed distribution header.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte | 1 byte                  | `NumberOfAtomCacheRefs/2+1 \| 0` bytes | `N \| 0` bytes    |</span>
-<span class="doccomment">/// | ------ | ----------------------- | -------------------------------------- | ----------------- |</span>
-<span class="doccomment">/// | `68`   | `NumberOfAtomCacheRefs` | `Flags`                                | `AtomCacheRefs`   |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * `NumberOfAtomCacheRefs` is the amount of atom cache references in this</span>
-<span class="doccomment">///   message.</span>
-<span class="doccomment">/// * `Flags` is a list of 4-byte values containig flags in the following format:</span>
-<span class="doccomment">///   </span>
-<span class="doccomment">///   | 1 bit           | 3 bits         |</span>
-<span class="doccomment">///   | --------------- | -------------- |</span>
-<span class="doccomment">///   | `NewCacheEntry` | `SegmentIndex` |</span>
-<span class="doccomment">///   </span>
-<span class="doccomment">///   * `NewCacheEntry` describes whether the atom is new in the cache.</span>
-<span class="doccomment">///   * `SegmentIndex` describes in which segment the atom is located.</span>
-<span class="doccomment">///   </span>
-<span class="doccomment">///   and after the flags for each of the references, one entry of this is sent:</span>
-<span class="doccomment">///   </span>
-<span class="doccomment">///   | 3 bits | 1 bit       |</span>
-<span class="doccomment">///   | ------ | ----------- |</span>
-<span class="doccomment">///   | Unused | `LongAtoms` |</span>
-<span class="doccomment">///   </span>
-<span class="doccomment">///   * `LongAtoms` states whether 1 or 2 bytes are used for the atom values</span>
-<span class="doccomment">///     in this distribution header.</span>
-<span class="doccomment">/// * `AtomCacheRefs` are:</span>
-<span class="doccomment">///   </span>
-<span class="doccomment">///   When for this atom, `NewCacheEntry` is 1:</span>
-<span class="doccomment">///   </span>
-<span class="doccomment">///   | 1 byte                 | 1\|2 bytes | `Length` bytes |</span>
-<span class="doccomment">///   | ---------------------- | ---------- | -------------- |</span>
-<span class="doccomment">///   | `InternalSegmentIndex` | `Length`   | `AtomText`     |</span>
-<span class="doccomment">///   </span>
-<span class="doccomment">///   * `InternalSegmentIndex`, together with `SegmentIndex` in the flags</span>
-<span class="doccomment">///     entry completely define the location of the atom in the atom cache.</span>
-<span class="doccomment">///   * `Length` is either 1 byte when `LongAtoms` is 0, and 2 bytes otherwise.</span>
-<span class="doccomment">///     It describes how many bytes long the `AtomText` is.</span>
-<span class="doccomment">///   * `AtomText` is the actual name of the atom.</span>
-<span class="doccomment">///   </span>
-<span class="doccomment">///   Or when for this atom, `NewCacheEntry` is 0:</span>
-<span class="doccomment">///   </span>
-<span class="doccomment">///   | 1 byte                 |</span>
-<span class="doccomment">///   | ---------------------- |</span>
-<span class="doccomment">///   | `InternalSegmentIndex` |</span>
-<span class="doccomment">///   </span>
-<span class="doccomment">///   * `InternalSegmentIndex`, together with `SegmentIndex` in the flags</span>
-<span class="doccomment">///     entry completely define the location of the atom in the atom cache.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// This header is then trailed with a term_to_binary-encoded term with</span>
-<span class="doccomment">/// (optionally) [atom references][`ATOM_CACHE_REF`] to this header.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// [`ATOM_CACHE_REF`]: static.ATOM_CACHE_REF.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">DIST_HDR_NORMAL</span>:     <span class="ident">u8</span> <span class="op">=</span> <span class="number">68</span>;
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">DistHeaderTag</span> {
+    <span class="doccomment">/// The tag for a normal unfragmented and uncompressed distribution header.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// ### Binary representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// | 1 byte | 1 byte                  | `NumberOfAtomCacheRefs/2+1 \| 0` bytes | `N \| 0` bytes    |</span>
+    <span class="doccomment">/// | ------ | ----------------------- | -------------------------------------- | ----------------- |</span>
+    <span class="doccomment">/// | `68`   | `NumberOfAtomCacheRefs` | `Flags`                                | `AtomCacheRefs`   |</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// * `NumberOfAtomCacheRefs` is the amount of atom cache references in</span>
+    <span class="doccomment">///   this message.</span>
+    <span class="doccomment">/// * `Flags` is a list of 4-byte values containig flags in the following</span>
+    <span class="doccomment">///    format:</span>
+    <span class="doccomment">///   </span>
+    <span class="doccomment">///   | 1 bit           | 3 bits         |</span>
+    <span class="doccomment">///   | --------------- | -------------- |</span>
+    <span class="doccomment">///   | `NewCacheEntry` | `SegmentIndex` |</span>
+    <span class="doccomment">///   </span>
+    <span class="doccomment">///   * `NewCacheEntry` describes whether the atom is new in the cache.</span>
+    <span class="doccomment">///   * `SegmentIndex` describes in which segment the atom is located.</span>
+    <span class="doccomment">///   </span>
+    <span class="doccomment">///   and after the flags for each of the references, one entry of this is</span>
+    <span class="doccomment">///   sent:</span>
+    <span class="doccomment">///   </span>
+    <span class="doccomment">///   | 3 bits | 1 bit       |</span>
+    <span class="doccomment">///   | ------ | ----------- |</span>
+    <span class="doccomment">///   | Unused | `LongAtoms` |</span>
+    <span class="doccomment">///   </span>
+    <span class="doccomment">///   * `LongAtoms` states whether 1 or 2 bytes are used for the atom</span>
+    <span class="doccomment">///     values in this distribution header.</span>
+    <span class="doccomment">/// * `AtomCacheRefs` are:</span>
+    <span class="doccomment">///   </span>
+    <span class="doccomment">///   When for this atom, `NewCacheEntry` is 1:</span>
+    <span class="doccomment">///   </span>
+    <span class="doccomment">///   | 1 byte                 | 1\|2 bytes | `Length` bytes |</span>
+    <span class="doccomment">///   | ---------------------- | ---------- | -------------- |</span>
+    <span class="doccomment">///   | `InternalSegmentIndex` | `Length`   | `AtomText`     |</span>
+    <span class="doccomment">///   </span>
+    <span class="doccomment">///   * `InternalSegmentIndex`, together with `SegmentIndex` in the flags</span>
+    <span class="doccomment">///     entry completely define the location of the atom in the atom cache.</span>
+    <span class="doccomment">///   * `Length` is either 1 byte when `LongAtoms` is 0, and 2 bytes</span>
+    <span class="doccomment">///     otherwise.</span>
+    <span class="doccomment">///     It describes how many bytes long the `AtomText` is.</span>
+    <span class="doccomment">///   * `AtomText` is the actual name of the atom.</span>
+    <span class="doccomment">///   </span>
+    <span class="doccomment">///   Or when for this atom, `NewCacheEntry` is 0:</span>
+    <span class="doccomment">///   </span>
+    <span class="doccomment">///   | 1 byte                 |</span>
+    <span class="doccomment">///   | ---------------------- |</span>
+    <span class="doccomment">///   | `InternalSegmentIndex` |</span>
+    <span class="doccomment">///   </span>
+    <span class="doccomment">///   * `InternalSegmentIndex`, together with `SegmentIndex` in the flags</span>
+    <span class="doccomment">///     entry completely define the location of the atom in the atom cache.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// This header is then trailed with a term_to_binary-encoded term with</span>
+    <span class="doccomment">/// (optionally) [atom references][`AtomCacheRef`] to this header.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// [`AtomCacheRef`]: enum.TermTag.html#variant.AtomCacheRef</span>
+    <span class="ident">Normal</span> <span class="op">=</span> <span class="number">68</span>,
 
-<span class="doccomment">/// The tag for a header stating that the message is fragmented.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// Note: This header must contain the entire atom cache.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte | 8 bytes      | 8 bytes      | 1 byte                  | `NumberOfAtomCacheRefs/2+1 \| 0` bytes | `N \| 0` bytes    |</span>
-<span class="doccomment">/// | ------ | ------------ | ------------ | ----------------------- | -------------------------------------- | ----------------- |</span>
-<span class="doccomment">/// | `69`   | `SequenceId` | `FragmentId` | `NumberOfAtomCacheRefs` | `Flags`                                | `AtomCacheRefs`   |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * `SequenceId` uniquely identifies the message that this fragment is part</span>
-<span class="doccomment">///   of.</span>
-<span class="doccomment">/// * `FragmentId` is a number that decreases with 1 for each fragment, and</span>
-<span class="doccomment">///   at N, where N is the number of fragments (so the last fragment has</span>
-<span class="doccomment">///   `FragmentId` of `1`).</span>
-<span class="doccomment">/// * `NumberOfAtomCacheRefs`, `Flags`, and `AtomCacheRefs` act just like in</span>
-<span class="doccomment">///   [`DIST_HDR_NORMAL`].</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// Some data MAY then be sent after this header, and each packet after this</span>
-<span class="doccomment">/// MUST only contain data of the term that is being sent.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// [`DIST_HDR_NORMAL`]: static.DIST_HDR_NORMAL.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">DIST_HDR_FRAG_START</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">69</span>;
+    <span class="doccomment">/// The tag for a header stating that the message is fragmented.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// Note: This header must contain the entire atom cache.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// ### Binary representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// | 1 byte | 8 bytes      | 8 bytes      | 1 byte                  | `NumberOfAtomCacheRefs/2+1 \| 0` bytes | `N \| 0` bytes  |</span>
+    <span class="doccomment">/// | ------ | ------------ | ------------ | ----------------------- | -------------------------------------- | --------------- |</span>
+    <span class="doccomment">/// | `69`   | `SequenceId` | `FragmentId` | `NumberOfAtomCacheRefs` | `Flags`                                | `AtomCacheRefs` |</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// * `SequenceId` uniquely identifies the message that this fragment is</span>
+    <span class="doccomment">///   part of.</span>
+    <span class="doccomment">/// * `FragmentId` is a number that decreases with 1 for each fragment, and</span>
+    <span class="doccomment">///   at N, where N is the number of fragments (so the last fragment has</span>
+    <span class="doccomment">///   `FragmentId` of `1`).</span>
+    <span class="doccomment">/// * `NumberOfAtomCacheRefs`, `Flags`, and `AtomCacheRefs` act just like</span>
+    <span class="doccomment">///   in [`Normal`].</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// Some data MAY then be sent after this header, and each packet after</span>
+    <span class="doccomment">/// this MUST only contain data of the term that is being sent.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// [`Normal`]: #variant.normal</span>
+    <span class="ident">Fragmented</span> <span class="op">=</span> <span class="number">69</span>,
 
-<span class="doccomment">/// The tag denoting a follow-up fragment of apreviously fragment message</span>
-<span class="doccomment">/// (either another fragment, or the [first fragment][`DIST_HDR_FRAG_START`]).</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte | 8 bytes      | 8 bytes      |</span>
-<span class="doccomment">/// | ------ | ------------ | ------------ |</span>
-<span class="doccomment">/// | `70`   | `SequenceId` | `FragmentId` |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * `SequenceId`, just like in [`DIST_HDR_FRAG_START`] uniquely identifies</span>
-<span class="doccomment">///   this message, and must be the same as in the associated</span>
-<span class="doccomment">///   `DIST_HDR_FRAG_CONT`&#39;s.</span>
-<span class="doccomment">/// * `FragmentId`, just like in [`DIST_HDR_FRAG_START`] is a number that</span>
-<span class="doccomment">///   decreases with 1 for each fragment, with the last fragment having a</span>
-<span class="doccomment">///   `FragmentId` of 1.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// [`DIST_HDR_FRAG_START`]: static.DIST_HDR_FRAG_START.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">DIST_HDR_FRAG_CONT</span>:  <span class="ident">u8</span> <span class="op">=</span> <span class="number">70</span>;
+    <span class="doccomment">/// The tag denoting a follow-up fragment of apreviously fragment message</span>
+    <span class="doccomment">/// (either another fragment, or the [first fragment][`Fragmented`]).</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// ### Binary representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// | 1 byte | 8 bytes      | 8 bytes      |</span>
+    <span class="doccomment">/// | ------ | ------------ | ------------ |</span>
+    <span class="doccomment">/// | `70`   | `SequenceId` | `FragmentId` |</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// * `SequenceId`, just like in [`Fragmented`] uniquely identifies</span>
+    <span class="doccomment">///   this message, and must be the same as in the associated</span>
+    <span class="doccomment">///   `DIST_HDR_FRAG_CONT`&#39;s.</span>
+    <span class="doccomment">/// * `FragmentId`, just like in [`Fragmented`] is a number that</span>
+    <span class="doccomment">///   decreases with 1 for each fragment, with the last fragment having a</span>
+    <span class="doccomment">///   `FragmentId` of 1.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// [`Fragmented`]: #variant.fragmented</span>
+    <span class="ident">Fragment</span> <span class="op">=</span> <span class="number">70</span>,
 
-<span class="doccomment">/// The tag denoting a compressed value (either a distribution header or an</span>
-<span class="doccomment">/// encoded atom).</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte | 4 bytes            | N                    |</span>
-<span class="doccomment">/// | ------ | ------------------ | -------------------- |</span>
-<span class="doccomment">/// | `80`   | `UncompressedSize` | `ZLibCompressedData` |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * `UncompressedSize` is the complete size of the uncompressed</span>
-<span class="doccomment">///   `ZLibCompressedData` (including the tag).</span>
-<span class="doccomment">/// * `ZLibCompressedData` compresses data of the shape:</span>
-<span class="doccomment">///   </span>
-<span class="doccomment">///   | 1 byte | N bytes |</span>
-<span class="doccomment">///   | ------ | ------- |</span>
-<span class="doccomment">///   | `Tag`  | `Data`  |</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">DIST_HDR_COMPRESSED</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">80</span>;
+    <span class="doccomment">/// The tag denoting a compressed value (either a distribution header or an</span>
+    <span class="doccomment">/// encoded atom).</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// ### Binary representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// | 1 byte | 4 bytes            | N                    |</span>
+    <span class="doccomment">/// | ------ | ------------------ | -------------------- |</span>
+    <span class="doccomment">/// | `80`   | `UncompressedSize` | `ZLibCompressedData` |</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// * `UncompressedSize` is the complete size of the uncompressed</span>
+    <span class="doccomment">///   `ZLibCompressedData` (including the tag).</span>
+    <span class="doccomment">/// * `ZLibCompressedData` compresses data of the shape:</span>
+    <span class="doccomment">///   </span>
+    <span class="doccomment">///   | 1 byte | N bytes |</span>
+    <span class="doccomment">///   | ------ | ------- |</span>
+    <span class="doccomment">///   | `Tag`  | `Data`  |</span>
+    <span class="ident">Compressed</span> <span class="op">=</span> <span class="number">80</span>,
+}
 
-<span class="doccomment">/// Refers to the atom with AtomCacheReferenceIndex in the</span>
-<span class="doccomment">/// [distribution header].</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// | 1 byte | 1 byte                    |</span>
-<span class="doccomment">/// | ------ | ------------------------- |</span>
-<span class="doccomment">/// | `82`   | `AtomCacheReferenceIndex` |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # String representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// This string is represented just like an [`atom`].</span>
-<span class="doccomment">/// The value of this atom is looked up in the [distribution header].</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// [`atom`]: static.ATOM_EXT.html</span>
-<span class="doccomment">/// [distribution header]: static.DIST_HDR_NORMAL.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">ATOM_CACHE_REF</span>:      <span class="ident">u8</span> <span class="op">=</span>  <span class="number">82</span>;
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u8</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">TermTag</span> {
+    <span class="doccomment">/// Refers to the atom with AtomCacheReferenceIndex in the</span>
+    <span class="doccomment">/// [distribution header].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ### Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 1 byte                    |</span>
+    <span class="doccomment">/// | ------ | ------------------------- |</span>
+    <span class="doccomment">/// | `82`   | `AtomCacheReferenceIndex` |</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// ### String representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// This string is represented just like an [`atom`].</span>
+    <span class="doccomment">/// The value of this atom is looked up in the [distribution header].</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// [`atom`]: #variant.Atom</span>
+    <span class="doccomment">/// [distribution header]: enum.DistHeaderTag.html#variant.Normal</span>
+    <span class="ident">AtomCacheRef</span> <span class="op">=</span> <span class="number">82</span>,
 
-<span class="doccomment">/// Unsigned 8-bit integer.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// | 1 byte | 1 byte |</span>
-<span class="doccomment">/// | ------ | ------ |</span>
-<span class="doccomment">/// | `97`   | `u8`   |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # String representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// Represent the value of this 2&#39;s complement 8-bit signed integer as either:</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * Simple decimal</span>
-<span class="doccomment">/// * An ASCII character Z in the form `$Z`</span>
-<span class="doccomment">/// * Any other base B in 2..36 in the form `B#N`</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// The recommendation is to always output like a simple decimal, as it is the</span>
-<span class="doccomment">/// simplest and most portable.</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">SMALL_INTEGER_EXT</span>:   <span class="ident">u8</span> <span class="op">=</span>  <span class="number">97</span>;
+    <span class="doccomment">/// Unsigned 8-bit integer.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ### Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 1 byte |</span>
+    <span class="doccomment">/// | ------ | ------ |</span>
+    <span class="doccomment">/// | `97`   | `u8`   |</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// ### String representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// Represent the value of this 2&#39;s complement 8-bit signed integer as</span>
+    <span class="doccomment">/// either:</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// * Simple decimal</span>
+    <span class="doccomment">/// * An ASCII character Z in the form `$Z`</span>
+    <span class="doccomment">/// * Any other base B in 2..36 in the form `B#N`</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// The recommendation is to always output like a simple decimal, as it is</span>
+    <span class="doccomment">/// the simplest and most portable.</span>
+    <span class="ident">SmallInteger</span> <span class="op">=</span> <span class="number">97</span>,
 
-<span class="doccomment">/// Signed 32-bit integer.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Binary layout</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// | 1 byte | 4 bytes |</span>
-<span class="doccomment">/// | ------ | ------- |</span>
-<span class="doccomment">/// | `98`   | `i32`   |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # String representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// The representations of this 2&#39;s complement 32-bit signed integer are:</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * Simple decimal</span>
-<span class="doccomment">/// * An ASCII character Z in the form `$Z`</span>
-<span class="doccomment">/// * Any other base B in 2..36 in the form `B#N`</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// The recommendation is to always output like a simple decimal, as it is the</span>
-<span class="doccomment">/// simplest and most portable.</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">INTEGER_EXT</span>:         <span class="ident">u8</span> <span class="op">=</span>  <span class="number">98</span>;
+    <span class="doccomment">/// Signed 32-bit integer.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ### Binary layout</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 4 bytes |</span>
+    <span class="doccomment">/// | ------ | ------- |</span>
+    <span class="doccomment">/// | `98`   | `i32`   |</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// ### String representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// The representations of this 2&#39;s complement 32-bit signed integer are:</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// * Simple decimal</span>
+    <span class="doccomment">/// * An ASCII character Z in the form `$Z`</span>
+    <span class="doccomment">/// * Any other base B in 2..36 in the form `B#N`</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// The recommendation is to always output like a simple decimal, as it is</span>
+    <span class="doccomment">/// the simplest and most portable.</span>
+    <span class="ident">Integer</span> <span class="op">=</span> <span class="number">98</span>,
 
-<span class="doccomment">///  A finite float (i.e. not inf, -inf or NaN) is stored in string format.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// This term is used in minor version 0 of the external format;</span>
-<span class="doccomment">/// it has been superseded by [`NEW_FLOAT_EXT`].</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// | 1 byte | 31 bytes        |</span>
-<span class="doccomment">/// | ------ | --------------- |</span>
-<span class="doccomment">/// | `99`   | Float as string |</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The format used in sprintf to format the float is `%.20e` (there are more</span>
-<span class="doccomment">/// bytes allocated than necessary).</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # String representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// The parsable values should be a decimal integer with either an exponent</span>
-<span class="doccomment">/// or a trailing dot with 1 or more numbers behind it.</span>
-<span class="doccomment">/// An optional base can also be specified in front of it, separating the</span>
-<span class="doccomment">/// value and base with an octothorpe (`#`).</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// The recommendation is to output with the format being `%.20e` as it is</span>
-<span class="doccomment">/// guaranteed not to lose precision.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [`NEW_FLOAT_EXT`]: static.NEW_FLOAT_EXT.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">FLOAT_EXT</span>:           <span class="ident">u8</span> <span class="op">=</span>  <span class="number">99</span>;
+    <span class="doccomment">///  A finite float (i.e. not inf, -inf or NaN) is stored in string format.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This term is used in minor version 0 of the external format;</span>
+    <span class="doccomment">/// it has been superseded by [`NewFloat`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ### Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 31 bytes        |</span>
+    <span class="doccomment">/// | ------ | --------------- |</span>
+    <span class="doccomment">/// | `99`   | Float as string |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The format used in sprintf to format the float is `%.20e` (there are</span>
+    <span class="doccomment">/// more bytes allocated than necessary).</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// ### String representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// The parsable values should be a decimal integer with either an exponent</span>
+    <span class="doccomment">/// or a trailing dot with 1 or more numbers behind it.</span>
+    <span class="doccomment">/// An optional base can also be specified in front of it, separating the</span>
+    <span class="doccomment">/// value and base with an octothorpe (`#`).</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// The recommendation is to output with the format being `%.20e` as it is</span>
+    <span class="doccomment">/// guaranteed not to lose precision.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`NewFloat`]: #variant.NewFloat</span>
+    <span class="ident">Float</span> <span class="op">=</span> <span class="number">99</span>,
 
-<span class="doccomment">/// Same as [`NEW_PORT_EXT`] except the Creation field is only one byte and</span>
-<span class="doccomment">/// only two bits are significant, the rest are to be 0.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// | 1 byte | N bytes | 4 bytes | 1 byte     |</span>
-<span class="doccomment">/// | ------ | ------- | ------- | ---------- |</span>
-<span class="doccomment">/// | `102`  | `Node`  | `ID`    | `Creation` |</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// * `Node` is the name of the originating node, encoded using</span>
-<span class="doccomment">///   [`ATOM_UTF8_EXT`], [`SMALL_ATOM_UTF8_EXT`] or [`ATOM_CACHE_REF`].</span>
-<span class="doccomment">/// * `ID` is a 32-bit big endian unsigned integer.</span>
-<span class="doccomment">///   Only 15 bits are significant; the rest are to be 0.</span>
-<span class="doccomment">/// * `Creation` is a 8-bit unsigned integer.</span>
-<span class="doccomment">///   All ports originating from the same node incarnation must have</span>
-<span class="doccomment">///   identical Creation values.</span>
-<span class="doccomment">///   This makes it possible to separate identifiers from old (crashed) nodes</span>
-<span class="doccomment">///   from a new one.</span>
-<span class="doccomment">///   The value zero should be avoided for normal operations as it is used as</span>
-<span class="doccomment">///   a wild card for debug purpose</span>
-<span class="doccomment">///   (like a pid returned by [`erlang:list_to_pid/1`]).</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # String representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// There is not actually a good way to represent a port as a string because</span>
-<span class="doccomment">/// the `Node` value may not be known.</span>
-<span class="doccomment">/// A representation of #Port&lt;0.{id}.{creation}&gt; can be used as a means to visualize</span>
-<span class="doccomment">/// the value of a port regardless.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1</span>
-<span class="doccomment">/// [`ATOM_UTF8_EXT`]: static.ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`SMALL_ATOM_UTF8_EXT`]: static.SMALL_ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`ATOM_CACHE_REF`]: static.ATOM_CACHE_REF.html</span>
-<span class="doccomment">/// [`NEW_PORT_EXT`]: static.NEW_PORT_EXT.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">PORT_EXT</span>:            <span class="ident">u8</span> <span class="op">=</span> <span class="number">102</span>;
+    <span class="doccomment">/// Same as [`NewPort`] except the Creation field is only one byte and</span>
+    <span class="doccomment">/// only two bits are significant, the rest are to be 0.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ### Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | N bytes | 4 bytes | 1 byte     |</span>
+    <span class="doccomment">/// | ------ | ------- | ------- | ---------- |</span>
+    <span class="doccomment">/// | `102`  | `Node`  | `ID`    | `Creation` |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Node` is the name of the originating node, encoded using</span>
+    <span class="doccomment">///   [`AtomUtf8`], [`SmallAtomUtf8`] or [`AtomCacheRef`].</span>
+    <span class="doccomment">/// * `ID` is a 32-bit big endian unsigned integer.</span>
+    <span class="doccomment">///   Only 15 bits are significant; the rest are to be 0.</span>
+    <span class="doccomment">/// * `Creation` is a 8-bit unsigned integer.</span>
+    <span class="doccomment">///   All ports originating from the same node incarnation must have</span>
+    <span class="doccomment">///   identical Creation values.</span>
+    <span class="doccomment">///   This makes it possible to separate identifiers from old (crashed)</span>
+    <span class="doccomment">///   nodes from a new one.</span>
+    <span class="doccomment">///   The value zero should be avoided for normal operations as it is used</span>
+    <span class="doccomment">///   as a wild card for debug purpose</span>
+    <span class="doccomment">///   (like a pid returned by [`erlang:list_to_pid/1`]).</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// ### String representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// There is not actually a good way to represent a port as a string</span>
+    <span class="doccomment">/// because the `Node` value may not be known.</span>
+    <span class="doccomment">/// A representation of `#Port&lt;0.{id}.{creation}&gt;` can be used as a means</span>
+    <span class="doccomment">/// to visualize the value of a port regardless.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1</span>
+    <span class="doccomment">/// [`AtomUtf8`]: #variant.AtomUtf8</span>
+    <span class="doccomment">/// [`SmallAtomUtf8`]: #variant.SmallAtomUtf8</span>
+    <span class="doccomment">/// [`AtomCacheRef`]: #variant.AtomCacheRef</span>
+    <span class="doccomment">/// [`NewPort`]: #variant.NewPort</span>
+    <span class="ident">Port</span> <span class="op">=</span> <span class="number">102</span>,
 
-<span class="doccomment">/// Encodes a port identifier (obtained from [`erlang:open_port/2`]).</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Introduced in OTP 19, but only to be decoded and echoed back.</span>
-<span class="doccomment">/// Not encoded for local ports.</span>
-<span class="doccomment">/// Planned to supersede PORT_EXT in OTP 23 when [DFLAG_BIG_CREATON](dflags)</span>
-<span class="doccomment">/// becomes mandatory.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// | 1 byte | N bytes | 4 bytes | 4 bytes    |</span>
-<span class="doccomment">/// | ------ | ------- | ------- | ---------- |</span>
-<span class="doccomment">/// | `89`   | `Node`  | `ID`    | `Creation` |</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// * `Node` is the name of the originating node, encoded using</span>
-<span class="doccomment">///   [`ATOM_UTF8_EXT`], [`SMALL_ATOM_UTF8_EXT`] or [`ATOM_CACHE_REF`].</span>
-<span class="doccomment">/// * `ID` is a 32-bit big endian unsigned integer.</span>
-<span class="doccomment">///   Only 15 bits are significant; the rest are to be 0.</span>
-<span class="doccomment">/// * `Creation` is a 32-bit big endian unsigned integer.</span>
-<span class="doccomment">///   All ports originating from the same node incarnation must have</span>
-<span class="doccomment">///   identical Creation values.</span>
-<span class="doccomment">///   This makes it possible to separate identifiers from old (crashed) nodes</span>
-<span class="doccomment">///   from a new one.</span>
-<span class="doccomment">///   The value zero should be avoided for normal operations as it is used as</span>
-<span class="doccomment">///   a wild card for debug purpose</span>
-<span class="doccomment">///   (like a pid returned by [`erlang:list_to_pid/1`]).</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # String representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// There is not actually a good way to represent a port as a string because</span>
-<span class="doccomment">/// the `Node` value may not be known.</span>
-<span class="doccomment">/// A representation of #Port&lt;0.{id}.{creation}&gt; can be used as a means to visualize</span>
-<span class="doccomment">/// the value of a port regardless.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1</span>
-<span class="doccomment">/// [`ATOM_UTF8_EXT`]: static.ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`SMALL_ATOM_UTF8_EXT`]: static.SMALL_ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`ATOM_CACHE_REF`]: static.ATOM_CACHE_REF.html</span>
-<span class="doccomment">/// [`erlang:open_port/2`]: http://erlang.org/doc/man/erlang.html#open_port-2</span>
-<span class="doccomment">/// [dflags]: http://erlang.org/doc/apps/erts/erl_dist_protocol.html#dflags</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">NEW_PORT_EXT</span>:        <span class="ident">u8</span> <span class="op">=</span>  <span class="number">89</span>;
+    <span class="doccomment">/// Encodes a port identifier (obtained from [`erlang:open_port/2`]).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Introduced in OTP 19, but only to be decoded and echoed back.</span>
+    <span class="doccomment">/// Not encoded for local ports.</span>
+    <span class="doccomment">/// Planned to supersede PORT_EXT in OTP 23 when</span>
+    <span class="doccomment">/// [DFLAG_BIG_CREATON](dflags) becomes mandatory.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | N bytes | 4 bytes | 4 bytes    |</span>
+    <span class="doccomment">/// | ------ | ------- | ------- | ---------- |</span>
+    <span class="doccomment">/// | `89`   | `Node`  | `ID`    | `Creation` |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Node` is the name of the originating node, encoded using</span>
+    <span class="doccomment">///   [`AtomUtf8`], [`SmallAtomUtf8`] or [`AtomCacheRef`].</span>
+    <span class="doccomment">/// * `ID` is a 32-bit big endian unsigned integer.</span>
+    <span class="doccomment">///   Only 15 bits are significant; the rest are to be 0.</span>
+    <span class="doccomment">/// * `Creation` is a 32-bit big endian unsigned integer.</span>
+    <span class="doccomment">///   All ports originating from the same node incarnation must have</span>
+    <span class="doccomment">///   identical Creation values.</span>
+    <span class="doccomment">///   This makes it possible to separate identifiers from old (crashed)</span>
+    <span class="doccomment">///   nodes from a new one.</span>
+    <span class="doccomment">///   The value zero should be avoided for normal operations as it is used</span>
+    <span class="doccomment">///   as a wild card for debug purpose</span>
+    <span class="doccomment">///   (like a pid returned by [`erlang:list_to_pid/1`]).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # String representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// There is not actually a good way to represent a port as a string</span>
+    <span class="doccomment">/// because the `Node` value may not be known.</span>
+    <span class="doccomment">/// A representation of #Port&lt;0.{id}.{creation}&gt; can be used as a means to</span>
+    <span class="doccomment">/// visualize the value of a port regardless.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1</span>
+    <span class="doccomment">/// [`AtomUtf8`]: #variant.AtomUtf8</span>
+    <span class="doccomment">/// [`SmallAtomUtf8`]: #variant.SmallAtomUtf8</span>
+    <span class="doccomment">/// [`AtomCacheRef`]: #variant.AtomCacheRef</span>
+    <span class="doccomment">/// [`erlang:open_port/2`]: http://erlang.org/doc/man/erlang.html#open_port-2</span>
+    <span class="doccomment">/// [dflags]: http://erlang.org/doc/apps/erts/erl_dist_protocol.html#dflags</span>
+    <span class="ident">NewPort</span> <span class="op">=</span> <span class="number">89</span>,
 
-<span class="doccomment">/// Same as [`NEW_PID_EXT`] except the Creation field is only one byte and only</span>
-<span class="doccomment">/// two bits are significant, the rest are to be 0.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// | 1 byte | N bytes | 4 bytes | 4 bytes  | 1 byte     |</span>
-<span class="doccomment">/// | ------ | ------- | ------- | -------- | ---------- |</span>
-<span class="doccomment">/// | `103`  | `Node`  | `ID`    | `Serial` | `Creation` |</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// * `Node` is the name of the originating node, encoded using</span>
-<span class="doccomment">///   [`ATOM_UTF8_EXT`], [`SMALL_ATOM_UTF8_EXT`] or [`ATOM_CACHE_REF`].</span>
-<span class="doccomment">/// * `ID` is a 32-bit big endian unsigned integer.</span>
-<span class="doccomment">///   Only 15 bits are significant; the rest are to be 0.</span>
-<span class="doccomment">/// * `Serial` is a 32-bit big endian unsigned integer.</span>
-<span class="doccomment">///   Only 13 bits are significant; the rest are to be 0.</span>
-<span class="doccomment">/// * `Creation` is a 8-bit unsigned integer.</span>
-<span class="doccomment">///   All identifiers originating from the same node incarnation must have</span>
-<span class="doccomment">///   identical Creation values.</span>
-<span class="doccomment">///   This makes it possible to separate identifiers from old (crashed) nodes</span>
-<span class="doccomment">///   from a new one.</span>
-<span class="doccomment">///   The value zero should be avoided for normal operations as it is used as</span>
-<span class="doccomment">///   a wild card for debug purpose</span>
-<span class="doccomment">///   (like a pid returned by [`erlang:list_to_pid/1`]).</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # String representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// There is not actually a good way to represent a pid as a string because</span>
-<span class="doccomment">/// the `Node` value may not be known.</span>
-<span class="doccomment">/// A representation of &lt;0.{id}.{creation}&gt; can be used as a means to visualize</span>
-<span class="doccomment">/// the value of a pid regardless.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1</span>
-<span class="doccomment">/// [`ATOM_UTF8_EXT`]: static.ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`SMALL_ATOM_UTF8_EXT`]: static.SMALL_ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`ATOM_CACHE_REF`]: static.ATOM_CACHE_REF.html</span>
-<span class="doccomment">/// [`NEW_PID_EXT`]: static.NEW_PID_EXT.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">PID_EXT</span>:             <span class="ident">u8</span> <span class="op">=</span> <span class="number">103</span>;
+    <span class="doccomment">/// Same as [`NewPid`] except the Creation field is only one byte and only</span>
+    <span class="doccomment">/// two bits are significant, the rest are to be 0.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | N bytes | 4 bytes | 4 bytes  | 1 byte     |</span>
+    <span class="doccomment">/// | ------ | ------- | ------- | -------- | ---------- |</span>
+    <span class="doccomment">/// | `103`  | `Node`  | `ID`    | `Serial` | `Creation` |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Node` is the name of the originating node, encoded using</span>
+    <span class="doccomment">///   [`AtomUtf8`], [`SmallAtomUtf8`] or [`AtomCacheRef`].</span>
+    <span class="doccomment">/// * `ID` is a 32-bit big endian unsigned integer.</span>
+    <span class="doccomment">///   Only 15 bits are significant; the rest are to be 0.</span>
+    <span class="doccomment">/// * `Serial` is a 32-bit big endian unsigned integer.</span>
+    <span class="doccomment">///   Only 13 bits are significant; the rest are to be 0.</span>
+    <span class="doccomment">/// * `Creation` is a 8-bit unsigned integer.</span>
+    <span class="doccomment">///   All identifiers originating from the same node incarnation must have</span>
+    <span class="doccomment">///   identical Creation values.</span>
+    <span class="doccomment">///   This makes it possible to separate identifiers from old (crashed)</span>
+    <span class="doccomment">///   nodes from a new one.</span>
+    <span class="doccomment">///   The value zero should be avoided for normal operations as it is used</span>
+    <span class="doccomment">///   as a wild card for debug purpose</span>
+    <span class="doccomment">///   (like a pid returned by [`erlang:list_to_pid/1`]).</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// # String representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// There is not actually a good way to represent a pid as a string because</span>
+    <span class="doccomment">/// the `Node` value may not be known.</span>
+    <span class="doccomment">/// A representation of `&lt;0.{id}.{creation}&gt;` can be used as a means to</span>
+    <span class="doccomment">/// visualize the value of a pid regardless.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1</span>
+    <span class="doccomment">/// [`AtomUtf8`]: #variant.AtomUtf8</span>
+    <span class="doccomment">/// [`SmallAtomUtf8`]: #variant.SmallAtomUtf8</span>
+    <span class="doccomment">/// [`AtomCacheRef`]: #variant.AtomCacheRef</span>
+    <span class="doccomment">/// [`NewPid`]: #variant.NewPid</span>
+    <span class="ident">Pid</span> <span class="op">=</span> <span class="number">103</span>,
 
-<span class="doccomment">///  Encodes an Erlang process identifier object.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Introduced in OTP 19, but only to be decoded and echoed back.</span>
-<span class="doccomment">/// Not encoded for local processes.</span>
-<span class="doccomment">/// Planned to supersede PID_EXT in OTP 23 when [DFLAG_BIG_CREATON](dflags)</span>
-<span class="doccomment">/// becomes mandatory.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// | 1 byte | N bytes | 4 bytes | 4 bytes  | 4 bytes    |</span>
-<span class="doccomment">/// | ------ | ------- | ------- | -------- | ---------- |</span>
-<span class="doccomment">/// | `88`   | `Node`  | `ID`    | `Serial` | `Creation` |</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// * `Node` is the name of the originating node, encoded using</span>
-<span class="doccomment">///   [`ATOM_UTF8_EXT`], [`SMALL_ATOM_UTF8_EXT`] or [`ATOM_CACHE_REF`].</span>
-<span class="doccomment">/// * `ID` is a 32-bit big endian unsigned integer.</span>
-<span class="doccomment">///   Only 15 bits are significant; the rest are to be 0.</span>
-<span class="doccomment">/// * `Serial` is a 32-bit big endian unsigned integer.</span>
-<span class="doccomment">///   Only 13 bits are significant; the rest are to be 0.</span>
-<span class="doccomment">/// * `Creation` is a 32-bit big endian unsigned integer.</span>
-<span class="doccomment">///   All identifiers originating from the same node incarnation must have</span>
-<span class="doccomment">///   identical Creation values.</span>
-<span class="doccomment">///   This makes it possible to separate identifiers from old (crashed) nodes</span>
-<span class="doccomment">///   from a new one.</span>
-<span class="doccomment">///   The value zero should be avoided for normal operations as it is used as</span>
-<span class="doccomment">///   a wild card for debug purpose</span>
-<span class="doccomment">///   (like a pid returned by [`erlang:list_to_pid/1`]).</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # String representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// There is not actually a good way to represent a pid as a string because</span>
-<span class="doccomment">/// the `Node` value may not be known.</span>
-<span class="doccomment">/// A representation of &lt;0.{id}.{creation}&gt; can be used as a means to visualize</span>
-<span class="doccomment">/// the value of a pid regardless.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1</span>
-<span class="doccomment">/// [`ATOM_UTF8_EXT`]: static.ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`SMALL_ATOM_UTF8_EXT`]: static.SMALL_ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`ATOM_CACHE_REF`]: static.ATOM_CACHE_REF.html</span>
-<span class="doccomment">/// [dflags]: http://erlang.org/doc/apps/erts/erl_dist_protocol.html#dflags</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">NEW_PID_EXT</span>:         <span class="ident">u8</span> <span class="op">=</span>  <span class="number">88</span>;
+    <span class="doccomment">///  Encodes an Erlang process identifier object.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Introduced in OTP 19, but only to be decoded and echoed back.</span>
+    <span class="doccomment">/// Not encoded for local processes.</span>
+    <span class="doccomment">/// Planned to supersede [`Pid`] in OTP 23 when [DFLAG_BIG_CREATON](dflags)</span>
+    <span class="doccomment">/// becomes mandatory.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | N bytes | 4 bytes | 4 bytes  | 4 bytes    |</span>
+    <span class="doccomment">/// | ------ | ------- | ------- | -------- | ---------- |</span>
+    <span class="doccomment">/// | `88`   | `Node`  | `ID`    | `Serial` | `Creation` |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Node` is the name of the originating node, encoded using</span>
+    <span class="doccomment">///   [`AtomUtf8`], [`SmallAtomUtf8`] or [`AtomCacheRef`].</span>
+    <span class="doccomment">/// * `ID` is a 32-bit big endian unsigned integer.</span>
+    <span class="doccomment">///   Only 15 bits are significant; the rest are to be 0.</span>
+    <span class="doccomment">/// * `Serial` is a 32-bit big endian unsigned integer.</span>
+    <span class="doccomment">///   Only 13 bits are significant; the rest are to be 0.</span>
+    <span class="doccomment">/// * `Creation` is a 32-bit big endian unsigned integer.</span>
+    <span class="doccomment">///   All identifiers originating from the same node incarnation must have</span>
+    <span class="doccomment">///   identical Creation values.</span>
+    <span class="doccomment">///   This makes it possible to separate identifiers from old (crashed)</span>
+    <span class="doccomment">///   nodes from a new one.</span>
+    <span class="doccomment">///   The value zero should be avoided for normal operations as it is used</span>
+    <span class="doccomment">///   as a wild card for debug purpose</span>
+    <span class="doccomment">///   (like a pid returned by [`erlang:list_to_pid/1`]).</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// # String representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// There is not actually a good way to represent a pid as a string because</span>
+    <span class="doccomment">/// the `Node` value may not be known.</span>
+    <span class="doccomment">/// A representation of `&lt;0.{id}.{creation}&gt;` can be used as a means to</span>
+    <span class="doccomment">/// visualize the value of a pid regardless.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1</span>
+    <span class="doccomment">/// [`AtomUtf8`]: #variant.AtomUtf8</span>
+    <span class="doccomment">/// [`SmallAtomUtf8`]: #variant.SmallAtomUtf8</span>
+    <span class="doccomment">/// [`AtomCacheRef`]: #variant.AtomCacheRef</span>
+    <span class="doccomment">/// [`Pid`]: #variant.Pid</span>
+    <span class="doccomment">/// [dflags]: http://erlang.org/doc/apps/erts/erl_dist_protocol.html#dflags</span>
+    <span class="ident">NewPid</span> <span class="op">=</span> <span class="number">88</span>,
 
-<span class="doccomment">/// Encodes a tuple.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// | 1 byte | 1 byte  | N bytes    |</span>
-<span class="doccomment">/// | ------ | ------- | ---------- |</span>
-<span class="doccomment">/// | `104`  | `Arity` | `Elements` |</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// * `Arity` is an unsigned 8-bit integer.</span>
-<span class="doccomment">/// * `Elements` are each encoded terms.</span>
-<span class="doccomment">///   There are `Arity` amount of elements.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # String representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// The string representation is simply a comma-separated list of stringified</span>
-<span class="doccomment">/// terms completely wrapped with curly braces.</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">SMALL_TUPLE_EXT</span>:     <span class="ident">u8</span> <span class="op">=</span> <span class="number">104</span>;
+    <span class="doccomment">/// Encodes a tuple.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 1 byte  | N bytes    |</span>
+    <span class="doccomment">/// | ------ | ------- | ---------- |</span>
+    <span class="doccomment">/// | `104`  | `Arity` | `Elements` |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Arity` is an unsigned 8-bit integer.</span>
+    <span class="doccomment">/// * `Elements` are each encoded terms.</span>
+    <span class="doccomment">///   There are `Arity` amount of elements.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// # String representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// The string representation is simply a comma-separated list of</span>
+    <span class="doccomment">/// stringified terms completely wrapped with curly braces.</span>
+    <span class="ident">SmallTuple</span> <span class="op">=</span> <span class="number">104</span>,
 
-<span class="doccomment">/// Same as [`SMALL_TUPLE_EXT`] except that Arity is an unsigned 4 byte</span>
-<span class="doccomment">/// integer.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// | 1 byte | 4 bytes | N bytes    |</span>
-<span class="doccomment">/// | ------ | ------- | ---------- |</span>
-<span class="doccomment">/// | `105`  | `Arity` | `Elements` |</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// * `Arity` is an unsigned 32-bit big-endian integer.</span>
-<span class="doccomment">/// * `Elements` are each encoded terms.</span>
-<span class="doccomment">///   There are `Arity` amount of elements.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # String representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// The string representation is simply a comma-separated list of stringified</span>
-<span class="doccomment">/// terms completely wrapped with curly braces.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [`SMALL_TUPLE_EXT`]: static.SMALL_TUPLE_EXT.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">LARGE_TUPLE_EXT</span>:     <span class="ident">u8</span> <span class="op">=</span> <span class="number">105</span>;
+    <span class="doccomment">/// Same as [`SmallTuple`] except that Arity is an unsigned 4 byte</span>
+    <span class="doccomment">/// integer.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 4 bytes | N bytes    |</span>
+    <span class="doccomment">/// | ------ | ------- | ---------- |</span>
+    <span class="doccomment">/// | `105`  | `Arity` | `Elements` |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Arity` is an unsigned 32-bit big-endian integer.</span>
+    <span class="doccomment">/// * `Elements` are each encoded terms.</span>
+    <span class="doccomment">///   There are `Arity` amount of elements.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// # String representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// The string representation is simply a comma-separated list of</span>
+    <span class="doccomment">/// stringified terms completely wrapped with curly braces.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`SmallTuple`]: #variant.SmallTuple</span>
+    <span class="ident">LargeTuple</span> <span class="op">=</span> <span class="number">105</span>,
 
-<span class="doccomment">/// Encodes a map.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// | 1 byte | 4 bytes | N bytes |</span>
-<span class="doccomment">/// | ------ | ------- | ------- |</span>
-<span class="doccomment">/// | `116`  | `Arity` | `Pairs` |</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// * `Arity` is the amount of key-value pairs in this map.</span>
-<span class="doccomment">/// * `Pairs` are each two encoded terms.</span>
-<span class="doccomment">///   There are `Arity` amount of pairs.</span>
-<span class="doccomment">///   There are no duplicate keys.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # String representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// A map is represented like this:</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// `#{ key0 =&gt; value0 (, keyN =&gt; valueN )* }`</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">MAP_EXT</span>:             <span class="ident">u8</span> <span class="op">=</span> <span class="number">116</span>;
+    <span class="doccomment">/// Encodes a map.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 4 bytes | N bytes |</span>
+    <span class="doccomment">/// | ------ | ------- | ------- |</span>
+    <span class="doccomment">/// | `116`  | `Arity` | `Pairs` |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Arity` is the amount of key-value pairs in this map.</span>
+    <span class="doccomment">/// * `Pairs` are each two encoded terms.</span>
+    <span class="doccomment">///   There are `Arity` amount of pairs.</span>
+    <span class="doccomment">///   There are no duplicate keys.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// # String representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// A map is represented like this:</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// `#{ key0 =&gt; value0 (, keyN =&gt; valueN )* }`</span>
+    <span class="ident">Map</span> <span class="op">=</span> <span class="number">116</span>,
 
-<span class="doccomment">/// The representation for an empty list, that is, the Erlang syntax `[]`.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// | 1 byte |</span>
-<span class="doccomment">/// | ------ |</span>
-<span class="doccomment">/// | `106`  |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # String representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// `[]`.</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">NIL_EXT</span>:             <span class="ident">u8</span> <span class="op">=</span> <span class="number">106</span>;
+    <span class="doccomment">/// The representation for an empty list, that is, the Erlang syntax `[]`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte |</span>
+    <span class="doccomment">/// | ------ |</span>
+    <span class="doccomment">/// | `106`  |</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// # String representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// `[]`.</span>
+    <span class="ident">Nil</span> <span class="op">=</span> <span class="number">106</span>,
 
-<span class="doccomment">/// String does not have a corresponding Erlang representation, but is an</span>
-<span class="doccomment">/// optimization for sending lists of bytes (integer in the range 0-255) more</span>
-<span class="doccomment">/// efficiently over the distribution.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// As field Length is an unsigned 2 byte integer (big-endian), implementations</span>
-<span class="doccomment">/// must ensure that lists longer than 65535 elements are encoded as</span>
-<span class="doccomment">/// [`LIST_EXT`].</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// | 1 byte | 2 bytes  | `Length` bytes |</span>
-<span class="doccomment">/// | ------ | -------- | -------------- |</span>
-<span class="doccomment">/// | 107    | `Length` | `Characters`   |</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The characters are UTF-8 encoded characters.</span>
-<span class="doccomment">/// There are a maximum of 65535 bytes, however many characters that turns out</span>
-<span class="doccomment">/// to be.</span>
-<span class="doccomment">/// It is *not* a maximum of 65535 characters!</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # String representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// Place the string between double quotes, and apply the following escape</span>
-<span class="doccomment">/// sequences:</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | Actual character            | Escape sequence |</span>
-<span class="doccomment">/// | --------------------------- | --------------- |</span>
-<span class="doccomment">/// | backspace                   | `\b`            |</span>
-<span class="doccomment">/// | delete                      | `\d`            |</span>
-<span class="doccomment">/// | escape                      | `\e`            |</span>
-<span class="doccomment">/// | form feed                   | `\f`            |</span>
-<span class="doccomment">/// | newline                     | `\n`            |</span>
-<span class="doccomment">/// | carriage return             | `\r`            |</span>
-<span class="doccomment">/// | tab                         | `\t`            |</span>
-<span class="doccomment">/// | vertical tab                | `\v`            |</span>
-<span class="doccomment">/// | double qoute (&quot;)            | `\&quot;`            |</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [`LIST_EXT`]: static.LIST_EXT.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">STRING_EXT</span>:          <span class="ident">u8</span> <span class="op">=</span> <span class="number">107</span>;
+    <span class="doccomment">/// String does not have a corresponding Erlang representation, but is an</span>
+    <span class="doccomment">/// optimization for sending lists of bytes (integer in the range 0-255)</span>
+    <span class="doccomment">/// more efficiently over the distribution.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// As field Length is an unsigned 2 byte integer (big-endian),</span>
+    <span class="doccomment">/// implementations must ensure that lists longer than 65535 elements are</span>
+    <span class="doccomment">/// encoded as [`List`].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 2 bytes  | `Length` bytes |</span>
+    <span class="doccomment">/// | ------ | -------- | -------------- |</span>
+    <span class="doccomment">/// | 107    | `Length` | `Characters`   |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The characters are UTF-8 encoded characters.</span>
+    <span class="doccomment">/// There are a maximum of 65535 bytes, however many characters that turns</span>
+    <span class="doccomment">/// out to be.</span>
+    <span class="doccomment">/// It is *not* a maximum of 65535 characters!</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// # String representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// Place the string between double quotes, and apply the following escape</span>
+    <span class="doccomment">/// sequences:</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// | Actual character            | Escape sequence |</span>
+    <span class="doccomment">/// | --------------------------- | --------------- |</span>
+    <span class="doccomment">/// | backspace                   | `\b`            |</span>
+    <span class="doccomment">/// | delete                      | `\d`            |</span>
+    <span class="doccomment">/// | escape                      | `\e`            |</span>
+    <span class="doccomment">/// | form feed                   | `\f`            |</span>
+    <span class="doccomment">/// | newline                     | `\n`            |</span>
+    <span class="doccomment">/// | carriage return             | `\r`            |</span>
+    <span class="doccomment">/// | tab                         | `\t`            |</span>
+    <span class="doccomment">/// | vertical tab                | `\v`            |</span>
+    <span class="doccomment">/// | double qoute (&quot;)            | `\&quot;`            |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`List`]: #variant.List</span>
+    <span class="ident">String</span> <span class="op">=</span> <span class="number">107</span>,
 
-<span class="doccomment">/// The representation for a non-empty list.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// | 1 byte | 4 bytes  | N bytes    | M bytes |</span>
-<span class="doccomment">/// | ------ | -------- | ---------- | ------- |</span>
-<span class="doccomment">/// | 108    | `Length` | `Elements` | `Tail`  |</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// * `Length` is a 32-bit big-endian unsigned number that is the number of</span>
-<span class="doccomment">///   elements that follows in section `Elements`.</span>
-<span class="doccomment">/// * `Elements` are each encoded terms.</span>
-<span class="doccomment">/// * `Tail` is the final tail of the list; it is [`NIL_EXT`] for a proper list,</span>
-<span class="doccomment">///   but can be any type if the list is improper (for example, `[a|b]`).</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # String representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// Place a comma-separated list of stringified terms between block-quotes.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [`NIL_EXT`]: static.NIL_EXT.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">LIST_EXT</span>:            <span class="ident">u8</span> <span class="op">=</span> <span class="number">108</span>;
+    <span class="doccomment">/// The representation for a non-empty list.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 4 bytes  | N bytes    | M bytes |</span>
+    <span class="doccomment">/// | ------ | -------- | ---------- | ------- |</span>
+    <span class="doccomment">/// | 108    | `Length` | `Elements` | `Tail`  |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Length` is a 32-bit big-endian unsigned number that is the number of</span>
+    <span class="doccomment">///   elements that follows in section `Elements`.</span>
+    <span class="doccomment">/// * `Elements` are each encoded terms.</span>
+    <span class="doccomment">/// * `Tail` is the final tail of the list; it is [`Nil`] for a proper list,</span>
+    <span class="doccomment">///   but can be any type if the list is improper (for example, `[a|b]`).</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// # String representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// Place a comma-separated list of stringified terms between block-quotes.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`Nil`]: #variant.Nil</span>
+    <span class="ident">List</span> <span class="op">=</span> <span class="number">108</span>,
 
-<span class="doccomment">/// Binaries are byte-arrays.</span>
-<span class="doccomment">/// They are represented as bitstrings or binaries in the Erlang language.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// | 1 byte | 4 bytes | `Len` bytes |</span>
-<span class="doccomment">/// | ------ | ------- | ----------- |</span>
-<span class="doccomment">/// | `109`  | `Len`   | `Data`      |</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// * The Len length field is an unsigned 4 byte integer (big-endian).</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # String representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// The output format is simply to convert each byte to a decimal number</span>
-<span class="doccomment">/// and print them as a comma-separated list between a pair of double angle</span>
-<span class="doccomment">/// brackets (`&lt;&lt;`, `&gt;&gt;`).</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// For reading, the values should be any of:</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * A number according to [`INTEGER_EXT`]</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// [`INTEGER_EXT`]: static.INTEGER_EXT.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">BINARY_EXT</span>:          <span class="ident">u8</span> <span class="op">=</span> <span class="number">109</span>;
+    <span class="doccomment">/// Binaries are byte-arrays.</span>
+    <span class="doccomment">/// They are represented as bitstrings or binaries in the Erlang language.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 4 bytes | `Len` bytes |</span>
+    <span class="doccomment">/// | ------ | ------- | ----------- |</span>
+    <span class="doccomment">/// | `109`  | `Len`   | `Data`      |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * The Len length field is an unsigned 4 byte integer (big-endian).</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// # String representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// The output format is simply to convert each byte to a decimal number</span>
+    <span class="doccomment">/// and print them as a comma-separated list between a pair of double angle</span>
+    <span class="doccomment">/// brackets (`&lt;&lt;`, `&gt;&gt;`).</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// For reading, the values should be any of:</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// * A number according to [`Integer`]</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// [`Integer`]: #variant.Integer</span>
+    <span class="ident">Binary</span> <span class="op">=</span> <span class="number">109</span>,
 
-<span class="doccomment">/// Integer representation of an integer N where `-2^256 &lt; N &lt; 2^256`.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte | 1 byte | 1 byte | `Len` bytes        |</span>
-<span class="doccomment">/// | ------ | ------ | ------ | ------------------ |</span>
-<span class="doccomment">/// | `110`  | `Len`  | `Sign` | `d0`..`d(Len - 1)` |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// Bignums are stored in unary form with a Sign byte, that is, 0 if the</span>
-<span class="doccomment">/// bignum is positive and 1 if it is negative.</span>
-<span class="doccomment">/// The digits are stored with the least significant byte stored first.</span>
-<span class="doccomment">/// To calculate the integer, the following formula can be used:</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```text</span>
-<span class="doccomment">/// B = 256</span>
-<span class="doccomment">/// (d0*B^0 + d1*B^1 + d2*B^2 + ... d(N-1)*B^(n-1))</span>
-<span class="doccomment">/// ```</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # String representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// The representations of this 2&#39;s complement 32-bit signed integer are:</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * Simple decimal</span>
-<span class="doccomment">/// * An ASCII character Z in the form `$Z`</span>
-<span class="doccomment">/// * Any other base B in 2..36 in the form `B#N`</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// The recommendation is to always output like a simple decimal, as it is the</span>
-<span class="doccomment">/// simplest and most portable.</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">SMALL_BIG_EXT</span>:       <span class="ident">u8</span> <span class="op">=</span> <span class="number">110</span>;
+    <span class="doccomment">/// Integer representation of an integer N where `-2^256 &lt; N &lt; 2^256`.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// | 1 byte | 1 byte | 1 byte | `Len` bytes        |</span>
+    <span class="doccomment">/// | ------ | ------ | ------ | ------------------ |</span>
+    <span class="doccomment">/// | `110`  | `Len`  | `Sign` | `d0`..`d(Len - 1)` |</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// Bignums are stored in unary form with a Sign byte, that is, 0 if the</span>
+    <span class="doccomment">/// bignum is positive and 1 if it is negative.</span>
+    <span class="doccomment">/// The digits are stored with the least significant byte stored first.</span>
+    <span class="doccomment">/// To calculate the integer, the following formula can be used:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```text</span>
+    <span class="doccomment">/// B = 256</span>
+    <span class="doccomment">/// (d0*B^0 + d1*B^1 + d2*B^2 + ... d(N-1)*B^(n-1))</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// # String representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// The representations of this 2&#39;s complement 32-bit signed integer are:</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// * Simple decimal</span>
+    <span class="doccomment">/// * An ASCII character Z in the form `$Z`</span>
+    <span class="doccomment">/// * Any other base B in 2..36 in the form `B#N`</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// The recommendation is to always output like a simple decimal, as it is</span>
+    <span class="doccomment">/// the simplest and most portable.</span>
+    <span class="ident">SmallBig</span> <span class="op">=</span> <span class="number">110</span>,
 
-<span class="doccomment">/// Integer representation of an integer N where `-2^(2^32) &lt; N &lt; 2^(2^32)`.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte | 4 bytes | 1 byte | `Len` bytes        |</span>
-<span class="doccomment">/// | ------ | ------- | ------ | ------------------ |</span>
-<span class="doccomment">/// | `111`  | `Len`   | `Sign` | `d0`..`d(Len - 1)` |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// Bignums are stored in unary form with a Sign byte, that is, 0 if the</span>
-<span class="doccomment">/// bignum is positive and 1 if it is negative.</span>
-<span class="doccomment">/// The digits are stored with the least significant byte stored first.</span>
-<span class="doccomment">/// To calculate the integer, the following formula can be used:</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```text</span>
-<span class="doccomment">/// B = 256</span>
-<span class="doccomment">/// (d0*B^0 + d1*B^1 + d2*B^2 + ... d(N-1)*B^(n-1))</span>
-<span class="doccomment">/// ```</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # String representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// The representations of this 2&#39;s complement 32-bit signed integer are:</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * Simple decimal</span>
-<span class="doccomment">/// * An ASCII character Z in the form `$Z`</span>
-<span class="doccomment">/// * Any other base B in 2..36 in the form `B#N`</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// The recommendation is to always output like a simple decimal, as it is the</span>
-<span class="doccomment">/// simplest and most portable.</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">LARGE_BIG_EXT</span>:       <span class="ident">u8</span> <span class="op">=</span> <span class="number">111</span>;
+    <span class="doccomment">/// Integer representation of an integer N where `-2^(2^32) &lt; N &lt; 2^(2^32)`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// | 1 byte | 4 bytes | 1 byte | `Len` bytes        |</span>
+    <span class="doccomment">/// | ------ | ------- | ------ | ------------------ |</span>
+    <span class="doccomment">/// | `111`  | `Len`   | `Sign` | `d0`..`d(Len - 1)` |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Bignums are stored in unary form with a Sign byte, that is, 0 if the</span>
+    <span class="doccomment">/// bignum is positive and 1 if it is negative.</span>
+    <span class="doccomment">/// The digits are stored with the least significant byte stored first.</span>
+    <span class="doccomment">/// To calculate the integer, the following formula can be used:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```text</span>
+    <span class="doccomment">/// B = 256</span>
+    <span class="doccomment">/// (d0*B^0 + d1*B^1 + d2*B^2 + ... d(N-1)*B^(n-1))</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # String representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The representations of this 2&#39;s complement 32-bit signed integer are:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * Simple decimal</span>
+    <span class="doccomment">/// * An ASCII character Z in the form `$Z`</span>
+    <span class="doccomment">/// * Any other base B in 2..36 in the form `B#N`</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The recommendation is to always output like a simple decimal, as it is</span>
+    <span class="doccomment">/// the simplest and most portable.</span>
+    <span class="ident">LargeBig</span> <span class="op">=</span> <span class="number">111</span>,
 
-<span class="doccomment">/// Deprecated method for encoding a reference term.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte | `N` bytes | 4 bytes | 1 byte     |</span>
-<span class="doccomment">/// | ------ | --------- | ------- | ---------- |</span>
-<span class="doccomment">/// | `101`  | `Node`    | `ID`    | `Creation` |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * `Node` is the name of the originating node, encoded using</span>
-<span class="doccomment">///   [`ATOM_UTF8_EXT`], [`SMALL_ATOM_UTF8_EXT`] or [`ATOM_CACHE_REF`].</span>
-<span class="doccomment">/// * `Creation` is a 8-bit unsigned integer.</span>
-<span class="doccomment">///   All references originating from the same node incarnation must have</span>
-<span class="doccomment">///   identical Creation values.</span>
-<span class="doccomment">///   This makes it possible to separate references from old (crashed) nodes</span>
-<span class="doccomment">///   from a new one.</span>
-<span class="doccomment">///   The value zero should be avoided for normal operations as it is used as</span>
-<span class="doccomment">///   a wild card for debug purpose</span>
-<span class="doccomment">///   (like a pid returned by [`erlang:list_to_pid/1`]).</span>
-<span class="doccomment">/// * `ID` is a node-unique number that describes this reference uniquely.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1</span>
-<span class="doccomment">/// [`ATOM_UTF8_EXT`]: static.ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`SMALL_ATOM_UTF8_EXT`]: static.SMALL_ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`ATOM_CACHE_REF`]: static.ATOM_CACHE_REF.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">REFERENCE_EXT</span>:       <span class="ident">u8</span> <span class="op">=</span> <span class="number">101</span>;
+    <span class="doccomment">/// Deprecated method for encoding a reference term.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | `N` bytes | 4 bytes | 1 byte     |</span>
+    <span class="doccomment">/// | ------ | --------- | ------- | ---------- |</span>
+    <span class="doccomment">/// | `101`  | `Node`    | `ID`    | `Creation` |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Node` is the name of the originating node, encoded using</span>
+    <span class="doccomment">///   [`AtomUtf8`], [`SmallAtomUtf8`] or [`AtomCacheRef`].</span>
+    <span class="doccomment">/// * `Creation` is a 8-bit unsigned integer.</span>
+    <span class="doccomment">///   All references originating from the same node incarnation must have</span>
+    <span class="doccomment">///   identical Creation values.</span>
+    <span class="doccomment">///   This makes it possible to separate references from old (crashed) nodes</span>
+    <span class="doccomment">///   from a new one.</span>
+    <span class="doccomment">///   The value zero should be avoided for normal operations as it is used</span>
+    <span class="doccomment">///   as a wild card for debug purpose</span>
+    <span class="doccomment">///   (like a pid returned by [`erlang:list_to_pid/1`]).</span>
+    <span class="doccomment">/// * `ID` is a node-unique number that describes this reference uniquely.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1</span>
+    <span class="doccomment">/// [`AtomUtf8`]: #variant.AtomUtf8</span>
+    <span class="doccomment">/// [`SmallAtomUtf8`]: #variant.SmallAtomUtf8</span>
+    <span class="doccomment">/// [`AtomCacheRef`]: #variant.AtomCacheRef</span>
+    <span class="ident">Reference</span> <span class="op">=</span> <span class="number">101</span>,
 
-<span class="doccomment">/// Deprecated method for encoding a reference term.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte | 2 bytes | `N` bytes | 1 byte     | `Len * 4` bytes |</span>
-<span class="doccomment">/// | ------ | ------- | --------- | ---------- | --------------- |</span>
-<span class="doccomment">/// | `101`  | `Len`   | `Node`    | `Creation` | `ID`            |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * `Node` is the name of the originating node, encoded using</span>
-<span class="doccomment">///   [`ATOM_UTF8_EXT`], [`SMALL_ATOM_UTF8_EXT`] or [`ATOM_CACHE_REF`].</span>
-<span class="doccomment">/// * `Creation` is a 8-bit unsigned integer.</span>
-<span class="doccomment">///   All references originating from the same node incarnation must have</span>
-<span class="doccomment">///   identical Creation values.</span>
-<span class="doccomment">///   This makes it possible to separate references from old (crashed) nodes</span>
-<span class="doccomment">///   from a new one.</span>
-<span class="doccomment">///   The value zero should be avoided for normal operations as it is used as</span>
-<span class="doccomment">///   a wild card for debug purpose</span>
-<span class="doccomment">///   (like a pid returned by [`erlang:list_to_pid/1`]).</span>
-<span class="doccomment">/// * `Len` describes how many 32-bit values are contained within `ID`.</span>
-<span class="doccomment">/// * `ID` is a series of 32-bit unsigned integers.</span>
-<span class="doccomment">///   The erlang docs state:</span>
-<span class="doccomment">///   </span>
-<span class="doccomment">///   &gt; A sequence of `Len` big-endian unsigned integers (4 bytes each, so</span>
-<span class="doccomment">///   &gt; `N&#39; = 4 * Len`), but is to be regarded as uninterpreted data.</span>
-<span class="doccomment">///   </span>
-<span class="doccomment">///   I am having trouble interpreting this statement, so the assumption is</span>
-<span class="doccomment">///   that only the first is interpreted, and only the 18 least-significant</span>
-<span class="doccomment">///   bits of that value are interpreted, and that the rest are to be 0.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1</span>
-<span class="doccomment">/// [`ATOM_UTF8_EXT`]: static.ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`SMALL_ATOM_UTF8_EXT`]: static.SMALL_ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`ATOM_CACHE_REF`]: static.ATOM_CACHE_REF.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">NEW_REFERENCE_EXT</span>:   <span class="ident">u8</span> <span class="op">=</span> <span class="number">114</span>;
+    <span class="doccomment">/// Deprecated method for encoding a reference term.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 2 bytes | `N` bytes | 1 byte     | `Len * 4` bytes |</span>
+    <span class="doccomment">/// | ------ | ------- | --------- | ---------- | --------------- |</span>
+    <span class="doccomment">/// | `101`  | `Len`   | `Node`    | `Creation` | `ID`            |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Node` is the name of the originating node, encoded using</span>
+    <span class="doccomment">///   [`AtomUtf8`], [`SmallAtomUtf8`] or [`AtomCacheRef`].</span>
+    <span class="doccomment">/// * `Creation` is a 8-bit unsigned integer.</span>
+    <span class="doccomment">///   All references originating from the same node incarnation must have</span>
+    <span class="doccomment">///   identical Creation values.</span>
+    <span class="doccomment">///   This makes it possible to separate references from old (crashed) nodes</span>
+    <span class="doccomment">///   from a new one.</span>
+    <span class="doccomment">///   The value zero should be avoided for normal operations as it is used</span>
+    <span class="doccomment">///   as a wild card for debug purpose</span>
+    <span class="doccomment">///   (like a pid returned by [`erlang:list_to_pid/1`]).</span>
+    <span class="doccomment">/// * `Len` describes how many 32-bit values are contained within `ID`.</span>
+    <span class="doccomment">/// * `ID` is a series of 32-bit unsigned integers.</span>
+    <span class="doccomment">///   The erlang docs state:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///   &gt; A sequence of `Len` big-endian unsigned integers (4 bytes each, so</span>
+    <span class="doccomment">///   &gt; `N&#39; = 4 * Len`), but is to be regarded as uninterpreted data.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///   I am having trouble interpreting this statement, so the assumption is</span>
+    <span class="doccomment">///   that only the first is interpreted, and only the 18 least-significant</span>
+    <span class="doccomment">///   bits of that value are interpreted, and that the rest are to be 0.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1</span>
+    <span class="doccomment">/// [`AtomUtf8`]: #variant.AtomUtf8</span>
+    <span class="doccomment">/// [`SmallAtomUtf8`]: #variant.SmallAtomUtf8</span>
+    <span class="doccomment">/// [`AtomCacheRef`]: #variant.AtomCacheRef</span>
+    <span class="ident">NewReference</span> <span class="op">=</span> <span class="number">114</span>,
 
-<span class="doccomment">/// Encodes a reference term.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte | 2 bytes | `N` bytes | 4 bytes    | `Len * 4` bytes |</span>
-<span class="doccomment">/// | ------ | ------- | --------- | ---------- | --------------- |</span>
-<span class="doccomment">/// | `90`   | `Len`   | `Node`    | `Creation` | `ID`            |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * `Node` is the name of the originating node, encoded using</span>
-<span class="doccomment">///   [`ATOM_UTF8_EXT`], [`SMALL_ATOM_UTF8_EXT`] or [`ATOM_CACHE_REF`].</span>
-<span class="doccomment">/// * `Creation` is a 32-bit big-endian unsigned integer.</span>
-<span class="doccomment">///   All references originating from the same node incarnation must have</span>
-<span class="doccomment">///   identical Creation values.</span>
-<span class="doccomment">///   This makes it possible to separate references from old (crashed) nodes</span>
-<span class="doccomment">///   from a new one.</span>
-<span class="doccomment">///   The value zero should be avoided for normal operations as it is used as</span>
-<span class="doccomment">///   a wild card for debug purpose</span>
-<span class="doccomment">///   (like a pid returned by [`erlang:list_to_pid/1`]).</span>
-<span class="doccomment">/// * `Len` describes how many 32-bit values are contained within `ID`.</span>
-<span class="doccomment">/// * `ID` is a series of 32-bit unsigned integers.</span>
-<span class="doccomment">///   The erlang docs state:</span>
-<span class="doccomment">///   </span>
-<span class="doccomment">///   &gt; A sequence of `Len` big-endian unsigned integers (4 bytes each, so</span>
-<span class="doccomment">///   &gt; `N&#39; = 4 * Len`), but is to be regarded as uninterpreted data.</span>
-<span class="doccomment">///   </span>
-<span class="doccomment">///   I am having trouble interpreting this statement, so the assumption is</span>
-<span class="doccomment">///   that only the first is interpreted, and only the 18 least-significant</span>
-<span class="doccomment">///   bits of that value are interpreted, and that the rest are to be 0.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1</span>
-<span class="doccomment">/// [`ATOM_UTF8_EXT`]: static.ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`SMALL_ATOM_UTF8_EXT`]: static.SMALL_ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`ATOM_CACHE_REF`]: static.ATOM_CACHE_REF.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">NEWER_REFERENCE_EXT</span>: <span class="ident">u8</span> <span class="op">=</span>  <span class="number">90</span>;
+    <span class="doccomment">/// Encodes a reference term.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 2 bytes | `N` bytes | 4 bytes    | `Len * 4` bytes |</span>
+    <span class="doccomment">/// | ------ | ------- | --------- | ---------- | --------------- |</span>
+    <span class="doccomment">/// | `90`   | `Len`   | `Node`    | `Creation` | `ID`            |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Node` is the name of the originating node, encoded using</span>
+    <span class="doccomment">///   [`AtomUtf8`], [`SmallAtomUtf8`] or [`AtomCacheRef`].</span>
+    <span class="doccomment">/// * `Creation` is a 32-bit big-endian unsigned integer.</span>
+    <span class="doccomment">///   All references originating from the same node incarnation must have</span>
+    <span class="doccomment">///   identical Creation values.</span>
+    <span class="doccomment">///   This makes it possible to separate references from old (crashed) nodes</span>
+    <span class="doccomment">///   from a new one.</span>
+    <span class="doccomment">///   The value zero should be avoided for normal operations as it is used</span>
+    <span class="doccomment">///   as a wild card for debug purpose</span>
+    <span class="doccomment">///   (like a pid returned by [`erlang:list_to_pid/1`]).</span>
+    <span class="doccomment">/// * `Len` describes how many 32-bit values are contained within `ID`.</span>
+    <span class="doccomment">/// * `ID` is a series of 32-bit unsigned integers.</span>
+    <span class="doccomment">///   The erlang docs state:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///   &gt; A sequence of `Len` big-endian unsigned integers (4 bytes each, so</span>
+    <span class="doccomment">///   &gt; `N&#39; = 4 * Len`), but is to be regarded as uninterpreted data.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///   I am having trouble interpreting this statement, so the assumption is</span>
+    <span class="doccomment">///   that only the first is interpreted, and only the 18 least-significant</span>
+    <span class="doccomment">///   bits of that value are interpreted, and that the rest are to be 0.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`erlang:lst_to_pid/1`]: http://erlang.org/doc/man/erlang.html#list_to_pid-1</span>
+    <span class="doccomment">/// [`AtomUtf8`]: #variant.AtomUtf8</span>
+    <span class="doccomment">/// [`SmallAtomUtf8`]: #variant.SmallAtomUtf8</span>
+    <span class="doccomment">/// [`AtomCacheRef`]: #variant.AtomCacheRef</span>
+    <span class="ident">NewerReference</span> <span class="op">=</span> <span class="number">90</span>,
 
-<span class="doccomment">/// Old encoding of internal functions: `fun F/A and fun(Arg1,..) -&gt; ... end`.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte | 4 bytes   | N bytes | N&#39; bytes | N&#39;&#39; bytes | N&#39;&#39;&#39;  bytes | N&#39;&#39;&#39;&#39; bytes    |</span>
-<span class="doccomment">/// | ------ | --------- | ------- | -------- | --------- | ----------- | -------------- |</span>
-<span class="doccomment">/// | `117`  | `NumFree` | `Pid`   | `Module` | `Index`   | `Uniq`      | `Free vars...` |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * `NumFree` is a 32-bit big-endian unsigned integer is the number of</span>
-<span class="doccomment">///   free variables (`Free vars`).</span>
-<span class="doccomment">/// * `Pid` is a process identifier as in [`PID_EXT`].</span>
-<span class="doccomment">///   Represents the process in which the fun was created.</span>
-<span class="doccomment">/// * `Module`, encoded as an atom using [`ATOM_UTF8_EXT`],</span>
-<span class="doccomment">///   [`SMALL_ATOM_UTF8_EXT`], or [`ATOM_CACHE_REF`], is the module that the</span>
-<span class="doccomment">///   fun is implemented in.</span>
-<span class="doccomment">/// * `Index`, encoded as an integer using [`SMALL_INTEGER_EXT`] or</span>
-<span class="doccomment">///   [`INTEGER_EXT`] is typically a small index into the module&#39;s fun table.</span>
-<span class="doccomment">/// * `Uniq`, encoded as an integer using [`SMALL_INTEGER_EXT`] or</span>
-<span class="doccomment">///   [`INTEGER_EXT`] is the hash value of the parse for the fun.</span>
-<span class="doccomment">/// * `Free vars` are `NumFree` amount of terms, each one encoded according to</span>
-<span class="doccomment">///   its type.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// [`ATOM_UTF8_EXT`]: static.ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`SMALL_ATOM_UTF8_EXT`]: static.SMALL_ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`ATOM_CACHE_REF`]: static.ATOM_CACHE_REF.html</span>
-<span class="doccomment">/// [`SMALL_INTEGER_EXT`]: static.SMALL_INTEGER_EXT.html</span>
-<span class="doccomment">/// [`INTEGER_EXT`]: static.INTEGER_EXT.html</span>
-<span class="doccomment">/// [`PID_EXT`]: static.PID_EXT.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">FUN_EXT</span>:             <span class="ident">u8</span> <span class="op">=</span> <span class="number">117</span>;
+    <span class="doccomment">/// Old encoding of internal functions:</span>
+    <span class="doccomment">/// `fun F/A and fun(Arg1,..) -&gt; ... end`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 4 bytes   | N bytes | N&#39; bytes | N&#39;&#39; bytes | N&#39;&#39;&#39;  bytes | N&#39;&#39;&#39;&#39; bytes    |</span>
+    <span class="doccomment">/// | ------ | --------- | ------- | -------- | --------- | ----------- | -------------- |</span>
+    <span class="doccomment">/// | `117`  | `NumFree` | `Pid`   | `Module` | `Index`   | `Uniq`      | `Free vars...` |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `NumFree` is a 32-bit big-endian unsigned integer is the number of</span>
+    <span class="doccomment">///   free variables (`Free vars`).</span>
+    <span class="doccomment">/// * `Pid` is a process identifier as in [`Pid`].</span>
+    <span class="doccomment">///   Represents the process in which the fun was created.</span>
+    <span class="doccomment">/// * `Module`, encoded as an atom using [`AtomUtf8`], [`SmallAtomUtf8`], or</span>
+    <span class="doccomment">///   [`AtomCacheRef`], is the module that the fun is implemented in.</span>
+    <span class="doccomment">/// * `Index`, encoded as an integer using [`SmallInteger`] or</span>
+    <span class="doccomment">///   [`Integer`] is typically a small index into the module&#39;s fun table.</span>
+    <span class="doccomment">/// * `Uniq`, encoded as an integer using [`SmallInteger`] or</span>
+    <span class="doccomment">///   [`Integer`] is the hash value of the parse for the fun.</span>
+    <span class="doccomment">/// * `Free vars` are `NumFree` amount of terms, each one encoded according</span>
+    <span class="doccomment">///   to its type.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`AtomUtf8`]: #variant.AtomUtf8</span>
+    <span class="doccomment">/// [`SmallAtomUtf8`]: #variant.SmallAtomUtf8</span>
+    <span class="doccomment">/// [`AtomCacheRef`]: #variant.AtomCacheRef</span>
+    <span class="doccomment">/// [`SmallInteger`]: #variant.SmallInteger</span>
+    <span class="doccomment">/// [`Integer`]: #variant.Integer</span>
+    <span class="doccomment">/// [`Pid`]: #variant.Pid</span>
+    <span class="ident">Fun</span> <span class="op">=</span> <span class="number">117</span>,
 
-<span class="doccomment">/// Encoding of internal functions: `fun F/A and fun(Arg1,..) -&gt; ... end`.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte | 4 bytes | 1 byte   | 16 bytes | 4 bytes  | 4 bytes    | N bytes   | N&#39; bytes    | N&#39;&#39; bytes  | N&#39;&#39;&#39; bytes | N&#39;&#39;&#39;&#39; bytes    |</span>
-<span class="doccomment">/// | ------ | ------- | -------- | -------- | -------- | ---------- | --------- | ----------- | ---------- | ---------- | -------------- |</span>
-<span class="doccomment">/// | `112`  | `Size`  | `Arity`  | `Uniq`   | `Index`  | `NumFree`  | `Module`  | `OldIndex`  | `OldUniq`  | `Pid`      | `Free vars...` | </span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// * `Size` is the total number of bytes, including field Size.</span>
-<span class="doccomment">/// * `Arity` is the arity of the function implementing the fun, as an 8-bit</span>
-<span class="doccomment">///   unsigned number.</span>
-<span class="doccomment">/// * `Uniq` is a 16 bytes MD5 of the significant parts of the Beam file.</span>
-<span class="doccomment">/// * `Index` is a 32-bit big endian unsigned index number.</span>
-<span class="doccomment">///   Each fun within a module has an unique index.</span>
-<span class="doccomment">/// * `NumFree` is the number of free variables, stored as a 32-bit big endian</span>
-<span class="doccomment">///   unsigned integer.</span>
-<span class="doccomment">/// * `Module`, encoded as an atom using [`ATOM_UTF8_EXT`],</span>
-<span class="doccomment">///   [`SMALL_ATOM_UTF8_EXT`], or [`ATOM_CACHE_REF`], is the module that the</span>
-<span class="doccomment">///   fun is implemented in.</span>
-<span class="doccomment">/// * `OldIndex`, encoded as an integer encoded using [`SMALL_INTEGER_EXT`] or</span>
-<span class="doccomment">///   [`INTEGER_EXT`], is typically a small index into the module&#39;s fun table.</span>
-<span class="doccomment">/// * `OldUniq`, encoded as an integer using using [`SMALL_INTEGER_EXT`] or</span>
-<span class="doccomment">///   [`INTEGER_EXT`], is the hash value of the parse tree for the fun.</span>
-<span class="doccomment">/// * `Pid`, encoded using [`PID_EXT`], represnts the process in which the fun</span>
-<span class="doccomment">///   was created.</span>
-<span class="doccomment">/// * `Free vars` are `NumFree` amount of terms, each one encoded according to</span>
-<span class="doccomment">///   its type.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// [`ATOM_UTF8_EXT`]: static.ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`SMALL_ATOM_UTF8_EXT`]: static.SMALL_ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`ATOM_CACHE_REF`]: static.ATOM_CACHE_REF.html</span>
-<span class="doccomment">/// [`SMALL_INTEGER_EXT`]: static.SMALL_INTEGER_EXT.html</span>
-<span class="doccomment">/// [`INTEGER_EXT`]: static.INTEGER_EXT.html</span>
-<span class="doccomment">/// [`PID_EXT`]: static.PID_EXT.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">NEW_FUN_EXT</span>:         <span class="ident">u8</span> <span class="op">=</span> <span class="number">112</span>;
+    <span class="doccomment">/// Encoding of internal functions: `fun F/A and fun(Arg1,..) -&gt; ... end`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 4 bytes | 1 byte   | 16 bytes | 4 bytes  | 4 bytes    | N bytes   | N&#39; bytes    | N&#39;&#39; bytes  | N&#39;&#39;&#39; bytes | N&#39;&#39;&#39;&#39; bytes    |</span>
+    <span class="doccomment">/// | ------ | ------- | -------- | -------- | -------- | ---------- | --------- | ----------- | ---------- | ---------- | -------------- |</span>
+    <span class="doccomment">/// | `112`  | `Size`  | `Arity`  | `Uniq`   | `Index`  | `NumFree`  | `Module`  | `OldIndex`  | `OldUniq`  | `Pid`      | `Free vars...` | </span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Size` is the total number of bytes, including field Size.</span>
+    <span class="doccomment">/// * `Arity` is the arity of the function implementing the fun, as an 8-bit</span>
+    <span class="doccomment">///   unsigned number.</span>
+    <span class="doccomment">/// * `Uniq` is a 16 bytes MD5 of the significant parts of the Beam file.</span>
+    <span class="doccomment">/// * `Index` is a 32-bit big endian unsigned index number.</span>
+    <span class="doccomment">///   Each fun within a module has an unique index.</span>
+    <span class="doccomment">/// * `NumFree` is the number of free variables, stored as a 32-bit big</span>
+    <span class="doccomment">///   endian unsigned integer.</span>
+    <span class="doccomment">/// * `Module`, encoded as an atom using [`AtomUtf8`],</span>
+    <span class="doccomment">///   [`SmallAtomUtf8`], or [`AtomCacheRef`], is the module that the fun is</span>
+    <span class="doccomment">///   implemented in.</span>
+    <span class="doccomment">/// * `OldIndex`, encoded as an integer encoded using [`SmallInteger`] or</span>
+    <span class="doccomment">///   [`Integer`], is typically a small index into the module&#39;s fun table.</span>
+    <span class="doccomment">/// * `OldUniq`, encoded as an integer using using [`SmallInteger`] or</span>
+    <span class="doccomment">///   [`Integer`], is the hash value of the parse tree for the fun.</span>
+    <span class="doccomment">/// * `Pid`, encoded using [`Pid`], represnts the process in which the fun</span>
+    <span class="doccomment">///   was created.</span>
+    <span class="doccomment">/// * `Free vars` are `NumFree` amount of terms, each one encoded according</span>
+    <span class="doccomment">///   to its type.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`AtomUtf8`]: #variant.AtomUtf8</span>
+    <span class="doccomment">/// [`SmallAtomUtf8`]: #variant.SmallAtomUtf8</span>
+    <span class="doccomment">/// [`AtomCacheRef`]: #variant.AtomCacheRef</span>
+    <span class="doccomment">/// [`SmallInteger`]: #variant.SmallInteger</span>
+    <span class="doccomment">/// [`Integer`]: #variant.Integer</span>
+    <span class="doccomment">/// [`Pid`]: #variant.Pid</span>
+    <span class="ident">NewFun</span> <span class="op">=</span> <span class="number">112</span>,
 
-<span class="doccomment">/// Encodes functions of the shape `fun M:F/A`.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte | N bytes  | N&#39; bytes   | N&#39;&#39; bytes |</span>
-<span class="doccomment">/// | ------ | -------- | ---------- | --------- |</span>
-<span class="doccomment">/// | `113`  | `Module` | `Function` | `Arity`   |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * `Module`, encoded using [`ATOM_UTF8_EXT`], [`SMALL_ATOM_UTF8_EXT`], or</span>
-<span class="doccomment">///   [`ATOM_CACHE_REF`], is the module that exports this function.</span>
-<span class="doccomment">/// * `Function`, encoded using [`ATOM_UTF8_EXT`], [`SMALL_ATOM_UTF8_EXT`], or</span>
-<span class="doccomment">///   [`ATOM_CACHE_REF`], is the name of this function.</span>
-<span class="doccomment">/// * `Arity`, encoded using [`SMALL_INTEGER_EXT`], is the arity of this</span>
-<span class="doccomment">///   function.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// [`ATOM_UTF8_EXT`]: static.ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`SMALL_ATOM_UTF8_EXT`]: static.SMALL_ATOM_UTF8_EXT.html</span>
-<span class="doccomment">/// [`ATOM_CACHE_REF`]: static.ATOM_CACHE_REF.html</span>
-<span class="doccomment">/// [`SMALL_INTEGER_EXT`]: static.SMALL_INTEGER_EXT.html</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">EXPORT_EXT</span>:          <span class="ident">u8</span> <span class="op">=</span> <span class="number">113</span>;
+    <span class="doccomment">/// Encodes functions of the shape `fun M:F/A`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | N bytes  | N&#39; bytes   | N&#39;&#39; bytes |</span>
+    <span class="doccomment">/// | ------ | -------- | ---------- | --------- |</span>
+    <span class="doccomment">/// | `113`  | `Module` | `Function` | `Arity`   |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Module`, encoded using [`AtomUtf8`], [`SmallAtomUtf8`], or</span>
+    <span class="doccomment">///   [`AtomCacheRef`], is the module that exports this function.</span>
+    <span class="doccomment">/// * `Function`, encoded using [`AtomUtf8`], [`SmallAtomUtf8`], or</span>
+    <span class="doccomment">///   [`AtomCacheRef`], is the name of this function.</span>
+    <span class="doccomment">/// * `Arity`, encoded using [`SmallInteger`], is the arity of this</span>
+    <span class="doccomment">///   function.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`AtomUtf8`]: #variant.AtomUtf8</span>
+    <span class="doccomment">/// [`SmallAtomUtf8`]: #variant.SmallAtomUtf8</span>
+    <span class="doccomment">/// [`AtomCacheRef`]: #variant.AtomCacheRef</span>
+    <span class="doccomment">/// [`SmallInteger`]: #variant.SmallInteger</span>
+    <span class="ident">Export</span> <span class="op">=</span> <span class="number">113</span>,
 
-<span class="doccomment">/// This term represents a bitstring whose length in bits does not have to be</span>
-<span class="doccomment">/// a multiple of 8.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte | 4 bytes | 1 byte | `Len` bytes |</span>
-<span class="doccomment">/// | ------ | ------- | ------ | ----------- |</span>
-<span class="doccomment">/// | `77`   | `Len`   | `Bits` | `Data`      |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * `Len`, encoded as a 32-bit big endian unsigned integer, is the amount</span>
-<span class="doccomment">///   of `Data` bytes.</span>
-<span class="doccomment">/// * `Bits`, encoded as an 8-bit number N, where 1 &gt;= N &gt;= 8, is the amount</span>
-<span class="doccomment">///   of bits that are used in the last data byte, counting from most</span>
-<span class="doccomment">///   significant to least significant.</span>
-<span class="doccomment">/// * `Data` is the actual binary data in this bitstring.</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">BIT_BINARY_EXT</span>:      <span class="ident">u8</span> <span class="op">=</span>  <span class="number">77</span>;
+    <span class="doccomment">/// This term represents a bitstring whose length in bits does not have to</span>
+    <span class="doccomment">/// be a multiple of 8.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 4 bytes | 1 byte | `Len` bytes |</span>
+    <span class="doccomment">/// | ------ | ------- | ------ | ----------- |</span>
+    <span class="doccomment">/// | `77`   | `Len`   | `Bits` | `Data`      |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Len`, encoded as a 32-bit big endian unsigned integer, is the amount</span>
+    <span class="doccomment">///   of `Data` bytes.</span>
+    <span class="doccomment">/// * `Bits`, encoded as an 8-bit number N, where 1 &gt;= N &gt;= 8, is the amount</span>
+    <span class="doccomment">///   of bits that are used in the last data byte, counting from most</span>
+    <span class="doccomment">///   significant to least significant.</span>
+    <span class="doccomment">/// * `Data` is the actual binary data in this bitstring.</span>
+    <span class="ident">BitBinary</span> <span class="op">=</span> <span class="number">77</span>,
 
-<span class="doccomment">/// This term represents a float</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte | 8 bytes |</span>
-<span class="doccomment">/// | ------ | ------- |</span>
-<span class="doccomment">/// | `70`   | `Float` |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * `Float` is an 32-bit IEEE floating point number stored in big-endian</span>
-<span class="doccomment">///   format.</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">NEW_FLOAT_EXT</span>:       <span class="ident">u8</span> <span class="op">=</span>  <span class="number">70</span>;
+    <span class="doccomment">/// This term represents a float</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 8 bytes |</span>
+    <span class="doccomment">/// | ------ | ------- |</span>
+    <span class="doccomment">/// | `70`   | `Float` |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Float` is an 32-bit IEEE floating point number stored in big-endian</span>
+    <span class="doccomment">///   format.</span>
+    <span class="ident">NewFloat</span> <span class="op">=</span> <span class="number">70</span>,
 
-<span class="doccomment">/// This term represents an atom.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte | 2 bytes | `Len` bytes |</span>
-<span class="doccomment">/// | ------ | ------- | ----------- |</span>
-<span class="doccomment">/// | `118`  | `Len`   | `AtomName`  |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * `Len`, represented as a 16-bit big-endian unsigned integer, is the amount</span>
-<span class="doccomment">///   of bytes the atom name takes.</span>
-<span class="doccomment">/// * `AtomName` is an unescaped UTF8 string of `Len` bytes long representing</span>
-<span class="doccomment">///   the name of this atom.</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">ATOM_UTF8_EXT</span>:       <span class="ident">u8</span> <span class="op">=</span> <span class="number">118</span>;
+    <span class="doccomment">/// This term represents an atom.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 2 bytes | `Len` bytes |</span>
+    <span class="doccomment">/// | ------ | ------- | ----------- |</span>
+    <span class="doccomment">/// | `118`  | `Len`   | `AtomName`  |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Len`, represented as a 16-bit big-endian unsigned integer, is the</span>
+    <span class="doccomment">///   amount of bytes the atom name takes.</span>
+    <span class="doccomment">/// * `AtomName` is an unescaped UTF8 string of `Len` bytes long</span>
+    <span class="doccomment">///   representing the name of this atom.</span>
+    <span class="ident">AtomUtf8</span> <span class="op">=</span> <span class="number">118</span>,
 
-<span class="doccomment">/// This term represents an atom that takes up at most 255 bytes</span>
-<span class="doccomment">/// (which may be less than 255 characters as UTF-8 can have multi-byte</span>
-<span class="doccomment">/// characters).</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte | 1 byte | `Len` bytes |</span>
-<span class="doccomment">/// | ------ | ------ | ----------- |</span>
-<span class="doccomment">/// | `118`  | `Len`  | `AtomName`  |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * `Len`, represented as an 8-bit unsigned integer, is the amount of bytes</span>
-<span class="doccomment">///   the atom name takes.</span>
-<span class="doccomment">/// * `AtomName` is an unescaped UTF8 string of `Len` bytes long representing</span>
-<span class="doccomment">///   the name of this atom.</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">SMALL_ATOM_UTF8_EXT</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">119</span>;
+    <span class="doccomment">/// This term represents an atom that takes up at most 255 bytes</span>
+    <span class="doccomment">/// (which may be less than 255 characters as UTF-8 can have multi-byte</span>
+    <span class="doccomment">/// characters).</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// | 1 byte | 1 byte | `Len` bytes |</span>
+    <span class="doccomment">/// | ------ | ------ | ----------- |</span>
+    <span class="doccomment">/// | `118`  | `Len`  | `AtomName`  |</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// * `Len`, represented as an 8-bit unsigned integer, is the amount of</span>
+    <span class="doccomment">///   bytes the atom name takes.</span>
+    <span class="doccomment">/// * `AtomName` is an unescaped UTF8 string of `Len` bytes long</span>
+    <span class="doccomment">///   representing the name of this atom.</span>
+    <span class="ident">SmallAtomUtf8</span> <span class="op">=</span> <span class="number">119</span>,
 
-<span class="doccomment">/// This represents a LATIN-1 atom, but should not be encoded anymore.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte | 2 bytes | `Len` bytes |</span>
-<span class="doccomment">/// | ------ | ------- | ----------- |</span>
-<span class="doccomment">/// | `118`  | `Len`   | `AtomName`  |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * `Len`, represented as an 16-bit big endian unsigned integer, is the</span>
-<span class="doccomment">///   amount of bytes the atom name takes.</span>
-<span class="doccomment">/// * `AtomName` is an unescaped LATIN-1 string of `Len` bytes long</span>
-<span class="doccomment">///   representing the name of this atom.</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">ATOM_EXT</span>:            <span class="ident">u8</span> <span class="op">=</span> <span class="number">100</span>;
+    <span class="doccomment">/// This represents a LATIN-1 atom, but should not be encoded anymore.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte | 2 bytes | `Len` bytes |</span>
+    <span class="doccomment">/// | ------ | ------- | ----------- |</span>
+    <span class="doccomment">/// | `118`  | `Len`   | `AtomName`  |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Len`, represented as an 16-bit big endian unsigned integer, is the</span>
+    <span class="doccomment">///   amount of bytes the atom name takes.</span>
+    <span class="doccomment">/// * `AtomName` is an unescaped LATIN-1 string of `Len` bytes long</span>
+    <span class="doccomment">///   representing the name of this atom.</span>
+    <span class="ident">Atom</span> <span class="op">=</span> <span class="number">100</span>,
 
-<span class="doccomment">/// This represents a LATIN-1 atom, but should not be encoded anymore.</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// # Binary representation</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// | 1 byte |  byte | `Len` bytes |</span>
-<span class="doccomment">/// | ------ | ----- | ----------- |</span>
-<span class="doccomment">/// | `118`  | `Len` | `AtomName`  |</span>
-<span class="doccomment">/// </span>
-<span class="doccomment">/// * `Len`, represented as an 8-bit unsigned integer, is the amount of bytes</span>
-<span class="doccomment">///   the atom name takes.</span>
-<span class="doccomment">/// * `AtomName` is an unescaped LATIN-1 string of `Len` bytes long</span>
-<span class="doccomment">///   representing the name of this atom.</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">SMALL_ATOM_EXT</span>:      <span class="ident">u8</span> <span class="op">=</span> <span class="number">115</span>;
+    <span class="doccomment">/// This represents a LATIN-1 atom, but should not be encoded anymore.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Binary representation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// | 1 byte |  byte | `Len` bytes |</span>
+    <span class="doccomment">/// | ------ | ----- | ----------- |</span>
+    <span class="doccomment">/// | `118`  | `Len` | `AtomName`  |</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Len`, represented as an 8-bit unsigned integer, is the amount of</span>
+    <span class="doccomment">///   bytes the atom name takes.</span>
+    <span class="doccomment">/// * `AtomName` is an unescaped LATIN-1 string of `Len` bytes long</span>
+    <span class="doccomment">///   representing the name of this atom.</span>
+    <span class="ident">SmallAtom</span> <span class="op">=</span> <span class="number">115</span>,
+}
 
-<span class="doccomment">/// A type that can be converted to an Erlang Binary Term format and two valid</span>
-<span class="doccomment">/// Erlang String Term representations.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ETerm</span>: <span class="ident">encode</span>::<span class="ident">TryToExternalBinary</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Display</span> {
-    <span class="kw">fn</span> <span class="ident">try_to_external_binary</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">try_to_vec</span>()
-    }
+<span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TermTag</span> {
+    <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> ();
 
-    <span class="kw">fn</span> <span class="ident">try_write_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">try_to_writer</span>(<span class="ident">writer</span>)
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">cognitive_complexity</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">from</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TermTag</span>, ()<span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="ident">from</span> {
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">AtomCacheRef</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">AtomCacheRef</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">SmallInteger</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">SmallInteger</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">Integer</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">Integer</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">Float</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">Float</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">Port</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">Port</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">NewPort</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">NewPort</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">Pid</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">Pid</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">NewPid</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">NewPid</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">SmallTuple</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">SmallTuple</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">LargeTuple</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">LargeTuple</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">Map</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">Map</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">Nil</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">Nil</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">String</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">String</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">List</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">List</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">Binary</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">Binary</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">SmallBig</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">SmallBig</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">LargeBig</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">LargeBig</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">Reference</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">Reference</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">NewReference</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">NewReference</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">NewerReference</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">NewerReference</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">Fun</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">Fun</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">NewFun</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">NewFun</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">Export</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">Export</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">BitBinary</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">BitBinary</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">NewFloat</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">NewFloat</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">AtomUtf8</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">AtomUtf8</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">SmallAtomUtf8</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">SmallAtomUtf8</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">Atom</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">Atom</span>),
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TermTag</span>::<span class="ident">SmallAtom</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">TermTag</span>::<span class="ident">SmallAtom</span>),
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(()),
+        }
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">ETerm</span> <span class="kw">for</span> <span class="ident">T</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">encode</span>::<span class="ident">TryToExternalBinary</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Display</span> {}
+<span class="doccomment">/// A type that can be converted to an Erlang Binary Term format and two valid</span>
+<span class="doccomment">/// Erlang String Term representations.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ETerm</span>: <span class="ident">encode</span>::<span class="ident">ToExternalBinary</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="op">+</span> <span class="ident">Any</span> {
+    <span class="kw">fn</span> <span class="ident">write_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">to_writer</span>(<span class="ident">writer</span>)
+    }
+
+    <span class="kw">fn</span> <span class="ident">to_external_binary</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+
+        <span class="self">self</span>.<span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">result</span>)<span class="question-mark">?</span>;
+
+        <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">ETerm</span> <span class="kw">for</span> <span class="ident">T</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">encode</span>::<span class="ident">ToExternalBinary</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="op">+</span> <span class="ident">Any</span> {}
 
 <span class="doccomment">/// Represents an Erlang `NIL_EXT` term.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ENil</span>;
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ENil</span> {
@@ -2165,13 +2278,13 @@
 }
 
 <span class="doccomment">/// Represents a proper `LIST_EXT` term with a `nil` tail.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EList</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw">dyn</span> <span class="ident">ETerm</span><span class="op">&gt;</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EList</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">ETerm</span><span class="op">&gt;</span><span class="op">&gt;</span>);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">EList</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">EList</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="string">&quot;[&quot;</span>.<span class="ident">to_string</span>();
         <span class="kw">for</span> <span class="ident">d</span> <span class="kw">in</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter</span>() {
-            <span class="ident">s</span>.<span class="ident">push_str</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">d</span>).<span class="ident">as_ref</span>());
+            <span class="ident">s</span>.<span class="ident">push_str</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="kw-2">*</span><span class="ident">d</span>).<span class="ident">as_ref</span>());
         }
         <span class="ident">s</span>.<span class="ident">push</span>(<span class="string">&#39;]&#39;</span>);
 
@@ -2180,12 +2293,12 @@
 }
 
 <span class="doccomment">/// Describes a `LIST_EXT` term with a possible non-`nil` tail.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ENonProperList</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw">dyn</span> <span class="ident">ETerm</span><span class="op">&gt;</span>,
-    <span class="ident">tail</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw">dyn</span> <span class="ident">ETerm</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ENonProperList</span> {
+    <span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">ETerm</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">tail</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">ETerm</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ENonProperList</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ENonProperList</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="string">&quot;[&quot;</span>.<span class="ident">to_string</span>();
         <span class="kw">for</span> <span class="ident">d</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">iter</span>() {
@@ -2244,9 +2357,9 @@
 }
 
 <span class="doccomment">/// Represents a `LARGE_TUPLE_EXT` or a `SMALL_TUPLE_EXT` term.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ETuple</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw">dyn</span> <span class="ident">ETerm</span><span class="op">&gt;</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ETuple</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">ETerm</span><span class="op">&gt;</span><span class="op">&gt;</span>);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ETuple</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ETuple</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span> <span class="op">=</span> <span class="string">&quot;{&quot;</span>.<span class="ident">to_string</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">parts</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
@@ -2260,10 +2373,9 @@
     }
 }
 
-<span class="doccomment">/// Describes an `ATOM_UTF8_EXT` term and a `SMALL_ATOM_UTF8_EXT` term.</span>
+<span class="doccomment">/// Describes an `STRING_EXT` term.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// TODO: Make sure the string representation of atoms that need to be quoted</span>
-<span class="doccomment">///  is implemented.</span>
+<span class="doccomment">/// TODO: Test proper quoting of string.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EString</span>(<span class="ident">String</span>);
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">EString</span> {
@@ -2300,9 +2412,9 @@
 }
 
 <span class="doccomment">/// Describes an Erlang Map</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EMap</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw">dyn</span> <span class="ident">ETerm</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw">dyn</span> <span class="ident">ETerm</span>)<span class="op">&gt;</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EMap</span>(<span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">ETerm</span><span class="op">&gt;</span>, <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">ETerm</span><span class="op">&gt;</span>)<span class="op">&gt;</span>);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">EMap</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">EMap</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span> <span class="op">=</span> <span class="string">&quot;#{&quot;</span>.<span class="ident">to_string</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">parts</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
@@ -2317,13 +2429,13 @@
 }
 
 <span class="doccomment">/// Describes an Erlang Binary</span>
-<span class="kw">struct</span> <span class="ident">EBinary</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>);
+<span class="kw">struct</span> <span class="ident">EBinary</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">EBinary</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">EBinary</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span> <span class="op">=</span> <span class="string">&quot;&lt;&lt;&quot;</span>.<span class="ident">to_string</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">parts</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
-        <span class="kw">for</span> <span class="ident">byte</span> <span class="kw">in</span> <span class="self">self</span>.<span class="number">0</span> {
+        <span class="kw">for</span> <span class="ident">byte</span> <span class="kw">in</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter</span>() {
             <span class="ident">parts</span>.<span class="ident">push</span>(<span class="ident">byte</span>.<span class="ident">to_string</span>());
         }
 

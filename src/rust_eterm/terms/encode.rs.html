@@ -785,54 +785,7 @@
 <span id="785">785</span>
 <span id="786">786</span>
 <span id="787">787</span>
-<span id="788">788</span>
-<span id="789">789</span>
-<span id="790">790</span>
-<span id="791">791</span>
-<span id="792">792</span>
-<span id="793">793</span>
-<span id="794">794</span>
-<span id="795">795</span>
-<span id="796">796</span>
-<span id="797">797</span>
-<span id="798">798</span>
-<span id="799">799</span>
-<span id="800">800</span>
-<span id="801">801</span>
-<span id="802">802</span>
-<span id="803">803</span>
-<span id="804">804</span>
-<span id="805">805</span>
-<span id="806">806</span>
-<span id="807">807</span>
-<span id="808">808</span>
-<span id="809">809</span>
-<span id="810">810</span>
-<span id="811">811</span>
-<span id="812">812</span>
-<span id="813">813</span>
-<span id="814">814</span>
-<span id="815">815</span>
-<span id="816">816</span>
-<span id="817">817</span>
-<span id="818">818</span>
-<span id="819">819</span>
-<span id="820">820</span>
-<span id="821">821</span>
-<span id="822">822</span>
-<span id="823">823</span>
-<span id="824">824</span>
-<span id="825">825</span>
-<span id="826">826</span>
-<span id="827">827</span>
-<span id="828">828</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;bigint&quot;</span>)]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num_bigint</span>;
-
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;bigint&quot;</span>)]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num_traits</span>;
-
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;bigint&quot;</span>)]</span>
 <span class="kw">use</span> {
     <span class="ident">num_bigint</span>::{ <span class="ident">BigInt</span>, <span class="ident">BigUint</span>, <span class="ident">Sign</span> },
@@ -852,80 +805,49 @@
     <span class="ident">EPid</span>,
     <span class="ident">EMap</span>,
     <span class="ident">EBinary</span>,
+    <span class="ident">TermTag</span>,
 };
-<span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">error</span>::{ <span class="ident">Error</span>, <span class="ident">ErrorCode</span> };
+<span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">error</span>::{ <span class="ident">Error</span> };
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{ <span class="ident">Write</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">IOError</span> };
-
-<span class="doccomment">/// Replacement for `std::convert::TryInto&lt;T&gt;` that doesn&#39;t require `Sized`.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">TryToExternalBinary</span> {
-    <span class="kw">fn</span> <span class="ident">try_to_vec</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
-        <span class="self">self</span>.<span class="ident">try_to_writer</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">result</span>)<span class="question-mark">?</span>;
-
-        <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
-    }
-
-    <span class="kw">fn</span> <span class="ident">try_to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
-}
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Write</span>;
 
 <span class="doccomment">/// Replacement for `std::convert::Into&lt;T&gt;` that doesn&#39;t require `Sized`.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ToExternalBinary</span> {
-    <span class="kw">fn</span> <span class="ident">to_vec</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
-        <span class="self">self</span>.<span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">result</span>).<span class="ident">unwrap</span>();
-
-        <span class="ident">result</span>
-    }
-
-    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">IOError</span><span class="op">&gt;</span>;
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">X</span><span class="op">&gt;</span> <span class="ident">TryToExternalBinary</span> <span class="kw">for</span> <span class="ident">X</span> <span class="kw">where</span> <span class="ident">X</span>: <span class="ident">ToExternalBinary</span> {
-    <span class="kw">fn</span> <span class="ident">try_to_vec</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="prelude-val">Ok</span>(<span class="ident">ToExternalBinary</span>::<span class="ident">to_vec</span>(<span class="self">self</span>))
-    }
-
-    <span class="kw">fn</span> <span class="ident">try_to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">to_writer</span>(<span class="ident">writer</span>) {
-            <span class="prelude-val">Ok</span>(<span class="ident">size</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">size</span>),
-            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">io</span>(<span class="ident">e</span>)),
-        }
-    }
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
 }
 
 <span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">i8</span> {
-    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">IOError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="self">self</span> <span class="kw">as</span> <span class="ident">i32</span>).<span class="ident">to_writer</span>(<span class="ident">writer</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">u8</span> {
-    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">IOError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>; <span class="number">1</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">to_be_bytes</span>();
 
-        <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">SMALL_INTEGER_EXT</span>, <span class="ident">data</span>[<span class="number">0</span>]])
+        <span class="prelude-val">Ok</span>(<span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">SmallInteger</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">data</span>[<span class="number">0</span>]])<span class="question-mark">?</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">i16</span> {
-    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">IOError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="self">self</span> <span class="kw">as</span> <span class="ident">i32</span>).<span class="ident">to_writer</span>(<span class="ident">writer</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">u16</span> {
-    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">IOError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="self">self</span> <span class="kw">as</span> <span class="ident">i32</span>).<span class="ident">to_writer</span>(<span class="ident">writer</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">i32</span> {
-    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">IOError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">u8</span>::<span class="ident">max_value</span>().<span class="ident">into</span>() <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span> {
             (<span class="kw-2">*</span><span class="self">self</span> <span class="kw">as</span> <span class="ident">u8</span>).<span class="ident">to_writer</span>(<span class="ident">writer</span>)
         } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">amount</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">INTEGER_EXT</span>])<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">amount</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">Integer</span> <span class="kw">as</span> <span class="ident">u8</span>])<span class="question-mark">?</span>;
             <span class="ident">amount</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">to_be_bytes</span>())<span class="question-mark">?</span>;
 
             <span class="prelude-val">Ok</span>(<span class="ident">amount</span>)
@@ -934,25 +856,25 @@
 }
 
 <span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">u32</span> {
-    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">IOError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="self">self</span> <span class="kw">as</span> <span class="ident">i128</span>).<span class="ident">to_writer</span>(<span class="ident">writer</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">i64</span> {
-    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">IOError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="self">self</span> <span class="kw">as</span> <span class="ident">i128</span>).<span class="ident">to_writer</span>(<span class="ident">writer</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">u64</span> {
-    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">IOError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="self">self</span> <span class="kw">as</span> <span class="ident">i128</span>).<span class="ident">to_writer</span>(<span class="ident">writer</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">i128</span> {
-    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">IOError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">i32</span>::<span class="ident">max_value</span>().<span class="ident">into</span>() <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">i32</span>::<span class="ident">min_value</span>().<span class="ident">into</span>() {
             (<span class="kw-2">*</span><span class="self">self</span> <span class="kw">as</span> <span class="ident">i32</span>).<span class="ident">to_writer</span>(<span class="ident">writer</span>)
         } <span class="kw">else</span> {
@@ -961,7 +883,7 @@
             <span class="kw">let</span> <span class="ident">bytes</span>: <span class="ident">u8</span> <span class="op">=</span> (<span class="number">16</span> <span class="op">-</span> (<span class="ident">abs</span>.<span class="ident">leading_zeros</span>() <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">3</span>)) <span class="kw">as</span> <span class="ident">u8</span>;
             <span class="kw">let</span> <span class="ident">sign</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span> { <span class="number">0</span> } <span class="kw">else</span> { <span class="number">1</span> };
 
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">amount</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">SMALL_BIG_EXT</span>, <span class="ident">bytes</span>, <span class="ident">sign</span>])<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">amount</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">SmallBig</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">bytes</span>, <span class="ident">sign</span>])<span class="question-mark">?</span>;
 
             <span class="kw">while</span> <span class="ident">abs</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                 <span class="ident">amount</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[(<span class="ident">abs</span> <span class="op">&amp;</span> <span class="number">0xff</span>) <span class="kw">as</span> <span class="ident">u8</span>])<span class="question-mark">?</span>;
@@ -974,7 +896,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">u128</span> {
-    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">IOError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="comment">// The big number here is i128::max_value() as a `From&lt;u128&gt;` for i128 is not implemented</span>
         <span class="kw">if</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">170_141_183_460_469_231_731_687_303_715_884_105_727u128</span> {
             (<span class="kw-2">*</span><span class="self">self</span> <span class="kw">as</span> <span class="ident">i128</span>).<span class="ident">to_writer</span>(<span class="ident">writer</span>)
@@ -982,7 +904,7 @@
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tmp</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>;
 
             <span class="kw">let</span> <span class="ident">bytes</span>: <span class="ident">u8</span> <span class="op">=</span> (<span class="number">16</span> <span class="op">-</span> (<span class="ident">tmp</span>.<span class="ident">leading_zeros</span>() <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">3</span>)) <span class="kw">as</span> <span class="ident">u8</span>;
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">amount</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">SMALL_BIG_EXT</span>, <span class="ident">bytes</span>, <span class="number">0u8</span>])<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">amount</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">SmallBig</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">bytes</span>, <span class="number">0u8</span>])<span class="question-mark">?</span>;
 
             <span class="kw">while</span> <span class="ident">tmp</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                 <span class="ident">amount</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[(<span class="ident">tmp</span> <span class="op">&amp;</span> <span class="number">0xff</span>) <span class="kw">as</span> <span class="ident">u8</span>])<span class="question-mark">?</span>;
@@ -995,200 +917,199 @@
 }
 
 <span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">isize</span> {
-    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">IOError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="self">self</span> <span class="kw">as</span> <span class="ident">i128</span>).<span class="ident">to_writer</span>(<span class="ident">writer</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">usize</span> {
-    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">IOError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="self">self</span> <span class="kw">as</span> <span class="ident">u128</span>).<span class="ident">to_writer</span>(<span class="ident">writer</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">ENil</span> {
-    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">IOError</span><span class="op">&gt;</span> {
-        <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">NIL_EXT</span>])
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="prelude-val">Ok</span>(<span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">Nil</span> <span class="kw">as</span> <span class="ident">u8</span>])<span class="question-mark">?</span>)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryToExternalBinary</span> <span class="kw">for</span> <span class="ident">EList</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">try_to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">EList</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">is_empty</span>() {
-            (<span class="ident">ENil</span> {}).<span class="ident">try_to_writer</span>(<span class="ident">writer</span>)
+            <span class="ident">ENil</span>::<span class="ident">default</span>().<span class="ident">to_writer</span>(<span class="ident">writer</span>)
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="ident">len</span>: [<span class="ident">u8</span>; <span class="number">4</span>] <span class="op">=</span> (<span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">i32</span>).<span class="ident">to_be_bytes</span>();
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">amount</span> <span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">LIST_EXT</span>, <span class="ident">len</span>[<span class="number">0</span>], <span class="ident">len</span>[<span class="number">1</span>], <span class="ident">len</span>[<span class="number">2</span>], <span class="ident">len</span>[<span class="number">3</span>]])<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">amount</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">List</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">len</span>[<span class="number">0</span>], <span class="ident">len</span>[<span class="number">1</span>], <span class="ident">len</span>[<span class="number">2</span>], <span class="ident">len</span>[<span class="number">3</span>]])<span class="question-mark">?</span>;
 
             <span class="kw">for</span> <span class="ident">d</span> <span class="kw">in</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter</span>() {
-                <span class="ident">amount</span> <span class="op">+</span><span class="op">=</span> <span class="ident">d</span>.<span class="ident">try_to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
+                <span class="ident">amount</span> <span class="op">+</span><span class="op">=</span> <span class="ident">d</span>.<span class="ident">to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
             }
 
-            <span class="ident">amount</span> <span class="op">+</span><span class="op">=</span> (<span class="ident">ENil</span> {}).<span class="ident">try_to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
+            <span class="ident">amount</span> <span class="op">+</span><span class="op">=</span> (<span class="ident">ENil</span> {}).<span class="ident">to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
             
             <span class="prelude-val">Ok</span>(<span class="ident">amount</span>)
         }
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryToExternalBinary</span> <span class="kw">for</span> <span class="ident">ENonProperList</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">try_to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">ENonProperList</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">len</span>: [<span class="ident">u8</span>; <span class="number">4</span>] <span class="op">=</span> (<span class="self">self</span>.<span class="ident">data</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">i32</span>).<span class="ident">to_be_bytes</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span>([<span class="kw">super</span>::<span class="ident">LIST_EXT</span>, <span class="ident">len</span>[<span class="number">0</span>], <span class="ident">len</span>[<span class="number">1</span>], <span class="ident">len</span>[<span class="number">2</span>], <span class="ident">len</span>[<span class="number">3</span>]]))<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>([<span class="ident">TermTag</span>::<span class="ident">List</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">len</span>[<span class="number">0</span>], <span class="ident">len</span>[<span class="number">1</span>], <span class="ident">len</span>[<span class="number">2</span>], <span class="ident">len</span>[<span class="number">3</span>]]))<span class="question-mark">?</span>;
 
         <span class="kw">for</span> <span class="ident">d</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">iter</span>() {
-            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">d</span>.<span class="ident">try_to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
+            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">d</span>.<span class="ident">to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
         }
 
-        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">tail</span>.<span class="ident">try_to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
+        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">tail</span>.<span class="ident">to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="ident">written</span>)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">TryToExternalBinary</span> <span class="kw">for</span> <span class="ident">EAtom</span> {
-    <span class="kw">fn</span> <span class="ident">try_to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">EAtom</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">byte_length</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_bytes</span>().<span class="ident">len</span>();
 
         <span class="kw">if</span> <span class="ident">byte_length</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">u8</span>::<span class="ident">max_value</span>().<span class="ident">into</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">SMALL_ATOM_UTF8_EXT</span>, <span class="ident">byte_length</span> <span class="kw">as</span> <span class="ident">u8</span>])<span class="question-mark">?</span>;
-            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">SmallAtomUtf8</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">byte_length</span> <span class="kw">as</span> <span class="ident">u8</span>])<span class="question-mark">?</span>;
+            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
 
             <span class="prelude-val">Ok</span>(<span class="ident">written</span>)
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">byte_length</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">u16</span>::<span class="ident">max_value</span>().<span class="ident">into</span>() {
             <span class="kw">let</span> <span class="ident">len</span>: [<span class="ident">u8</span>; <span class="number">8</span>] <span class="op">=</span> <span class="ident">byte_length</span>.<span class="ident">to_be_bytes</span>();
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">ATOM_UTF8_EXT</span>, <span class="ident">len</span>[<span class="number">6</span>], <span class="ident">len</span>[<span class="number">7</span>]])<span class="question-mark">?</span>;
-            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">AtomUtf8</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">len</span>[<span class="number">6</span>], <span class="ident">len</span>[<span class="number">7</span>]])<span class="question-mark">?</span>;
+            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
 
             <span class="prelude-val">Ok</span>(<span class="ident">written</span>)
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">data</span>(<span class="ident">ErrorCode</span>::<span class="ident">ValueNotEncodable</span>(<span class="ident">Box</span>::<span class="ident">from</span>((<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>).<span class="ident">as_str</span>().<span class="ident">to_owned</span>()))))
+            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Message</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">to_owned</span>()))
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">TryToExternalBinary</span> <span class="kw">for</span> <span class="ident">f32</span> {
-    <span class="kw">fn</span> <span class="ident">try_to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        (<span class="kw-2">*</span><span class="self">self</span> <span class="kw">as</span> <span class="ident">f64</span>).<span class="ident">try_to_writer</span>(<span class="ident">writer</span>)
+<span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">f32</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        (<span class="kw-2">*</span><span class="self">self</span> <span class="kw">as</span> <span class="ident">f64</span>).<span class="ident">to_writer</span>(<span class="ident">writer</span>)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">TryToExternalBinary</span> <span class="kw">for</span> <span class="ident">f64</span> {
-    <span class="kw">fn</span> <span class="ident">try_to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">f64</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_finite</span>() {
             <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_be_bytes</span>();
 
-            <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">NEW_FLOAT_EXT</span>, <span class="ident">bytes</span>[<span class="number">0</span>], <span class="ident">bytes</span>[<span class="number">1</span>], <span class="ident">bytes</span>[<span class="number">2</span>], <span class="ident">bytes</span>[<span class="number">3</span>], <span class="ident">bytes</span>[<span class="number">4</span>], <span class="ident">bytes</span>[<span class="number">5</span>], <span class="ident">bytes</span>[<span class="number">6</span>], <span class="ident">bytes</span>[<span class="number">7</span>]])
+            <span class="prelude-val">Ok</span>(<span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">NewFloat</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">bytes</span>[<span class="number">0</span>], <span class="ident">bytes</span>[<span class="number">1</span>], <span class="ident">bytes</span>[<span class="number">2</span>], <span class="ident">bytes</span>[<span class="number">3</span>], <span class="ident">bytes</span>[<span class="number">4</span>], <span class="ident">bytes</span>[<span class="number">5</span>], <span class="ident">bytes</span>[<span class="number">6</span>], <span class="ident">bytes</span>[<span class="number">7</span>]])<span class="question-mark">?</span>)
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">data</span>(<span class="ident">ErrorCode</span>::<span class="ident">ValueNotEncodable</span>(<span class="ident">Box</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">to_string</span>()))))
+            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Message</span>(<span class="self">self</span>.<span class="ident">to_string</span>()))
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">TryToExternalBinary</span> <span class="kw">for</span> <span class="ident">EExport</span> {
-    <span class="kw">fn</span> <span class="ident">try_to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">EXPORT_EXT</span>])<span class="question-mark">?</span>;
-        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">module</span>.<span class="ident">try_to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
-        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">function</span>.<span class="ident">try_to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
-        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">arity</span>.<span class="ident">try_to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
+<span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">EExport</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">Export</span> <span class="kw">as</span> <span class="ident">u8</span>])<span class="question-mark">?</span>;
+        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">module</span>.<span class="ident">to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
+        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">function</span>.<span class="ident">to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
+        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">arity</span>.<span class="ident">to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="ident">written</span>)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryToExternalBinary</span> <span class="kw">for</span> <span class="ident">ETuple</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">try_to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">ETuple</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> (<span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u32</span>).<span class="ident">to_be_bytes</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="number">0</span>;
 
         <span class="kw">if</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="ident">u8</span>::<span class="ident">max_value</span>().<span class="ident">into</span>() {
-            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">SMALL_TUPLE_EXT</span>, <span class="ident">len</span>[<span class="number">3</span>]])<span class="question-mark">?</span>;
+            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">SmallTuple</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">len</span>[<span class="number">3</span>]])<span class="question-mark">?</span>;
         } <span class="kw">else</span> {
-            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">LARGE_TUPLE_EXT</span>, <span class="ident">len</span>[<span class="number">0</span>], <span class="ident">len</span>[<span class="number">1</span>], <span class="ident">len</span>[<span class="number">2</span>], <span class="ident">len</span>[<span class="number">3</span>]])<span class="question-mark">?</span>;
+            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">LargeTuple</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">len</span>[<span class="number">0</span>], <span class="ident">len</span>[<span class="number">1</span>], <span class="ident">len</span>[<span class="number">2</span>], <span class="ident">len</span>[<span class="number">3</span>]])<span class="question-mark">?</span>;
         }
 
         <span class="kw">for</span> <span class="ident">d</span> <span class="kw">in</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter</span>() {
-            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">d</span>.<span class="ident">try_to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
+            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">d</span>.<span class="ident">to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
         }
 
         <span class="prelude-val">Ok</span>(<span class="ident">written</span>)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">TryToExternalBinary</span> <span class="kw">for</span> <span class="ident">EString</span> {
-    <span class="kw">fn</span> <span class="ident">try_to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">EString</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">byte_length</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_bytes</span>().<span class="ident">len</span>();
 
         <span class="kw">if</span> <span class="ident">byte_length</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">u16</span>::<span class="ident">max_value</span>().<span class="ident">into</span>() {
             <span class="kw">let</span> <span class="ident">len</span>: [<span class="ident">u8</span>; <span class="number">8</span>] <span class="op">=</span> <span class="ident">byte_length</span>.<span class="ident">to_be_bytes</span>();
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">STRING_EXT</span>, <span class="ident">len</span>[<span class="number">6</span>], <span class="ident">len</span>[<span class="number">7</span>]])<span class="question-mark">?</span>;
-            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">String</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">len</span>[<span class="number">6</span>], <span class="ident">len</span>[<span class="number">7</span>]])<span class="question-mark">?</span>;
+            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
 
             <span class="prelude-val">Ok</span>(<span class="ident">written</span>)
         } <span class="kw">else</span> {
-            <span class="ident">EList</span>(<span class="kw-2">&amp;</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_bytes</span>().<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span> <span class="kw">as</span> <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">ETerm</span>).<span class="ident">collect</span>())).<span class="ident">try_to_writer</span>(<span class="ident">writer</span>)
+            <span class="ident">EList</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_bytes</span>().<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">Box</span>::<span class="ident">from</span>(<span class="kw-2">*</span><span class="ident">x</span>) <span class="kw">as</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">ETerm</span><span class="op">&gt;</span>).<span class="ident">collect</span>()).<span class="ident">to_writer</span>(<span class="ident">writer</span>)
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">TryToExternalBinary</span> <span class="kw">for</span> <span class="ident">EPort</span> {
-    <span class="kw">fn</span> <span class="ident">try_to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">NEW_PORT_EXT</span>])<span class="question-mark">?</span>;
-        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">node</span>.<span class="ident">try_to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
-        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">id</span>.<span class="ident">to_be_bytes</span>())<span class="question-mark">?</span>;
-        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">creation</span>.<span class="ident">to_be_bytes</span>())<span class="question-mark">?</span>;
+<span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">EPort</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">NewPort</span> <span class="kw">as</span> <span class="ident">u8</span>])<span class="question-mark">?</span>;
+        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">node</span>.<span class="ident">to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
+        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">id</span>.<span class="ident">to_be_bytes</span>())<span class="question-mark">?</span>;
+        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">creation</span>.<span class="ident">to_be_bytes</span>())<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="ident">written</span>)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">TryToExternalBinary</span> <span class="kw">for</span> <span class="ident">EPid</span> {
-    <span class="kw">fn</span> <span class="ident">try_to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">NEW_PID_EXT</span>])<span class="question-mark">?</span>;
-        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">node</span>.<span class="ident">try_to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
-        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">id</span>.<span class="ident">to_be_bytes</span>())<span class="question-mark">?</span>;
-        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">serial</span>.<span class="ident">to_be_bytes</span>())<span class="question-mark">?</span>;
-        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">creation</span>.<span class="ident">to_be_bytes</span>())<span class="question-mark">?</span>;
+<span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">EPid</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">NewPid</span> <span class="kw">as</span> <span class="ident">u8</span>])<span class="question-mark">?</span>;
+        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">node</span>.<span class="ident">to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
+        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">id</span>.<span class="ident">to_be_bytes</span>())<span class="question-mark">?</span>;
+        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">serial</span>.<span class="ident">to_be_bytes</span>())<span class="question-mark">?</span>;
+        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">creation</span>.<span class="ident">to_be_bytes</span>())<span class="question-mark">?</span>;
         
         <span class="prelude-val">Ok</span>(<span class="ident">written</span>)
     }
 }
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryToExternalBinary</span> <span class="kw">for</span> <span class="ident">EMap</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">try_to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">MAP_EXT</span>])<span class="question-mark">?</span>;
-        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u32</span>).<span class="ident">to_be_bytes</span>())<span class="question-mark">?</span>;
 
-        <span class="kw">for</span> (<span class="ident">k</span>, <span class="ident">v</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">k</span>.<span class="ident">try_to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
-            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">v</span>.<span class="ident">try_to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">EMap</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">Map</span> <span class="kw">as</span> <span class="ident">u8</span>])<span class="question-mark">?</span>;
+        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u32</span>).<span class="ident">to_be_bytes</span>())<span class="question-mark">?</span>;
+
+        <span class="kw">for</span> (<span class="ident">k</span>, <span class="ident">v</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter</span>() {
+            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">k</span>.<span class="ident">to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
+            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">v</span>.<span class="ident">to_writer</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
         };
 
         <span class="prelude-val">Ok</span>(<span class="ident">written</span>)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">EBinary</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">IOError</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">BINARY_EXT</span>])<span class="question-mark">?</span>;
+<span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">EBinary</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">Binary</span> <span class="kw">as</span> <span class="ident">u8</span>])<span class="question-mark">?</span>;
         <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>().<span class="ident">to_be_bytes</span>())<span class="question-mark">?</span>;
-        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="self">self</span>.<span class="number">0</span>)<span class="question-mark">?</span>;
+        <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ref</span>())<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="ident">written</span>)
     }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;bigint&quot;</span>)]</span>
-<span class="kw">impl</span> <span class="ident">TryToExternalBinary</span> <span class="kw">for</span> <span class="ident">BigInt</span> {
-    <span class="kw">fn</span> <span class="ident">try_to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">to_u128</span>() {
-            <span class="prelude-val">Some</span>(<span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">x</span>.<span class="ident">try_to_writer</span>(<span class="ident">writer</span>),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span>::<span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>::<span class="prelude-val">None</span>
-        };
+<span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">BigInt</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">x</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_u128</span>() {
+            <span class="kw">return</span> <span class="ident">x</span>.<span class="ident">to_writer</span>(<span class="ident">writer</span>);
+        }
 
-        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">to_i128</span>() {
-            <span class="prelude-val">Some</span>(<span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">x</span>.<span class="ident">try_to_writer</span>(<span class="ident">writer</span>),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span>::<span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>::<span class="prelude-val">None</span>
-        };
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">x</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_i128</span>() {
+            <span class="kw">return</span> <span class="ident">x</span>.<span class="ident">to_writer</span>(<span class="ident">writer</span>);
+        }
 
         <span class="comment">// Failing to delegate to u128 and i128 already establishes that</span>
         <span class="comment">// either a SMALL_BIG_EXT or a LARGE_BIG_EXT is required to encode</span>
@@ -1203,62 +1124,52 @@
             <span class="ident">Sign</span>::<span class="ident">Plus</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0</span>
         };
 
-        <span class="kw">let</span> <span class="ident">abs</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">abs</span>().<span class="ident">to_biguint</span>() {
-            <span class="prelude-ty">Option</span>::<span class="prelude-val">Some</span>(<span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">x</span>,
-            <span class="prelude-ty">Option</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">data</span>(<span class="ident">ErrorCode</span>::<span class="ident">ValueNotEncodable</span>(<span class="ident">Box</span>::<span class="ident">from</span>(<span class="string">&quot;Non-negative bigint is somehow not convertible to biguint.&quot;</span>))))
-        };
+        <span class="kw">let</span> <span class="ident">abs</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">abs</span>().<span class="ident">to_biguint</span>()
+            .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">Error</span>::<span class="ident">Message</span>(<span class="string">&quot;Non-negative bigint is somehow not convertible to biguint.&quot;</span>.<span class="ident">to_string</span>()))<span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">abs</span>.<span class="ident">to_bytes_be</span>().<span class="ident">len</span>();
 
         <span class="kw">if</span> <span class="ident">len</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">u8</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">usize</span>) {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">SMALL_BIG_EXT</span>, <span class="ident">len</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">sign</span>])<span class="question-mark">?</span>;
-            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="ident">abs</span>.<span class="ident">to_bytes_le</span>().<span class="ident">as_ref</span>())<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">SmallBig</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">len</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">sign</span>])<span class="question-mark">?</span>;
+            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="ident">abs</span>.<span class="ident">to_bytes_le</span>().<span class="ident">as_ref</span>())<span class="question-mark">?</span>;
 
             <span class="prelude-val">Ok</span>(<span class="ident">written</span>)
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">len</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">u32</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">usize</span>) {
             <span class="kw">let</span> <span class="ident">len_bytes</span> <span class="op">=</span> (<span class="ident">len</span> <span class="kw">as</span> <span class="ident">u32</span>).<span class="ident">to_be_bytes</span>();
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">LARGE_BIG_EXT</span>, <span class="ident">len_bytes</span>[<span class="number">0</span>], <span class="ident">len_bytes</span>[<span class="number">1</span>], <span class="ident">len_bytes</span>[<span class="number">2</span>], <span class="ident">len_bytes</span>[<span class="number">3</span>], <span class="ident">sign</span>])<span class="question-mark">?</span>;
-            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="ident">abs</span>.<span class="ident">to_bytes_le</span>().<span class="ident">as_ref</span>())<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">LargeBig</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">len_bytes</span>[<span class="number">0</span>], <span class="ident">len_bytes</span>[<span class="number">1</span>], <span class="ident">len_bytes</span>[<span class="number">2</span>], <span class="ident">len_bytes</span>[<span class="number">3</span>], <span class="ident">sign</span>])<span class="question-mark">?</span>;
+            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="ident">abs</span>.<span class="ident">to_bytes_le</span>().<span class="ident">as_ref</span>())<span class="question-mark">?</span>;
 
             <span class="prelude-val">Ok</span>(<span class="ident">written</span>)
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">data</span>(<span class="ident">ErrorCode</span>::<span class="ident">ValueNotEncodable</span>(<span class="ident">Box</span>::<span class="ident">from</span>(<span class="string">&quot;Integer size is outside of the possible ranges for an erlang term (-2^N..2^N-1 with N=(2^32)*8)&quot;</span>))))
+            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Message</span>(<span class="string">&quot;Integer size is outside of the possible ranges for an erlang term (-2^N..2^N-1 with N=(2^32)*8)&quot;</span>.<span class="ident">to_string</span>()))
         }
     }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;bigint&quot;</span>)]</span>
-<span class="kw">impl</span> <span class="ident">TryToExternalBinary</span> <span class="kw">for</span> <span class="ident">BigUint</span> {
-    <span class="kw">fn</span> <span class="ident">try_to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">to_u128</span>() {
-            <span class="prelude-val">Some</span>(<span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">x</span>.<span class="ident">try_to_writer</span>(<span class="ident">writer</span>),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span>::<span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>::<span class="prelude-val">None</span>
-        };
+<span class="kw">impl</span> <span class="ident">ToExternalBinary</span> <span class="kw">for</span> <span class="ident">BigUint</span> {
+    <span class="kw">fn</span> <span class="ident">to_writer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">x</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_u128</span>() {
+            <span class="kw">return</span> <span class="ident">x</span>.<span class="ident">to_writer</span>(<span class="ident">writer</span>);
+        }
 
         <span class="kw">let</span> <span class="ident">tmp</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_bytes_be</span>();
 
         <span class="kw">if</span> <span class="ident">tmp</span>.<span class="ident">len</span>() <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">u8</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">usize</span>) {
             <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">tmp</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u8</span>;
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">SMALL_BIG_EXT</span>, <span class="ident">len</span>, <span class="number">0u8</span>])<span class="question-mark">?</span>;
-            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="self">self</span>.<span class="ident">to_bytes_le</span>().<span class="ident">as_ref</span>())<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">SmallBig</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">len</span>, <span class="number">0u8</span>])<span class="question-mark">?</span>;
+            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="self">self</span>.<span class="ident">to_bytes_le</span>().<span class="ident">as_ref</span>())<span class="question-mark">?</span>;
 
             <span class="prelude-val">Ok</span>(<span class="ident">written</span>)
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">tmp</span>.<span class="ident">len</span>() <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">u32</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">usize</span>) {
             <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> (<span class="ident">tmp</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u32</span>).<span class="ident">to_be_bytes</span>();
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">LARGE_BIG_EXT</span>, <span class="ident">len</span>[<span class="number">0</span>], <span class="ident">len</span>[<span class="number">1</span>], <span class="ident">len</span>[<span class="number">2</span>], <span class="ident">len</span>[<span class="number">3</span>], <span class="number">0u8</span>])<span class="question-mark">?</span>;
-            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">write</span>(<span class="ident">writer</span>, <span class="self">self</span>.<span class="ident">to_bytes_le</span>().<span class="ident">as_ref</span>())<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">written</span> <span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span>[<span class="ident">TermTag</span>::<span class="ident">LargeBig</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">len</span>[<span class="number">0</span>], <span class="ident">len</span>[<span class="number">1</span>], <span class="ident">len</span>[<span class="number">2</span>], <span class="ident">len</span>[<span class="number">3</span>], <span class="number">0u8</span>])<span class="question-mark">?</span>;
+            <span class="ident">written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="self">self</span>.<span class="ident">to_bytes_le</span>().<span class="ident">as_ref</span>())<span class="question-mark">?</span>;
 
             <span class="prelude-val">Ok</span>(<span class="ident">written</span>)
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">data</span>(<span class="ident">ErrorCode</span>::<span class="ident">ValueNotEncodable</span>(<span class="ident">Box</span>::<span class="ident">from</span>(<span class="string">&quot;Integer size is outside of the possible ranges for an erlang term (-2^N..2^N-1 with N=(2^32)*8)&quot;</span>))))
+            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Message</span>(<span class="string">&quot;Integer size is outside of the possible ranges for an erlang term (-2^N..2^N-1 with N=(2^32)*8)&quot;</span>.<span class="ident">to_string</span>()))
         }
-    }
-}
-
-<span class="kw">fn</span> <span class="ident">write</span>(<span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">Write</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">match</span> <span class="ident">writer</span>.<span class="ident">write</span>(<span class="ident">bytes</span>) {
-        <span class="prelude-val">Ok</span>(<span class="ident">written</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">written</span>),
-        <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">io</span>(<span class="ident">e</span>)),
     }
 }
 
@@ -1276,6 +1187,8 @@
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">ETerm</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">lossless_abs</span>;
+
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;bigint&quot;</span>)]</span>
     <span class="kw">use</span> <span class="ident">num_bigint</span>::{ <span class="ident">BigInt</span>, <span class="ident">BigUint</span>, <span class="ident">Sign</span> };
 
     <span class="kw">struct</span> <span class="ident">Test</span> {
@@ -1338,33 +1251,35 @@
         <span class="kw">fn</span> <span class="ident">run</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">signed</span>: <span class="ident">bool</span>, <span class="ident">bits</span>: <span class="ident">u8</span>) {
             <span class="kw">let</span> <span class="ident">bin</span> <span class="op">=</span> <span class="kw">match</span> (<span class="ident">signed</span>, <span class="ident">bits</span>, <span class="self">self</span>.<span class="ident">is_negative</span>, <span class="self">self</span>.<span class="ident">number</span>) {
                 (<span class="bool-val">true</span>, <span class="number">8</span>, <span class="ident">s</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">i8</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">|</span><span class="op">|</span> (<span class="ident">s</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">lossless_abs</span>(<span class="ident">i8</span>::<span class="ident">min_value</span>() <span class="kw">as</span> <span class="ident">i128</span>)) <span class="op">=</span><span class="op">&gt;</span>
-                    (<span class="self">self</span>.<span class="ident">with_sign</span>() <span class="kw">as</span> <span class="ident">i8</span>).<span class="ident">try_to_external_binary</span>(),
+                    (<span class="self">self</span>.<span class="ident">with_sign</span>() <span class="kw">as</span> <span class="ident">i8</span>).<span class="ident">to_external_binary</span>(),
                 (<span class="bool-val">false</span>, <span class="number">8</span>, <span class="bool-val">false</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">u8</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">=</span><span class="op">&gt;</span>
-                    (<span class="self">self</span>.<span class="ident">number</span> <span class="kw">as</span> <span class="ident">u8</span>).<span class="ident">try_to_external_binary</span>(),
+                    (<span class="self">self</span>.<span class="ident">number</span> <span class="kw">as</span> <span class="ident">u8</span>).<span class="ident">to_external_binary</span>(),
                 (<span class="bool-val">true</span>, <span class="number">16</span>, <span class="ident">s</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">i16</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">|</span><span class="op">|</span> (<span class="ident">s</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">lossless_abs</span>(<span class="ident">i16</span>::<span class="ident">min_value</span>() <span class="kw">as</span> <span class="ident">i128</span>)) <span class="op">=</span><span class="op">&gt;</span>
-                    (<span class="self">self</span>.<span class="ident">with_sign</span>() <span class="kw">as</span> <span class="ident">i16</span>).<span class="ident">try_to_external_binary</span>(),
+                    (<span class="self">self</span>.<span class="ident">with_sign</span>() <span class="kw">as</span> <span class="ident">i16</span>).<span class="ident">to_external_binary</span>(),
                 (<span class="bool-val">false</span>, <span class="number">16</span>, <span class="bool-val">false</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">u16</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">=</span><span class="op">&gt;</span>
-                    (<span class="self">self</span>.<span class="ident">number</span> <span class="kw">as</span> <span class="ident">u16</span>).<span class="ident">try_to_external_binary</span>(),
+                    (<span class="self">self</span>.<span class="ident">number</span> <span class="kw">as</span> <span class="ident">u16</span>).<span class="ident">to_external_binary</span>(),
                 (<span class="bool-val">true</span>, <span class="number">32</span>, <span class="ident">s</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">i32</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">|</span><span class="op">|</span> (<span class="ident">s</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">lossless_abs</span>(<span class="ident">i32</span>::<span class="ident">min_value</span>() <span class="kw">as</span> <span class="ident">i128</span>)) <span class="op">=</span><span class="op">&gt;</span>
-                    (<span class="self">self</span>.<span class="ident">with_sign</span>() <span class="kw">as</span> <span class="ident">i32</span>).<span class="ident">try_to_external_binary</span>(),
+                    (<span class="self">self</span>.<span class="ident">with_sign</span>() <span class="kw">as</span> <span class="ident">i32</span>).<span class="ident">to_external_binary</span>(),
                 (<span class="bool-val">false</span>, <span class="number">32</span>, <span class="bool-val">false</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">u32</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">=</span><span class="op">&gt;</span>
-                    (<span class="self">self</span>.<span class="ident">number</span> <span class="kw">as</span> <span class="ident">u32</span>).<span class="ident">try_to_external_binary</span>(),
+                    (<span class="self">self</span>.<span class="ident">number</span> <span class="kw">as</span> <span class="ident">u32</span>).<span class="ident">to_external_binary</span>(),
                 (<span class="bool-val">true</span>, <span class="number">64</span>, <span class="ident">s</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">i64</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">|</span><span class="op">|</span> (<span class="ident">s</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">lossless_abs</span>(<span class="ident">i64</span>::<span class="ident">min_value</span>() <span class="kw">as</span> <span class="ident">i128</span>)) <span class="op">=</span><span class="op">&gt;</span>
-                    (<span class="self">self</span>.<span class="ident">with_sign</span>() <span class="kw">as</span> <span class="ident">i64</span>).<span class="ident">try_to_external_binary</span>(),
+                    (<span class="self">self</span>.<span class="ident">with_sign</span>() <span class="kw">as</span> <span class="ident">i64</span>).<span class="ident">to_external_binary</span>(),
                 (<span class="bool-val">false</span>, <span class="number">64</span>, <span class="bool-val">false</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">u64</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">=</span><span class="op">&gt;</span>
-                    (<span class="self">self</span>.<span class="ident">number</span> <span class="kw">as</span> <span class="ident">u64</span>).<span class="ident">try_to_external_binary</span>(),
+                    (<span class="self">self</span>.<span class="ident">number</span> <span class="kw">as</span> <span class="ident">u64</span>).<span class="ident">to_external_binary</span>(),
                 (<span class="bool-val">true</span>, <span class="number">128</span>, <span class="ident">s</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="ident">i128</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">|</span><span class="op">|</span> (<span class="ident">s</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">lossless_abs</span>(<span class="ident">i128</span>::<span class="ident">min_value</span>() <span class="kw">as</span> <span class="ident">i128</span>)) <span class="op">=</span><span class="op">&gt;</span>
-                    (<span class="self">self</span>.<span class="ident">with_sign</span>() <span class="kw">as</span> <span class="ident">i128</span>).<span class="ident">try_to_external_binary</span>(),
+                    (<span class="self">self</span>.<span class="ident">with_sign</span>() <span class="kw">as</span> <span class="ident">i128</span>).<span class="ident">to_external_binary</span>(),
                 (<span class="bool-val">false</span>, <span class="number">128</span>, <span class="bool-val">false</span>, <span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">u128</span>::<span class="ident">max_value</span>() <span class="op">=</span><span class="op">&gt;</span>
-                    <span class="self">self</span>.<span class="ident">number</span>.<span class="ident">try_to_external_binary</span>(),
+                    <span class="self">self</span>.<span class="ident">number</span>.<span class="ident">to_external_binary</span>(),
+                <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;bigint&quot;</span>)]</span>
                 (<span class="bool-val">true</span>, <span class="number">0</span>, <span class="ident">s</span>, <span class="ident">n</span>) <span class="op">=</span><span class="op">&gt;</span>
                     <span class="ident">BigInt</span>::<span class="ident">from_biguint</span>(<span class="kw">if</span> <span class="ident">s</span> {
                         <span class="ident">Sign</span>::<span class="ident">Minus</span>
                     } <span class="kw">else</span> {
                         <span class="ident">Sign</span>::<span class="ident">Plus</span>
-                    }, <span class="ident">BigUint</span>::<span class="ident">from</span>(<span class="ident">n</span>)).<span class="ident">try_to_external_binary</span>(),
+                    }, <span class="ident">BigUint</span>::<span class="ident">from</span>(<span class="ident">n</span>)).<span class="ident">to_external_binary</span>(),
+                <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;bigint&quot;</span>)]</span>
                 (<span class="bool-val">false</span>, <span class="number">0</span>, <span class="bool-val">false</span>, <span class="ident">n</span>) <span class="op">=</span><span class="op">&gt;</span>
-                    <span class="ident">BigUint</span>::<span class="ident">from</span>(<span class="ident">n</span>).<span class="ident">try_to_external_binary</span>(),
+                    <span class="ident">BigUint</span>::<span class="ident">from</span>(<span class="ident">n</span>).<span class="ident">to_external_binary</span>(),
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span>,
             }.<span class="ident">unwrap</span>();
 
@@ -1446,7 +1361,7 @@
             <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>,
             <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>,
             <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="comment">// Value</span>
-        ], <span class="ident">val</span>.<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>(), <span class="string">&quot;(positive)&quot;</span>);
+        ], <span class="ident">val</span>.<span class="ident">to_external_binary</span>().<span class="ident">unwrap</span>(), <span class="string">&quot;(positive)&quot;</span>);
         <span class="ident">val</span> <span class="kw-2">*</span><span class="op">=</span> <span class="op">-</span><span class="number">1</span>;
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[
             <span class="number">0x6e</span>, <span class="comment">// SMALL_BIG_EXT</span>
@@ -1474,7 +1389,7 @@
             <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>,
             <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>,
             <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="comment">// Value</span>
-        ], <span class="ident">val</span>.<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>(), <span class="string">&quot;(negative)&quot;</span>);
+        ], <span class="ident">val</span>.<span class="ident">to_external_binary</span>().<span class="ident">unwrap</span>(), <span class="string">&quot;(negative)&quot;</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1511,7 +1426,7 @@
             <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>,
             <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>,
             <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="number">0xff</span>, <span class="comment">// Value</span>
-        ], <span class="ident">val</span>.<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
+        ], <span class="ident">val</span>.<span class="ident">to_external_binary</span>().<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1549,7 +1464,7 @@
             <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,
             <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,
             <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x01</span>, <span class="comment">// Value</span>
-        ], <span class="ident">val</span>.<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>(), <span class="string">&quot;(positive)&quot;</span>);
+        ], <span class="ident">val</span>.<span class="ident">to_external_binary</span>().<span class="ident">unwrap</span>(), <span class="string">&quot;(positive)&quot;</span>);
         <span class="ident">val</span> <span class="kw-2">*</span><span class="op">=</span> <span class="op">-</span><span class="number">1</span>;
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">vec</span><span class="macro">!</span>[
             <span class="number">0x6f</span>, <span class="comment">// LARGE_BIG_EXT</span>
@@ -1577,7 +1492,7 @@
             <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,
             <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,
             <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x01</span>, <span class="comment">// Value</span>
-        ], <span class="ident">val</span>.<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>(), <span class="string">&quot;(negative)&quot;</span>);
+        ], <span class="ident">val</span>.<span class="ident">to_external_binary</span>().<span class="ident">unwrap</span>(), <span class="string">&quot;(negative)&quot;</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1615,7 +1530,7 @@
             <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,
             <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,
             <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x01</span>, <span class="comment">// Value</span>
-        ], <span class="ident">val</span>.<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>());
+        ], <span class="ident">val</span>.<span class="ident">to_external_binary</span>().<span class="ident">unwrap</span>());
     }
 
     <span class="kw">struct</span> <span class="ident">FloatTest</span> {
@@ -1636,6 +1551,9 @@
         <span class="comment">//  decimal.</span>
         <span class="comment">//  I feel it is more correct to include full precision whenever</span>
         <span class="comment">//  possible.</span>
+        <span class="comment">//  If it is impossible to represent the full precision of the number</span>
+        <span class="comment">//  in decimal, we should truncate it to as short as possible so that</span>
+        <span class="comment">//  it is precise enough to be an unambiguous representation of an f64.</span>
         <span class="kw">for</span> <span class="ident">t</span> <span class="kw">in</span> <span class="kw-2">&amp;</span>[
             <span class="comment">// f32 and f64</span>
             <span class="kw-2">&amp;</span><span class="ident">FloatTest</span>{<span class="ident">value</span>: <span class="number">0.5</span>, <span class="ident">binary</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="number">70</span>, <span class="number">63</span>, <span class="number">224</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]},
@@ -1645,12 +1563,12 @@
             <span class="comment">// f64 only</span>
             <span class="kw-2">&amp;</span><span class="ident">FloatTest</span>{<span class="ident">value</span>: <span class="number">0.200000000000000011102230246252</span>, <span class="ident">binary</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="number">70</span>, <span class="number">63</span>, <span class="number">201</span>, <span class="number">153</span>, <span class="number">153</span>, <span class="number">153</span>, <span class="number">153</span>, <span class="number">153</span>, <span class="number">154</span>]}
         ] {
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">t</span>.<span class="ident">binary</span>, <span class="ident">t</span>.<span class="ident">value</span>.<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>(), <span class="string">&quot;(f64: {})&quot;</span>, <span class="ident">t</span>.<span class="ident">value</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">t</span>.<span class="ident">binary</span>, <span class="ident">t</span>.<span class="ident">value</span>.<span class="ident">to_external_binary</span>().<span class="ident">unwrap</span>(), <span class="string">&quot;(f64: {})&quot;</span>, <span class="ident">t</span>.<span class="ident">value</span>);
 
             <span class="comment">// This tests whether the f32 representation is exact.</span>
             <span class="comment">//  Only if it is, testing the value as f32 is meaningful.</span>
             <span class="kw">if</span> ((<span class="ident">t</span>.<span class="ident">value</span> <span class="kw">as</span> <span class="ident">f32</span>) <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">=</span><span class="op">=</span> <span class="ident">t</span>.<span class="ident">value</span> {
-                <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">t</span>.<span class="ident">binary</span>, (<span class="ident">t</span>.<span class="ident">value</span> <span class="kw">as</span> <span class="ident">f32</span>).<span class="ident">try_to_external_binary</span>().<span class="ident">unwrap</span>(), <span class="string">&quot;(f32: {})&quot;</span>, <span class="ident">t</span>.<span class="ident">value</span>);
+                <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">t</span>.<span class="ident">binary</span>, (<span class="ident">t</span>.<span class="ident">value</span> <span class="kw">as</span> <span class="ident">f32</span>).<span class="ident">to_external_binary</span>().<span class="ident">unwrap</span>(), <span class="string">&quot;(f32: {})&quot;</span>, <span class="ident">t</span>.<span class="ident">value</span>);
             }
         }
     }

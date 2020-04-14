@@ -1,1 +1,1 @@
-initSidebarItems({});
+initSidebarItems({"fn":[["decode",""]],"struct":[["DecodeOptions",""]]});
